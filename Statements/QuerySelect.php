@@ -1,0 +1,200 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * Author: Adrian Dumitru
+ * Date: 4/22/2017 4:17 AM
+ */
+
+namespace Adi\QueryBuilder\Statements;
+
+
+use Adi\QueryBuilder\DB\DbService;
+use Adi\QueryBuilder\Dependencies\QueryHelper;
+use Adi\QueryBuilder\Dependencies\QueryStructure;
+use Adi\QueryBuilder\QueryBuild;
+use Adi\QueryBuilder\Traits\GroupBy;
+use Adi\QueryBuilder\Traits\Join;
+use Adi\QueryBuilder\Traits\Limit;
+use Adi\QueryBuilder\Traits\OrderBy;
+use Adi\QueryBuilder\Traits\Replacement;
+use Adi\QueryBuilder\Traits\Where;
+
+class QuerySelect extends QueryStatement implements QueryStatementInterface
+{
+
+	use Limit, Where, Replacement, OrderBy, GroupBy, Join;
+
+	/**
+	 * @var string
+	 */
+	protected $statement = 'SELECT';
+
+
+	/**
+	 * QuerySelect constructor.
+	 * @param QueryBuild $queryBuild
+	 * @param null $table
+	 */
+	public function __construct( QueryBuild $queryBuild, $table = null )
+	{
+		parent::__construct($queryBuild, $table);
+
+		if(is_a( $table, QuerySelect::class) ) {
+
+			/**
+			 * @var QuerySelect $table
+			 */
+			$tableName = '( ' .$table->getSyntax() . ' )';
+			$this->queryStructure->setElement(QueryStructure::TABLE, $tableName);
+
+			if($this->queryStructure->getElement(QueryStructure::REPLACEMENT))
+				$table->withReplacement();
+
+			$tableSelectParams = $table->getBindParams();
+			foreach ($tableSelectParams as $key => $value)
+				$this->queryStructure->setParams($key, $value);
+
+		}
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function distinct()
+	{
+		$this->queryStructure->setElement(QueryStructure::DISTINCT, 1);
+		return $this;
+	}
+
+	/**
+	 * @param $fields
+	 * @return $this
+	 */
+	public function fields( $fields )
+	{
+		$this->queryStructure->setElement(QueryStructure::FIELDS, $fields);
+		return $this;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function first()
+	{
+		$this->queryStructure->setElement(QueryStructure::FIRST, 1);
+		return $this;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function count()
+	{
+		$this->queryStructure->setElement(QueryStructure::COUNT, 1);
+		return $this;
+	}
+
+	/**
+	 * @param $column
+	 * @return $this
+	 */
+	public function column($column)
+	{
+		$column = QueryHelper::clearMultipleSpaces($column);
+		$this->queryStructure->setElement(QueryStructure::COLUMN, $column);
+		return $this;
+	}
+
+	public function getSyntax()
+	{
+
+		if( $this->queryStructure->getElement( QueryStructure::COUNT ) ) {
+			$this->queryStructure->setElement(QueryStructure::FIELDS, 'COUNT(*)');
+			$this->queryStructure->setElement(QueryStructure::LIMIT, 1);
+			$this->queryStructure->setElement(QueryStructure::DISTINCT, 0); //???
+		}
+
+		if($this->queryStructure->getElement(QueryStructure::FIRST))
+			$this->queryStructure->setElement(QueryStructure::LIMIT, 1);
+
+		$syntax = array();
+
+		/**
+		 * SELECT statement
+		 */
+		$syntax[] = $this->statement;
+
+		/**
+		 * DISTINCT clause
+		 */
+		$syntax[] = $this->queryStructure->getElement(QueryStructure::DISTINCT) ? 'DISTINCT' : '';
+
+		/**
+		 * FIELDS
+		 */
+		$syntax[] = $this->queryStructure->getElement(QueryStructure::FIELDS);
+
+		/**
+		 * FROM table or queryStructure
+		 */
+		$syntax[] = 'FROM ' . $this->queryStructure->getElement(QueryStructure::TABLE);
+
+		/**
+		 * JOIN CLAUSES
+		 */
+		$syntax[] = $this->getJoinSyntax();
+
+		/**
+		 * WHERE clause
+		 */
+		$syntax[] = $this->getWhereSyntax();
+
+		/**
+		 * GROUP BY clause
+		 */
+		$syntax[] = $this->getGroupBySyntax();
+
+		/**
+		 * ORDER BY clause
+		 */
+		$syntax[] = $this->getOrderBySyntax();
+
+		/**
+		 * LIMIT clause
+		 */
+		$syntax[] = $this->getLimitSyntax();
+
+		$syntax = implode(' ',$syntax);
+
+		return $this->getSyntaxReplace( $syntax );
+
+	}
+
+
+	/**
+	 * @return array|int|mixed|null|string
+	 */
+	public function execute()
+	{
+		//echo "<pre>" . print_r(debug_backtrace(),1)."</pre>";
+
+		switch ( true )
+		{
+			case $this->queryStructure->getElement(QueryStructure::COUNT):
+				return DbService::getInstance()->single($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+				break;
+			case $this->queryStructure->getElement(QueryStructure::FIRST):
+				if($this->queryStructure->getElement(QueryStructure::COLUMN))
+					return DbService::getInstance()->single($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+				return DbService::getInstance()->row($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+				break;
+			case $this->queryStructure->getElement(QueryStructure::COLUMN):
+				return DbService::getInstance()->column($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+				break;
+			default:
+				return DbService::getInstance()->query($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+				break;
+		}
+	}
+
+}
