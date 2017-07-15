@@ -5,7 +5,7 @@
  * Date: 5/21/2017 9:29 AM
  */
 
-namespace Adi\QueryBuilder\Statements;
+namespace Qpdb\QueryBuilder\Statements;
 
 
 interface QueryStatementInterface

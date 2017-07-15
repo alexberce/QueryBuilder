@@ -5,11 +5,11 @@
  * Date: 4/30/2017 9:55 PM
  */
 
-namespace Adi\QueryBuilder\Traits;
+namespace Qpdb\QueryBuilder\Traits;
 
 
-use Adi\QueryBuilder\Dependencies\QueryStructure;
-use Adi\QueryBuilder\Dependencies\QueryHelper;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 
 trait GroupBy
 {

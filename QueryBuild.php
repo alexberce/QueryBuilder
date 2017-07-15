@@ -5,13 +5,13 @@
  * Date: 4/22/2017 4:08 AM
  */
 
-namespace Adi\QueryBuilder;
+namespace Qpdb\QueryBuilder;
 
 
-use Adi\QueryBuilder\Statements\QueryDelete;
-use Adi\QueryBuilder\Statements\QueryInsert;
-use Adi\QueryBuilder\Statements\QuerySelect;
-use Adi\QueryBuilder\Statements\QueryUpdate;
+use Qpdb\QueryBuilder\Statements\QueryDelete;
+use Qpdb\QueryBuilder\Statements\QueryInsert;
+use Qpdb\QueryBuilder\Statements\QuerySelect;
+use Qpdb\QueryBuilder\Statements\QueryUpdate;
 
 class QueryBuild
 {

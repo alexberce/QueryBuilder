@@ -5,7 +5,7 @@
  * Date: 5/27/2017 7:46 PM
  */
 
-namespace Adi\QueryBuilder\DB;
+namespace Qpdb\QueryBuilder\DB;
 
 
 class DbException extends \Exception

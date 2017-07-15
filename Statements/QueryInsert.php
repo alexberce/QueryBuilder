@@ -6,15 +6,15 @@
  * Time: 1:51 PM
  */
 
-namespace Adi\QueryBuilder\Statements;
+namespace Qpdb\QueryBuilder\Statements;
 
 
-use Adi\QueryBuilder\QueryBuild;
-use Adi\QueryBuilder\Traits\Ignore;
-use Adi\QueryBuilder\Traits\InsertMultiple;
-use Adi\QueryBuilder\Traits\Replacement;
-use Adi\QueryBuilder\Traits\SetFields;
-use Adi\QueryBuilder\Traits\Utilities;
+use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\Ignore;
+use Qpdb\QueryBuilder\Traits\InsertMultiple;
+use Qpdb\QueryBuilder\Traits\Replacement;
+use Qpdb\QueryBuilder\Traits\SetFields;
+use Qpdb\QueryBuilder\Traits\Utilities;
 
 class QueryInsert extends QueryStatement implements QueryStatementInterface
 {

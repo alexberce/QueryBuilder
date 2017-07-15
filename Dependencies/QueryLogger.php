@@ -5,7 +5,7 @@
  * Date: 5/20/2017 7:33 PM
  */
 
-namespace Adi\QueryBuilder\Dependencies;
+namespace Qpdb\QueryBuilder\Dependencies;
 
 
 class QueryLogger

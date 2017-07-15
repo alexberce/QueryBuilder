@@ -5,19 +5,19 @@
  * Date: 4/22/2017 4:17 AM
  */
 
-namespace Adi\QueryBuilder\Statements;
+namespace Qpdb\QueryBuilder\Statements;
 
 
-use Adi\QueryBuilder\DB\DbService;
-use Adi\QueryBuilder\Dependencies\QueryHelper;
-use Adi\QueryBuilder\Dependencies\QueryStructure;
-use Adi\QueryBuilder\QueryBuild;
-use Adi\QueryBuilder\Traits\GroupBy;
-use Adi\QueryBuilder\Traits\Join;
-use Adi\QueryBuilder\Traits\Limit;
-use Adi\QueryBuilder\Traits\OrderBy;
-use Adi\QueryBuilder\Traits\Replacement;
-use Adi\QueryBuilder\Traits\Where;
+use Qpdb\QueryBuilder\DB\DbService;
+use Qpdb\QueryBuilder\Dependencies\QueryHelper;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\GroupBy;
+use Qpdb\QueryBuilder\Traits\Join;
+use Qpdb\QueryBuilder\Traits\Limit;
+use Qpdb\QueryBuilder\Traits\OrderBy;
+use Qpdb\QueryBuilder\Traits\Replacement;
+use Qpdb\QueryBuilder\Traits\Where;
 
 class QuerySelect extends QueryStatement implements QueryStatementInterface
 {

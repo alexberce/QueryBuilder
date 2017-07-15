@@ -6,10 +6,10 @@
  * Time: 8:47 AM
  */
 
-namespace Adi\QueryBuilder\Traits;
+namespace Qpdb\QueryBuilder\Traits;
 
 
-use Adi\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait Ignore
 {

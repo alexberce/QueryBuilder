@@ -6,20 +6,20 @@
  * Time: 11:18 AM
  */
 
-namespace Adi\QueryBuilder\Statements;
+namespace Qpdb\QueryBuilder\Statements;
 
 
-use Adi\QueryBuilder\DB\DbService;
-use Adi\QueryBuilder\Dependencies\QueryException;
-use Adi\QueryBuilder\Dependencies\QueryStructure;
-use Adi\QueryBuilder\QueryBuild;
-use Adi\QueryBuilder\Traits\Ignore;
-use Adi\QueryBuilder\Traits\Limit;
-use Adi\QueryBuilder\Traits\OrderBy;
-use Adi\QueryBuilder\Traits\Replacement;
-use Adi\QueryBuilder\Traits\SetFields;
-use Adi\QueryBuilder\Traits\Utilities;
-use Adi\QueryBuilder\Traits\Where;
+use Qpdb\QueryBuilder\DB\DbService;
+use Qpdb\QueryBuilder\Dependencies\QueryException;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\Ignore;
+use Qpdb\QueryBuilder\Traits\Limit;
+use Qpdb\QueryBuilder\Traits\OrderBy;
+use Qpdb\QueryBuilder\Traits\Replacement;
+use Qpdb\QueryBuilder\Traits\SetFields;
+use Qpdb\QueryBuilder\Traits\Utilities;
+use Qpdb\QueryBuilder\Traits\Where;
 
 class QueryDelete extends QueryStatement implements QueryStatementInterface
 {

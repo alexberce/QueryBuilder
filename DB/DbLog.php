@@ -5,7 +5,7 @@
  * Date: 6/3/2017 8:51 PM
  */
 
-namespace Adi\QueryBuilder\DB;
+namespace Qpdb\QueryBuilder\DB;
 
 
 class DbLog

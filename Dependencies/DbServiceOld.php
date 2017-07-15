@@ -6,7 +6,7 @@
  * Date: 5/1/2017 1:30 AM
  */
 
-namespace Adi\QueryBuilder\Dependencies;
+namespace Qpdb\QueryBuilder\Dependencies;
 
 class DbServiceOld
 {

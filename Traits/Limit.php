@@ -5,13 +5,13 @@
  * Date: 4/22/2017 11:40 PM
  */
 
-namespace Adi\QueryBuilder\Traits;
+namespace Qpdb\QueryBuilder\Traits;
 
 
 
-use Adi\QueryBuilder\Dependencies\QueryException;
-use Adi\QueryBuilder\Dependencies\QueryHelper;
-use Adi\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Dependencies\QueryException;
+use Qpdb\QueryBuilder\Dependencies\QueryHelper;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait Limit
 {

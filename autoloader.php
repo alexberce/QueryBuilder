@@ -12,11 +12,11 @@ spl_autoload_register(
  */
     function( $class )
     {
-        $basePath = trim( $_SERVER['DOCUMENT_ROOT'], '/');
+
         $nameSpace = str_replace( '\\', '/', trim($class, '\\') ) . '.php';
-        $nameSpace = str_replace('Adi/QueryBuilder/', '/QueryBuilder/', $nameSpace);
-        $classFile = $basePath . $nameSpace;
-        require_once ( $classFile );
+        $nameSpace = str_replace('Qpdb/QueryBuilder/', '', $nameSpace);
+        $includeFile = __DIR__ . '/' . $nameSpace;
+        require_once ( $includeFile );
     }
 
 );

@@ -5,7 +5,7 @@
  * Date: 6/17/2017 9:16 AM
  */
 
-namespace Adi\QueryBuilder\DB;
+namespace Qpdb\QueryBuilder\DB;
 
 
 class DbConfigModel

@@ -5,7 +5,7 @@
  * Date: 5/6/2017 3:08 PM
  */
 
-namespace Adi\QueryBuilder\DB;
+namespace Qpdb\QueryBuilder\DB;
 
 
 class DbConnect

@@ -5,13 +5,13 @@
  * Date: 4/30/2017 4:47 PM
  */
 
-namespace Adi\QueryBuilder\Traits;
+namespace Qpdb\QueryBuilder\Traits;
 
 
-use Adi\QueryBuilder\DB\DbConnect;
-use Adi\QueryBuilder\Dependencies\QueryHelper;
-use Adi\QueryBuilder\Dependencies\QueryStructure;
-use Adi\QueryBuilder\Statements\QueryStatementInterface;
+use Qpdb\QueryBuilder\DB\DbConnect;
+use Qpdb\QueryBuilder\Dependencies\QueryHelper;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Statements\QueryStatementInterface;
 
 trait Replacement
 {

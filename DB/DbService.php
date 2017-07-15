@@ -5,7 +5,7 @@
  * Date: 6/1/2017 4:14 PM
  */
 
-namespace Adi\QueryBuilder\DB;
+namespace Qpdb\QueryBuilder\DB;
 
 
 class DbService

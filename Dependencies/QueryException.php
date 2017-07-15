@@ -5,7 +5,7 @@
  * Date: 4/22/2017 3:15 AM
  */
 
-namespace Adi\QueryBuilder\Dependencies;
+namespace Qpdb\QueryBuilder\Dependencies;
 
 
 class QueryException extends \Exception

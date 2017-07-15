@@ -5,10 +5,10 @@
  * Date: 4/22/2017 2:33 AM
  */
 
-namespace Adi\QueryBuilder\Dependencies;
+namespace Qpdb\QueryBuilder\Dependencies;
 
 
-use Adi\QueryBuilder\Statements\QueryStatement;
+use Qpdb\QueryBuilder\Statements\QueryStatement;
 
 class QueryStructure
 {

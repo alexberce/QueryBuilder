@@ -5,10 +5,10 @@
  * Date: 6/26/2017 6:22 AM
  */
 
-namespace Adi\QueryBuilder\Traits;
+namespace Qpdb\QueryBuilder\Traits;
 
 
-use Adi\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait SetFields
 {

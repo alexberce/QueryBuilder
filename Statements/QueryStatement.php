@@ -5,12 +5,12 @@
  * Date: 4/22/2017 4:16 AM
  */
 
-namespace Adi\QueryBuilder\Statements;
+namespace Qpdb\QueryBuilder\Statements;
 
 
-use Adi\QueryBuilder\Dependencies\QueryStructure;
-use Adi\QueryBuilder\QueryBuild;
-use Adi\QueryBuilder\Traits\Utilities;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\Utilities;
 
 abstract class QueryStatement
 {

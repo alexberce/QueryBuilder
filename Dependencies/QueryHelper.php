@@ -5,7 +5,7 @@
  * Date: 4/23/2017 12:02 AM
  */
 
-namespace Adi\QueryBuilder\Dependencies;
+namespace Qpdb\QueryBuilder\Dependencies;
 
 
 class QueryHelper

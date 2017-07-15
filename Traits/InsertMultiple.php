@@ -6,10 +6,10 @@
  * Time: 10:41 AM
  */
 
-namespace Adi\QueryBuilder\Traits;
+namespace Qpdb\QueryBuilder\Traits;
 
 
-use Adi\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait InsertMultiple
 {

@@ -5,13 +5,13 @@
  * Date: 4/25/2017 1:13 AM
  */
 
-namespace Adi\QueryBuilder\Traits;
+namespace Qpdb\QueryBuilder\Traits;
 
 
-use Adi\QueryBuilder\Dependencies\QueryStructure;
-use Adi\QueryBuilder\Dependencies\QueryException;
-use Adi\QueryBuilder\Dependencies\QueryHelper;
-use Adi\QueryBuilder\Statements\QuerySelect;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Dependencies\QueryException;
+use Qpdb\QueryBuilder\Dependencies\QueryHelper;
+use Qpdb\QueryBuilder\Statements\QuerySelect;
 
 trait Where
 {

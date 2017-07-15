@@ -5,7 +5,7 @@
  * Date: 5/26/2017 7:36 PM
  */
 
-namespace Adi\QueryBuilder\Dependencies;
+namespace Qpdb\QueryBuilder\Dependencies;
 
 
 class QueryTimer

@@ -5,10 +5,10 @@
  * Date: 4/22/2017 11:43 PM
  */
 
-namespace Adi\QueryBuilder\Traits;
+namespace Qpdb\QueryBuilder\Traits;
 
 
-use Adi\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait Objects
 {
