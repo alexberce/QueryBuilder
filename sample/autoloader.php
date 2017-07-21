@@ -15,8 +15,10 @@ spl_autoload_register(
 
         $nameSpace = str_replace( '\\', '/', trim($class, '\\') ) . '.php';
         $nameSpace = str_replace('Qpdb/QueryBuilder/', '', $nameSpace);
-        $includeFile = __DIR__ . '/' . $nameSpace;
+        $includeFile = __DIR__ . '/../src/' . $nameSpace;
+
         require_once ( $includeFile );
+
     }
 
 );
