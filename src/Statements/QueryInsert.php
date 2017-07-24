@@ -9,6 +9,8 @@
 namespace Qpdb\QueryBuilder\Statements;
 
 
+use Qpdb\QueryBuilder\DB\DbService;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
 use Qpdb\QueryBuilder\Traits\Ignore;
 use Qpdb\QueryBuilder\Traits\InsertMultiple;
@@ -39,11 +41,41 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 
     public function getSyntax()
     {
-        // TODO: Implement getSyntax() method.
+	    $syntax = array();
+
+	    /**
+	     * UPDATE statement
+	     */
+	    $syntax[] = $this->statement;
+
+	    /**
+	     * IGNORE clause
+	     */
+	    $syntax[] = $this->queryStructure->getElement(QueryStructure::IGNORE) ? 'IGNORE' : '';
+
+	    /**
+	     * INTO table
+	     */
+	    $syntax[] = 'INTO ' . $this->queryStructure->getElement(QueryStructure::TABLE);
+
+	    /**
+	     * FIELDS update
+	     */
+	    $syntax[] = $this->getSettingFieldsSyntax();
+
+	    $syntax = implode(' ',$syntax);
+
+	    return $this->getSyntaxReplace( $syntax );
+
     }
 
     public function execute()
     {
-        // TODO: Implement execute() method.
+	    return DbService::getInstance()->query(
+		    $this->getSyntax(),
+		    $this->queryStructure->getElement(QueryStructure::BIND_PARAMS)
+	    );
     }
+
+
 }
