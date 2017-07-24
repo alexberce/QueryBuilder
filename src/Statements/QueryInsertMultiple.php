@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: computer
- * Date: 6/27/2017
- * Time: 1:51 PM
+ * Date: 7/24/2017
+ * Time: 6:34 PM
  */
 
 namespace Qpdb\QueryBuilder\Statements;
@@ -13,14 +13,14 @@ use Qpdb\QueryBuilder\DB\DbService;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
 use Qpdb\QueryBuilder\Traits\Ignore;
+use Qpdb\QueryBuilder\Traits\InsertMultiple;
 use Qpdb\QueryBuilder\Traits\Replacement;
-use Qpdb\QueryBuilder\Traits\SetFields;
 use Qpdb\QueryBuilder\Traits\Utilities;
 
-class QueryInsert extends QueryStatement implements QueryStatementInterface
+class QueryInsertMultiple extends QueryStatement implements QueryStatementInterface
 {
 
-    use Replacement, SetFields, Ignore, Utilities;
+    use InsertMultiple, Replacement, Ignore, Utilities;
 
     /**
      * @var string
@@ -36,14 +36,7 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
     public function __construct(QueryBuild $queryBuild, $table = null)
     {
         parent::__construct($queryBuild, $table);
-    }
-
-    /**
-     * @return QueryInsertMultiple
-     */
-    public function multiple()
-    {
-        return new QueryInsertMultiple( $this->queryBuild, $this->queryStructure->getElement(QueryStructure::TABLE) );
+        $this->queryStructure->setElement(QueryStructure::FIELDS, array());
     }
 
     public function getSyntax()
@@ -68,14 +61,13 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
         /**
          * FIELDS update
          */
-        $syntax[] = $this->getSettingFieldsSyntax();
+        $syntax[] = $this->getInsertMultipleRowsSyntax();
 
         $syntax = implode(' ',$syntax);
 
         return $this->getSyntaxReplace( $syntax );
 
     }
-
 
     public function execute()
     {
@@ -84,6 +76,4 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
             $this->queryStructure->getElement(QueryStructure::BIND_PARAMS)
         );
     }
-
-
 }

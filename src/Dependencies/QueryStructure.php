@@ -163,9 +163,6 @@ class QueryStructure
         if(!array_key_exists( $elementName, $this->syntaxEL ))
             throw new QueryException('Invalid Query property', QueryException::QUERY_ERROR_ELEMENT_NOT_FOUND);
 
-        if(!is_array($this->syntaxEL[$elementName]))
-            throw new QueryException('Invalid Query property', QueryException::QUERY_ERROR_ELEMENT_TYPE);
-
         $this->syntaxEL[$elementName] = $elementValue;
     }
 

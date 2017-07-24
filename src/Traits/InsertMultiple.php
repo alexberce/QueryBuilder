@@ -9,6 +9,8 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
+use Qpdb\QueryBuilder\Dependencies\QueryException;
+use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait InsertMultiple
@@ -16,27 +18,72 @@ trait InsertMultiple
 
     use Objects;
 
+
     /**
-     * @param array $fieldsArray
-     * @param array $valuesArray
+     * @param string|array $fieldList
      * @return $this
-     *
-     * @sample: ->insertMultipleRows(
-               [field1, field2, field3, ... ],
-               [
-                   [field1_v1, field2_v1, field3_v1, ... ],
-                   [field1_v2, field2_v2, field3_v2, ... ],
-                   [field1_v3, field2_v3, field3_v3, ... ],
-                   ...
-               ]
-     )
-     *
      */
-    public function multipleRows( array $fieldsArray, array $valuesArray )
+    public function setFieldsList( $fieldList )
     {
-        $this->queryStructure->setElement(QueryStructure::MULTIPLE_ROWS, 1);
+        if(!is_array($fieldList))
+            $fieldList = QueryHelper::explode($fieldList);
+
+        $this->queryStructure->replaceElement(QueryStructure::FIELDS, $fieldList );
 
         return $this;
     }
+
+    /**
+     * @param array $rowValues
+     * @return $this
+     * @throws QueryException
+     */
+    public function addRow(array $rowValues )
+    {
+        if($this->getNumberOfFields() !== count($rowValues))
+            throw new QueryException('Ivalid number of fields.', QueryException::QUERY_ERROR_INVALID_FIELDS_COUNT);
+
+        $pdoRowValues = array();
+
+        foreach ($rowValues as $value)
+            $pdoRowValues[] = $this->queryStructure->bindParam('value', $value);
+
+        $pdoRowValuesString = '( ' . QueryHelper::implode($pdoRowValues,', ') . ' )';
+
+        $this->queryStructure->setElement(QueryStructure::SET_FIELDS, $pdoRowValuesString );
+
+        return $this;
+    }
+
+    /**
+     * @param array $rows
+     * @return $this
+     */
+    public function addMultipleRows(array $rows )
+    {
+        foreach ($rows as $row)
+            $this->addRow($row);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    private function getInsertMultipleRowsSyntax()
+    {
+        $fields =  '( ' . QueryHelper::implode($this->queryStructure->getElement(QueryStructure::FIELDS), ', ') . ' )';
+        $values = QueryHelper::implode($this->queryStructure->getElement(QueryStructure::SET_FIELDS), ', ');
+        return $fields . ' VALUES ' . $values;
+    }
+
+    /**
+     * @return int
+     */
+    private function getNumberOfFields()
+    {
+        return count($this->queryStructure->getElement(QueryStructure::FIELDS));
+    }
+
 
 }
