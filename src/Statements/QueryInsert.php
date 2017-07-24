@@ -69,6 +69,7 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 
     }
 
+
     public function execute()
     {
 	    return DbService::getInstance()->query(
