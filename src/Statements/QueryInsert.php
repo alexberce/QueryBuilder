@@ -41,31 +41,31 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 
     public function getSyntax()
     {
-		$syntax = array();
-		
-		/**
-		 * UPDATE statement
-		 */
-		$syntax[] = $this->statement;
-		
-		/**
-		 * IGNORE clause
-		 */
-		$syntax[] = $this->queryStructure->getElement(QueryStructure::IGNORE) ? 'IGNORE' : '';
-		
-		/**
-		 * INTO table
-		 */
-		$syntax[] = 'INTO ' . $this->queryStructure->getElement(QueryStructure::TABLE);
-		
-		/**
-		 * FIELDS update
-		 */
-		$syntax[] = $this->getSettingFieldsSyntax();
-		
-		$syntax = implode(' ',$syntax);
-		
-		return $this->getSyntaxReplace( $syntax );
+        $syntax = array();
+
+        /**
+         * UPDATE statement
+         */
+        $syntax[] = $this->statement;
+
+        /**
+         * IGNORE clause
+         */
+        $syntax[] = $this->queryStructure->getElement(QueryStructure::IGNORE) ? 'IGNORE' : '';
+
+        /**
+         * INTO table
+         */
+        $syntax[] = 'INTO ' . $this->queryStructure->getElement(QueryStructure::TABLE);
+
+        /**
+         * FIELDS update
+         */
+        $syntax[] = $this->getSettingFieldsSyntax();
+
+        $syntax = implode(' ',$syntax);
+
+        return $this->getSyntaxReplace( $syntax );
 
     }
 
