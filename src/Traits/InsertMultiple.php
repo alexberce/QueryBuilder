@@ -95,9 +95,18 @@ trait InsertMultiple
      */
     private function getInsertMultipleRowsSyntax()
     {
+        if(is_a($this->queryStructure->getElement(QueryStructure::SET_FIELDS), QuerySelect::class))
+            return $this->getSyntaxWithSelect();
+
         $fields =  '( ' . QueryHelper::implode($this->queryStructure->getElement(QueryStructure::FIELDS), ', ') . ' )';
         $values = QueryHelper::implode($this->queryStructure->getElement(QueryStructure::SET_FIELDS), ', ');
         return $fields . ' VALUES ' . $values;
+    }
+
+    private function getSyntaxWithSelect()
+    {
+        $fields =  '( ' . QueryHelper::implode($this->queryStructure->getElement(QueryStructure::FIELDS), ', ') . ' )';
+        return $fields . ' ' . $this->queryStructure->getElement(QueryStructure::SET_FIELDS)->getSyntax();
     }
 
     /**
