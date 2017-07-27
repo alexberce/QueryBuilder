@@ -63,11 +63,6 @@ class QueryBuild
         return new QueryDelete( new QueryBuild(0), $table);
     }
 
-    public static function loadStatement ( $querySerialized )
-    {
-        //TODO: load query after serialize
-    }
-
 	/**
 	 * @return mixed
 	 */
