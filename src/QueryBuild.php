@@ -8,6 +8,7 @@
 namespace Qpdb\QueryBuilder;
 
 
+use Qpdb\QueryBuilder\Statements\QueryCustom;
 use Qpdb\QueryBuilder\Statements\QueryDelete;
 use Qpdb\QueryBuilder\Statements\QueryInsert;
 use Qpdb\QueryBuilder\Statements\QuerySelect;
@@ -61,6 +62,14 @@ class QueryBuild
     public static function delete( $table )
     {
         return new QueryDelete( new QueryBuild(0), $table);
+    }
+
+    /**
+     * @return QueryCustom
+     */
+    public static function custom()
+    {
+        return new QueryCustom( new QueryBuild(1));
     }
 
 	/**
