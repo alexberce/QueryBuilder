@@ -155,7 +155,7 @@ class QueryStructure
 
     /**
      * @param string $elementName
-     * @param array $elementValue
+     * @param $elementValue
      * @throws QueryException
      */
     public function replaceElement( $elementName, $elementValue )

@@ -12,6 +12,7 @@ namespace Qpdb\QueryBuilder\Traits;
 use Qpdb\QueryBuilder\Dependencies\QueryException;
 use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
+use Qpdb\QueryBuilder\Statements\QuerySelect;
 
 trait InsertMultiple
 {
@@ -20,17 +21,50 @@ trait InsertMultiple
 
 
     /**
-     * @param string|array $fieldList
+     * @param $fieldsList
+     * @param array $rowsForInsert
      * @return $this
      */
-    public function setFieldsList( $fieldList )
+    public function fromArray( $fieldsList, array $rowsForInsert )
+    {
+        $this->setFieldsList( $fieldsList );
+
+        foreach ($rowsForInsert as $row)
+            $this->addSingleRow($row);
+
+        return $this;
+    }
+
+
+    /**
+     * @param $fieldsList
+     * @param QuerySelect $query
+     * @return $this
+     */
+    public function fromQuerySelect($fieldsList, QuerySelect $query )
+    {
+        $this->setFieldsList( $fieldsList );
+
+        foreach ($query->getBindParams() as $key => $value)
+            $this->queryStructure->setParams($key, $value);
+
+        $this->queryStructure->replaceElement(QueryStructure::SET_FIELDS, $query );
+
+        return $this;
+    }
+
+
+
+    /**
+     * @param string|array $fieldList
+     */
+    private function setFieldsList( $fieldList )
     {
         if(!is_array($fieldList))
             $fieldList = QueryHelper::explode($fieldList);
 
         $this->queryStructure->replaceElement(QueryStructure::FIELDS, $fieldList );
 
-        return $this;
     }
 
     /**
@@ -38,8 +72,9 @@ trait InsertMultiple
      * @return $this
      * @throws QueryException
      */
-    public function addRow(array $rowValues )
+    private function addSingleRow ( array $rowValues )
     {
+
         if($this->getNumberOfFields() !== count($rowValues))
             throw new QueryException('Ivalid number of fields.', QueryException::QUERY_ERROR_INVALID_FIELDS_COUNT);
 
@@ -51,18 +86,6 @@ trait InsertMultiple
         $pdoRowValuesString = '( ' . QueryHelper::implode($pdoRowValues,', ') . ' )';
 
         $this->queryStructure->setElement(QueryStructure::SET_FIELDS, $pdoRowValuesString );
-
-        return $this;
-    }
-
-    /**
-     * @param array $rows
-     * @return $this
-     */
-    public function addMultipleRows(array $rows )
-    {
-        foreach ($rows as $row)
-            $this->addRow($row);
 
         return $this;
     }
