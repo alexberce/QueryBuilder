@@ -103,6 +103,10 @@ trait InsertMultiple
         return $fields . ' VALUES ' . $values;
     }
 
+
+    /**
+     * @return string
+     */
     private function getSyntaxWithSelect()
     {
         $fields =  '( ' . QueryHelper::implode($this->queryStructure->getElement(QueryStructure::FIELDS), ', ') . ' )';
