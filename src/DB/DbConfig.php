@@ -80,15 +80,6 @@ class DbConfig
 
 
 	/**
-	 * @return mixed
-	 */
-	public function getTablePrefix()
-	{
-		return $this->dbConfig['prefix'];
-	}
-
-
-	/**
 	 * @return bool
 	 * @throws DbException
 	 */

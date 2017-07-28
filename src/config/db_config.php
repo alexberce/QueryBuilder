@@ -44,8 +44,6 @@ return [
 		]
 	],
 
-	'prefix' => 'vs_',
-
 	'db_log' => [
 		'enable_log_errors' => true,
 		'enable_log_query_duration' => true,

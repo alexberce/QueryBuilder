@@ -115,7 +115,7 @@ class DbService
 	 */
 	private function queryInit( $query, $parameters = [] )
 	{
-		$query = str_replace('::', DbConfig::getInstance()->getTablePrefix(), $query);
+		//$query = str_replace('::', DbConfig::getInstance()->getTablePrefix(), $query);
 		$this->pdo = DbConnect::getInstance()->getConnection(self::getQueryStatement($query));
 
 		try {

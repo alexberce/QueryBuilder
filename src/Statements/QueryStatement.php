@@ -8,6 +8,7 @@
 namespace Qpdb\QueryBuilder\Statements;
 
 
+use Qpdb\QueryBuilder\Dependencies\QueryConfig;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
 use Qpdb\QueryBuilder\Traits\Utilities;
@@ -37,26 +38,27 @@ abstract class QueryStatement
 	 */
 	protected $usedInstanceIds = [];
 
+    /**
+     * @var string
+     */
+	protected $tablePrefix;
+
 	/**
 	 * QueryStatement constructor.
 	 * @param QueryBuild $queryBuild
 	 * @param null $table
 	 */
-	public function __construct(QueryBuild $queryBuild, $table = null )
+	public function __construct( QueryBuild $queryBuild, $table = null )
 	{
-		$this->queryBuild = $queryBuild;
+
+		if(!is_null($table) && !is_a($table, QueryStatement::class))
+		    $table = str_ireplace('::', QueryConfig::getInstance()->getTablePrefix(), $table );
+
+        $this->queryBuild = $queryBuild;
 		$this->queryStructure = new QueryStructure();
 		$this->queryStructure->setElement( QueryStructure::TABLE, $table );
 		$this->queryStructure->setElement( QueryStructure::STATEMENT, $this->statement );
 		$this->queryStructure->setElement( QueryStructure::QUERY_TYPE, $this->queryBuild->getType());
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getQueryConfig()
-	{
-		return $this->queryStructure->getAllElements();
 	}
 
 	/**
