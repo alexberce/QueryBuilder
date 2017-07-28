@@ -12,6 +12,7 @@ use Qpdb\QueryBuilder\DB\DbService;
 use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\Distinct;
 use Qpdb\QueryBuilder\Traits\GroupBy;
 use Qpdb\QueryBuilder\Traits\Join;
 use Qpdb\QueryBuilder\Traits\Limit;
@@ -22,7 +23,7 @@ use Qpdb\QueryBuilder\Traits\Where;
 class QuerySelect extends QueryStatement implements QueryStatementInterface
 {
 
-	use Limit, Where, Replacement, OrderBy, GroupBy, Join;
+	use Limit, Distinct, Where, Replacement, OrderBy, GroupBy, Join;
 
 	/**
 	 * @var string
@@ -55,15 +56,6 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 				$this->queryStructure->setParams($key, $value);
 
 		}
-	}
-
-	/**
-	 * @return $this
-	 */
-	public function distinct()
-	{
-		$this->queryStructure->setElement(QueryStructure::DISTINCT, 1);
-		return $this;
 	}
 
 	/**
@@ -127,7 +119,7 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		/**
 		 * DISTINCT clause
 		 */
-		$syntax[] = $this->queryStructure->getElement(QueryStructure::DISTINCT) ? 'DISTINCT' : '';
+		$syntax[] = $this->getDistinctSyntax();
 
 		/**
 		 * FIELDS

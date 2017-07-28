@@ -17,6 +17,9 @@ use Qpdb\QueryBuilder\Statements\QueryUpdate;
 class QueryBuild
 {
 
+    /**
+     * @var integer
+     */
 	private $queryType;
 
 	/**
@@ -73,7 +76,7 @@ class QueryBuild
     }
 
 	/**
-	 * @return mixed
+	 * @return integer
 	 */
 	public function getType()
 	{

@@ -21,5 +21,6 @@ class QueryException extends \Exception
 	const QUERY_ERROR_DELETE_NOT_WHERE              = 70;
 
 	const QUERY_ERROR_INVALID_FIELDS_COUNT          = 91;
+	const QUERY_ERROR_INVALID_DISTINCT              = 92;
 
 }
