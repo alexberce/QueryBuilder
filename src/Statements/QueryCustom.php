@@ -11,7 +11,7 @@ namespace Qpdb\QueryBuilder\Statements;
 
 use Qpdb\QueryBuilder\QueryBuild;
 
-class QueryCustom extends QueryStatement
+class QueryCustom extends QueryStatement implements QueryStatementInterface
 {
 
     public function __construct(QueryBuild $queryBuild, $table = null)
@@ -19,4 +19,14 @@ class QueryCustom extends QueryStatement
         parent::__construct($queryBuild, $table);
     }
 
+
+    public function getSyntax()
+    {
+        // TODO: Implement getSyntax() method.
+    }
+
+    public function execute()
+    {
+        // TODO: Implement execute() method.
+    }
 }
