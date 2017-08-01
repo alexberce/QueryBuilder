@@ -13,8 +13,10 @@ use Qpdb\QueryBuilder\DB\DbService;
 use Qpdb\QueryBuilder\Dependencies\QueryException;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\DefaultPriority;
 use Qpdb\QueryBuilder\Traits\Ignore;
 use Qpdb\QueryBuilder\Traits\Limit;
+use Qpdb\QueryBuilder\Traits\LowPriority;
 use Qpdb\QueryBuilder\Traits\OrderBy;
 use Qpdb\QueryBuilder\Traits\Replacement;
 use Qpdb\QueryBuilder\Traits\SetFields;
@@ -24,7 +26,7 @@ use Qpdb\QueryBuilder\Traits\Where;
 class QueryDelete extends QueryStatement implements QueryStatementInterface
 {
 
-    use Limit, Where, Replacement, OrderBy, SetFields, Ignore, Utilities;
+    use Limit, Where, Replacement, OrderBy, SetFields, Ignore, DefaultPriority, LowPriority, Utilities;
 
     protected $statement = 'DELETE';
 
@@ -47,6 +49,11 @@ class QueryDelete extends QueryStatement implements QueryStatementInterface
          * UPDATE statement
          */
         $syntax[] = $this->statement;
+
+        /**
+         * PRIORITY
+         */
+        $syntax = $this->queryStructure->getElement(QueryStructure::PRIORITY);
 
         /**
          * TABLE update

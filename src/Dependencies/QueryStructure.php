@@ -15,6 +15,7 @@ class QueryStructure
 
 	const TABLE                 = 'table';
 	const STATEMENT             = 'statement';
+	const PRIORITY              = 'priority';
 	const FIELDS                = 'fields';
 	const SET_FIELDS            = 'set_fields';
 	const WHERE                 = 'where';
@@ -70,6 +71,7 @@ class QueryStructure
 		return [
 			self::TABLE                 => '',
 			self::STATEMENT             => '',
+			self::PRIORITY              => '',
 			self::FIELDS                => '*',
 			self::SET_FIELDS            => array(),
 			self::WHERE                 => array(),

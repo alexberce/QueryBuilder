@@ -12,15 +12,18 @@ namespace Qpdb\QueryBuilder\Statements;
 use Qpdb\QueryBuilder\DB\DbService;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\DefaultPriority;
+use Qpdb\QueryBuilder\Traits\HighPriority;
 use Qpdb\QueryBuilder\Traits\Ignore;
 use Qpdb\QueryBuilder\Traits\InsertMultiple;
+use Qpdb\QueryBuilder\Traits\LowPriority;
 use Qpdb\QueryBuilder\Traits\Replacement;
 use Qpdb\QueryBuilder\Traits\Utilities;
 
 class QueryInsertMultiple extends QueryStatement implements QueryStatementInterface
 {
 
-    use InsertMultiple, Replacement, Ignore, Utilities;
+    use InsertMultiple, Replacement, Ignore, DefaultPriority, LowPriority, HighPriority, Utilities;
 
     /**
      * @var string
@@ -47,6 +50,11 @@ class QueryInsertMultiple extends QueryStatement implements QueryStatementInterf
          * UPDATE statement
          */
         $syntax[] = $this->statement;
+
+        /**
+         * PRIORITY
+         */
+        $syntax = $this->queryStructure->getElement(QueryStructure::PRIORITY);
 
         /**
          * IGNORE clause

@@ -12,19 +12,22 @@ use Qpdb\QueryBuilder\DB\DbService;
 use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\DefaultPriority;
 use Qpdb\QueryBuilder\Traits\Distinct;
 use Qpdb\QueryBuilder\Traits\GroupBy;
 use Qpdb\QueryBuilder\Traits\Having;
+use Qpdb\QueryBuilder\Traits\HighPriority;
 use Qpdb\QueryBuilder\Traits\Join;
 use Qpdb\QueryBuilder\Traits\Limit;
 use Qpdb\QueryBuilder\Traits\OrderBy;
 use Qpdb\QueryBuilder\Traits\Replacement;
+use Qpdb\QueryBuilder\Traits\Utilities;
 use Qpdb\QueryBuilder\Traits\Where;
 
 class QuerySelect extends QueryStatement implements QueryStatementInterface
 {
 
-	use Limit, Distinct, Where, Having, Replacement, OrderBy, GroupBy, Join;
+	use Limit, Distinct, Where, Having, Replacement, OrderBy, GroupBy, Join, DefaultPriority, HighPriority, Utilities;
 
 	/**
 	 * @var string
@@ -116,6 +119,11 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		 * SELECT statement
 		 */
 		$syntax[] = $this->statement;
+
+        /**
+         * PRIORITY
+         */
+        $syntax = $this->queryStructure->getElement(QueryStructure::PRIORITY);
 
 		/**
 		 * DISTINCT clause
