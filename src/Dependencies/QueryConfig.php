@@ -35,6 +35,14 @@ class QueryConfig
         return $this->queryConfig['table_prefix'];
     }
 
+    /**
+     * @return string
+     */
+    public function getDriver()
+    {
+        return $this->queryConfig['driver'];
+    }
+
 
     /**
      * @return QueryConfig

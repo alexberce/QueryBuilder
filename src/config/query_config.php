@@ -8,6 +8,7 @@
 
 return [
 
-    'table_prefix' => 'vs_'
+    'table_prefix'  => 'vs_',
+    'driver'        => 'mysql'
 
 ];
