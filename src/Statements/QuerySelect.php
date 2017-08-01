@@ -14,6 +14,7 @@ use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
 use Qpdb\QueryBuilder\Traits\Distinct;
 use Qpdb\QueryBuilder\Traits\GroupBy;
+use Qpdb\QueryBuilder\Traits\Having;
 use Qpdb\QueryBuilder\Traits\Join;
 use Qpdb\QueryBuilder\Traits\Limit;
 use Qpdb\QueryBuilder\Traits\OrderBy;
@@ -23,7 +24,7 @@ use Qpdb\QueryBuilder\Traits\Where;
 class QuerySelect extends QueryStatement implements QueryStatementInterface
 {
 
-	use Limit, Distinct, Where, Replacement, OrderBy, GroupBy, Join;
+	use Limit, Distinct, Where, Having, Replacement, OrderBy, GroupBy, Join;
 
 	/**
 	 * @var string
@@ -145,6 +146,11 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		 * GROUP BY clause
 		 */
 		$syntax[] = $this->getGroupBySyntax();
+
+        /**
+         * HAVING clause
+         */
+        $syntax[] = $this->getHavingSyntax();
 
 		/**
 		 * ORDER BY clause

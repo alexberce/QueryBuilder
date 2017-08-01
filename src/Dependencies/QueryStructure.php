@@ -18,7 +18,9 @@ class QueryStructure
 	const FIELDS                = 'fields';
 	const SET_FIELDS            = 'set_fields';
 	const WHERE                 = 'where';
+	const HAVING                = 'having';
 	const WHERE_INVERT          = 'where_invert';
+	const HAVING_INVERT         = 'having_invert';
 	const LIMIT                 = 'limit_rows';
 	const ORDER_BY              = 'order_by';
 	const GROUP_BY              = 'group_by';
@@ -71,7 +73,9 @@ class QueryStructure
 			self::FIELDS                => '*',
 			self::SET_FIELDS            => array(),
 			self::WHERE                 => array(),
+            self::HAVING                => array(),
 			self::WHERE_INVERT          => 0,
+			self::HAVING_INVERT         => 0,
 			self::LIMIT                 => 0,
 			self::ORDER_BY              => array(),
 			self::GROUP_BY              => array(),

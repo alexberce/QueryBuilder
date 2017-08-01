@@ -84,7 +84,7 @@ class QueryDelete extends QueryStatement implements QueryStatementInterface
             $this->queryStructure->getElement((QueryStructure::WHERE_TRIGGER)) &&
             !count($this->queryStructure->getElement(QueryStructure::WHERE))
         )
-            throw new QueryException('Where clause is required for this statement!', QueryException::QUERY_ERROR_DELETE_NOT_WHERE);
+            throw new QueryException('Where or Having clause is required for this statement!', QueryException::QUERY_ERROR_DELETE_NOT_FILTER);
 
         return DbService::getInstance()->query(
             $this->getSyntax(),
