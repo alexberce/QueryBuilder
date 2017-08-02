@@ -182,7 +182,6 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	 */
 	public function execute()
 	{
-		//echo "<pre>" . print_r(debug_backtrace(),1)."</pre>";
 
 		switch ( true )
 		{
