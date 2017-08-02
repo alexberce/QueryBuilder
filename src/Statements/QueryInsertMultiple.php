@@ -54,7 +54,7 @@ class QueryInsertMultiple extends QueryStatement implements QueryStatementInterf
         /**
          * PRIORITY
          */
-        $syntax = $this->queryStructure->getElement(QueryStructure::PRIORITY);
+        $syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
 
         /**
          * IGNORE clause

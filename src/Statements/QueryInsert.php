@@ -61,7 +61,7 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
         /**
          * PRIORITY
          */
-        $syntax = $this->queryStructure->getElement(QueryStructure::PRIORITY);
+        $syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
 
         /**
          * IGNORE clause
