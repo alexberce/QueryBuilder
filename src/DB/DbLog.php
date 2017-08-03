@@ -33,6 +33,19 @@ class DbLog
 	}
 
 
+	public function writeQueryDuration( $query, $duration )
+    {
+        $backtrace = end(debug_backtrace());
+        $location = $backtrace['file']." Line: ".$backtrace['line'];
+
+        $this->path = DbConfig::getInstance()->getLogPathQueryDuration();
+        $message = "Duration: " . round($duration, 5) . "\r\n";
+        $message .= "Location: $location\r\n";
+        $message .= "Query: $query";
+        $this->write($message);
+    }
+
+
 	public function write( $message )
 	{
 
@@ -40,16 +53,21 @@ class DbLog
 		$date->setTimezone($this->dateTimeZone);
 
 		$log = $this->path . $date->format('Y-m-d').".txt";
+		$time = $date->format('H:i:s');
+
+		$messageFormat = "[$time]\r\n$message\r\n\r\n";
+
+//        $backtrace = end(debug_backtrace());
+//        echo "<pre>" . print_r($backtrace, 1) . "</pre>";
 
 		if(is_dir($this->path)) {
 			if(!file_exists($log)) {
 				$fh  = fopen($log, 'a+') or die("Fatal Error !");
-				$logcontent = "Time : " . $date->format('H:i:s')."\r\n" . $message ."\r\n";
-				fwrite($fh, $logcontent);
+				fwrite($fh, $messageFormat);
 				fclose($fh);
 			}
 			else {
-				$this->edit($log,$date, $message);
+				$this->edit($log,$date, $messageFormat);
 			}
 		}
 		else {
@@ -61,16 +79,14 @@ class DbLog
 	}
 
 
-	private function getLogFilePath( \DateTime $date )
+    /**
+     * @param string $log
+     * @param \DateTime $date
+     * @param  string$message
+     */
+    private function edit($log, \DateTime $date, $message )
 	{
-		$logFile = $_SERVER['DOCUMENT_ROOT'];
-		$logFile .= DbConfig::getInstance()->getLogConfig()['/tmp/db/errors/'];
-	}
-
-
-	private function edit( $log, $date, $message )
-	{
-
+        file_put_contents($log, $message, FILE_APPEND);
 	}
 
 

@@ -47,8 +47,8 @@ return [
 	'db_log' => [
 		'enable_log_errors' => true,
 		'enable_log_query_duration' => true,
-		'log_path_errors' => $_SERVER['DOCUMENT_ROOT'] . '/tmp/db_errors',
-		'log_path_query_duration' => $_SERVER['DOCUMENT_ROOT'] . '/tmp/db_query_duration',
+		'log_path_errors' => $_SERVER['DOCUMENT_ROOT'] . '/tmp/db_errors/',
+		'log_path_query_duration' => $_SERVER['DOCUMENT_ROOT'] . '/tmp/db_query_duration/',
 	]
 
 ];

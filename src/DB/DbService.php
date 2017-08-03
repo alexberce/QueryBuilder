@@ -8,6 +8,8 @@
 namespace Qpdb\QueryBuilder\DB;
 
 
+use MongoDB\Driver\Query;
+
 class DbService
 {
 
@@ -115,8 +117,8 @@ class DbService
 	 */
 	private function queryInit( $query, $parameters = [] )
 	{
-		//$query = str_replace('::', DbConfig::getInstance()->getTablePrefix(), $query);
 		$this->pdo = DbConnect::getInstance()->getConnection(self::getQueryStatement($query));
+		$startQueryTime = microtime(true);
 
 		try {
 
@@ -146,6 +148,12 @@ class DbService
 			}
 
 			$this->sQuery->execute();
+
+			if(DbConfig::getInstance()->isEnableLogQueryDuration()){
+			    $duration = microtime(true) - $startQueryTime;
+			    DbLog::getInstance()->writeQueryDuration($query, $duration);
+            }
+
 		}
 		catch (\PDOException $e) {
 			# Write into log and display Exception
