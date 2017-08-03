@@ -8,7 +8,6 @@
 namespace Qpdb\QueryBuilder\DB;
 
 
-use MongoDB\Driver\Query;
 
 class DbService
 {
