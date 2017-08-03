@@ -33,6 +33,26 @@ class DbConfig
 	 */
 	private $slaveDataConnect;
 
+    /**
+     * @var bool
+     */
+	private $enableLogErrors = false;
+
+    /**
+     * @var bool
+     */
+	private $enableLogQueryDuration = false;
+
+    /**
+     * @var string
+     */
+	private $logPathErrors;
+
+    /**
+     * @var string
+     */
+	private $logPathQueryDuration;
+
 
 	/**
 	 * DbConfig constructor.
@@ -44,6 +64,8 @@ class DbConfig
 		$this->replicationEnable = $this->dbConfig['replicationEnable'];
 		$this->readMasterDataConnect();
 		$this->readSlaveDataConnect();
+		$this->configLogger();
+
 	}
 
 	/**
@@ -78,6 +100,48 @@ class DbConfig
 		return $this->dbConfig['db_log'];
 	}
 
+    /**
+     * @return bool
+     */
+    public function isEnableLogErrors()
+    {
+        return $this->enableLogErrors;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnableLogQueryDuration()
+    {
+        return $this->enableLogQueryDuration;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogPathErrors()
+    {
+        return $this->logPathErrors;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogPathQueryDuration()
+    {
+        return $this->logPathQueryDuration;
+    }
+
+
+
+    private function configLogger()
+    {
+        $this->enableLogErrors = $this->dbConfig['db_log']['enable_log_errors'];
+        $this->enableLogQueryDuration = $this->dbConfig['db_log']['enable_log_query_duration'];
+        $this->logPathErrors = $this->dbConfig['db_log']['log_path_errors'];
+        $this->logPathQueryDuration = $this->dbConfig['db_log']['log_path_query_duration'];
+
+    }
 
 	/**
 	 * @return bool
