@@ -39,7 +39,7 @@ class DbConfig
 	 */
 	private function __construct()
 	{
-		$configPath = __DIR__ . '/../config/db_config.php';
+		$configPath = __DIR__ . '/../../config/db_config.php';
 		$this->dbConfig = require $configPath;
 		$this->replicationEnable = $this->dbConfig['replicationEnable'];
 		$this->readMasterDataConnect();

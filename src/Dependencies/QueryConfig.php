@@ -22,7 +22,7 @@ class QueryConfig
 
     private function __construct()
     {
-        $configPath = __DIR__ . '/../config/query_config.php';
+        $configPath = __DIR__ . '/../../config/query_config.php';
         $this->queryConfig = require $configPath;
     }
 
