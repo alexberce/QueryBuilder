@@ -17,70 +17,70 @@ use Qpdb\QueryBuilder\Statements\QueryUpdate;
 class QueryBuild
 {
 
-    /**
-     * @var integer
-     */
-    private $queryType;
+	/**
+	 * @var integer
+	 */
+	private $queryType;
 
-    /**
-     * QueryBuild constructor.
-     * @param $queryType
-     */
-    protected function __construct($queryType)
-    {
-        $this->queryType = $queryType;
-    }
+	/**
+	 * QueryBuild constructor.
+	 * @param $queryType
+	 */
+	protected function __construct($queryType)
+	{
+		$this->queryType = $queryType;
+	}
 
-    /**
-     * @param $table
-     * @return QuerySelect
-     */
-    public static function select($table)
-    {
-        return new QuerySelect(new QueryBuild(0), $table);
-    }
+	/**
+	 * @param $table
+	 * @return QuerySelect
+	 */
+	public static function select($table)
+	{
+		return new QuerySelect(new QueryBuild(0), $table);
+	}
 
-    /**
-     * @param $table
-     * @return QueryUpdate
-     */
-    public static function update($table)
-    {
-        return new QueryUpdate(new QueryBuild(0), $table);
-    }
+	/**
+	 * @param $table
+	 * @return QueryUpdate
+	 */
+	public static function update($table)
+	{
+		return new QueryUpdate(new QueryBuild(0), $table);
+	}
 
-    /**
-     * @param $table
-     * @return QueryInsert
-     */
-    public static function insert($table)
-    {
-        return new QueryInsert(new QueryBuild(0), $table);
-    }
+	/**
+	 * @param $table
+	 * @return QueryInsert
+	 */
+	public static function insert($table)
+	{
+		return new QueryInsert(new QueryBuild(0), $table);
+	}
 
-    /**
-     * @param $table
-     * @return QueryDelete
-     */
-    public static function delete($table)
-    {
-        return new QueryDelete(new QueryBuild(0), $table);
-    }
+	/**
+	 * @param $table
+	 * @return QueryDelete
+	 */
+	public static function delete($table)
+	{
+		return new QueryDelete(new QueryBuild(0), $table);
+	}
 
-    /**
-     * @return QueryCustom
-     */
-    public static function custom()
-    {
-        return new QueryCustom(new QueryBuild(1));
-    }
+	/**
+	 * @return QueryCustom
+	 */
+	public static function custom()
+	{
+		return new QueryCustom(new QueryBuild(1));
+	}
 
-    /**
-     * @return integer
-     */
-    public function getType()
-    {
-        return $this->queryType;
-    }
+	/**
+	 * @return integer
+	 */
+	public function getType()
+	{
+		return $this->queryType;
+	}
 
 }
