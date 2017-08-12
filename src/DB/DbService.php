@@ -8,7 +8,6 @@
 namespace Qpdb\QueryBuilder\DB;
 
 
-
 class DbService
 {
 
@@ -22,9 +21,12 @@ class DbService
 	const QUERY_TYPE_EMPTY = 'EMPTY';
 	const QUERY_TYPE_OTHER = 'OTHER';
 
-    /**
-     * @var DbService
-     */
+	const ON_ERROR_THROW_EXCEPTION = 1;
+	const ON_ERROR_RETURN_ERROR = 2;
+
+	/**
+	 * @var DbService
+	 */
 	private static $instance;
 
 	/**
@@ -49,7 +51,7 @@ class DbService
 	 * @param int $fetchMode
 	 * @return array|int|null
 	 */
-	public function query( $query, $params = null, $fetchMode = \PDO::FETCH_ASSOC )
+	public function query($query, $params = null, $fetchMode = \PDO::FETCH_ASSOC)
 	{
 
 		$query = trim(str_replace("\r", " ", $query));
@@ -59,18 +61,17 @@ class DbService
 
 		if ($statement === self::QUERY_TYPE_SELECT ||
 			$statement === self::QUERY_TYPE_SHOW ||
-			$statement === self::QUERY_TYPE_DESC )
-		{
+			$statement === self::QUERY_TYPE_DESC
+		) {
 			return $this->sQuery->fetchAll($fetchMode);
 		}
 		elseif ($statement === self::QUERY_TYPE_INSERT ||
 			$statement === self::QUERY_TYPE_UPDATE ||
-			$statement === self::QUERY_TYPE_DELETE )
-		{
+			$statement === self::QUERY_TYPE_DELETE
+		) {
 			return $this->sQuery->rowCount();
 		}
-		else
-		{
+		else {
 			return NULL;
 		}
 	}
@@ -114,7 +115,7 @@ class DbService
 	 * @param string $query
 	 * @param array $parameters
 	 */
-	private function queryInit( $query, $parameters = [] )
+	private function queryInit($query, $parameters = [])
 	{
 		$this->pdo = DbConnect::getInstance()->getConnection(self::getQueryStatement($query));
 		$startQueryTime = microtime(true);
@@ -131,15 +132,18 @@ class DbService
 			 */
 			$this->bindMore($parameters);
 
-			if ( count($this->parameters) ) {
+			if (count($this->parameters)) {
 				foreach ($this->parameters as $param => $value) {
-					if(is_int($value[1])) {
+					if (is_int($value[1])) {
 						$type = \PDO::PARAM_INT;
-					} else if(is_bool($value[1])) {
+					}
+					elseif (is_bool($value[1])) {
 						$type = \PDO::PARAM_BOOL;
-					} else if(is_null($value[1])) {
+					}
+					elseif (is_null($value[1])) {
 						$type = \PDO::PARAM_NULL;
-					} else {
+					}
+					else {
 						$type = \PDO::PARAM_STR;
 					}
 					$this->sQuery->bindValue($value[0], $value[1], $type);
@@ -148,29 +152,28 @@ class DbService
 
 			$this->sQuery->execute();
 
-			if(DbConfig::getInstance()->isEnableLogQueryDuration()){
-			    $duration = microtime(true) - $startQueryTime;
-			    DbLog::getInstance()->writeQueryDuration($query, $duration);
-            }
+			if (DbConfig::getInstance()->isEnableLogQueryDuration()) {
+				$duration = microtime(true) - $startQueryTime;
+				DbLog::getInstance()->writeQueryDuration($query, $duration);
+			}
 
-		}
-		catch (\PDOException $e) {
+		} catch (\PDOException $e) {
 			# Write into log and display Exception
 			//echo $this->ExceptionLog($e->getMessage(), $query);
 			echo $e->getMessage();
 			die();
 		}
 
-        /**
-         * Reset the parameters
-         */
+		/**
+		 * Reset the parameters
+		 */
 		$this->parameters = array();
 	}
 
 
 	public function bindMore($parray)
 	{
-		if ( !count($this->parameters)  && is_array($parray) ) {
+		if (!count($this->parameters) && is_array($parray)) {
 			$columns = array_keys($parray);
 			foreach ($columns as $i => &$column) {
 				$this->bind($column, $parray[$column]);
@@ -180,7 +183,7 @@ class DbService
 
 	public function bind($para, $value)
 	{
-		$this->parameters[sizeof($this->parameters)] = [":" . $para , $value];
+		$this->parameters[sizeof($this->parameters)] = [":" . $para, $value];
 	}
 
 
@@ -223,7 +226,8 @@ class DbService
 					return self::QUERY_TYPE_OTHER;
 					break;
 			}
-		} else {
+		}
+		else {
 			return self::QUERY_TYPE_OTHER;
 		}
 	}
@@ -232,7 +236,8 @@ class DbService
 	/**
 	 * @return DbService
 	 */
-	public static function getInstance() {
+	public static function getInstance()
+	{
 		if (null === static::$instance) {
 			static::$instance = new static();
 		}

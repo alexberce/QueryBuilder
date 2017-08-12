@@ -14,7 +14,6 @@ class DbLog
 	private static $instance;
 
 
-
 	/**
 	 * @var string
 	 */
@@ -26,74 +25,75 @@ class DbLog
 	private $dateTimeZone;
 
 
-
+	/**
+	 * DbLog constructor.
+	 */
 	private function __construct()
 	{
 		$this->dateTimeZone = new \DateTimeZone('Europe/Bucharest');
 	}
 
 
-	public function writeQueryDuration( $query, $duration )
-    {
-        $backtrace = end(debug_backtrace());
-        $location = $backtrace['file']." Line: ".$backtrace['line'];
+	/**
+	 * @param $query
+	 * @param $duration
+	 */
+	public function writeQueryDuration($query, $duration)
+	{
+		$backtrace = end(debug_backtrace());
+		$location = $backtrace['file'] . " Line: " . $backtrace['line'];
 
-        $this->path = DbConfig::getInstance()->getLogPathQueryDuration();
-        $message = "Duration: " . round($duration, 5) . "\r\n";
-        $message .= "Location: $location\r\n";
-        $message .= "Query: $query";
-        $this->write($message);
-    }
+		$this->path = DbConfig::getInstance()->getLogPathQueryDuration();
+		$message = "Duration: " . round($duration, 5) . "\r\n";
+		$message .= "Location: $location\r\n";
+		$message .= "Query: $query";
+		$this->write($message);
+	}
 
 
-	public function write( $message )
+	public function write($message)
 	{
 
 		$date = new \DateTime();
 		$date->setTimezone($this->dateTimeZone);
 
-		$log = $this->path . $date->format('Y-m-d').".txt";
+		$log = $this->path . $date->format('Y-m-d') . ".txt";
 		$time = $date->format('H:i:s');
 
 		$messageFormat = "[$time]\r\n$message\r\n\r\n";
 
-//        $backtrace = end(debug_backtrace());
-//        echo "<pre>" . print_r($backtrace, 1) . "</pre>";
-
-		if(is_dir($this->path)) {
-			if(!file_exists($log)) {
-				$fh  = fopen($log, 'a+') or die("Fatal Error !");
+		if (is_dir($this->path)) {
+			if (!file_exists($log)) {
+				$fh = fopen($log, 'a+') or die("Fatal Error !");
 				fwrite($fh, $messageFormat);
 				fclose($fh);
+			} else {
+				$this->edit($log, $date, $messageFormat);
 			}
-			else {
-				$this->edit($log,$date, $messageFormat);
-			}
-		}
-		else {
-			if(mkdir($this->path,0777) === true)
-			{
+		} else {
+			if (mkdir($this->path, 0777) === true) {
 				$this->write($message);
 			}
 		}
 	}
 
 
-    /**
-     * @param string $log
-     * @param \DateTime $date
-     * @param  string$message
-     */
-    private function edit($log, \DateTime $date, $message )
+	/**
+	 * @param string $log
+	 * @param \DateTime $date
+	 * @param  string $message
+	 */
+	private function edit($log, \DateTime $date, $message)
 	{
-        file_put_contents($log, $message, FILE_APPEND);
+		file_put_contents($log, $message, FILE_APPEND);
 	}
 
 
 	/**
 	 * @return DbLog
 	 */
-	public static function getInstance() {
+	public static function getInstance()
+	{
 		if (null === static::$instance) {
 			static::$instance = new static();
 		}
