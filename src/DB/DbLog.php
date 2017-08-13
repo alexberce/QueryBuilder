@@ -43,7 +43,7 @@ class DbLog
 		$backtrace = end(debug_backtrace());
 		$location = $backtrace['file'] . " Line: " . $backtrace['line'];
 
-		$this->path = DbConfig::getInstance()->getLogPathQueryDuration();
+		$this->path = DbConfig::getInstance()->getLogPathQueryDuration(); //my comments
 		$message = "Duration: " . round($duration, 5) . "\r\n";
 		$message .= "Location: $location\r\n";
 		$message .= "Query: $query";

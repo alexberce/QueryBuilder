@@ -40,19 +40,19 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	 * @param QueryBuild $queryBuild
 	 * @param null $table
 	 */
-	public function __construct( QueryBuild $queryBuild, $table = null )
+	public function __construct(QueryBuild $queryBuild, $table = null)
 	{
 		parent::__construct($queryBuild, $table);
 
-		if(is_a( $table, QuerySelect::class) ) {
+		if (is_a($table, QuerySelect::class)) {
 
 			/**
 			 * @var QuerySelect $table
 			 */
-			$tableName = '( ' .$table->getSyntax() . ' )';
+			$tableName = '( ' . $table->getSyntax() . ' )';
 			$this->queryStructure->setElement(QueryStructure::TABLE, $tableName);
 
-			if($this->queryStructure->getElement(QueryStructure::REPLACEMENT))
+			if ($this->queryStructure->getElement(QueryStructure::REPLACEMENT))
 				$table->withReplacement();
 
 			$tableSelectParams = $table->getBindParams();
@@ -66,7 +66,7 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	 * @param $fields
 	 * @return $this
 	 */
-	public function fields( $fields )
+	public function fields($fields)
 	{
 		$this->queryStructure->setElement(QueryStructure::FIELDS, $fields);
 		return $this;
@@ -104,13 +104,13 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	public function getSyntax()
 	{
 
-		if( $this->queryStructure->getElement( QueryStructure::COUNT ) ) {
+		if ($this->queryStructure->getElement(QueryStructure::COUNT)) {
 			$this->queryStructure->setElement(QueryStructure::FIELDS, 'COUNT(*)');
 			$this->queryStructure->setElement(QueryStructure::LIMIT, 1);
 			$this->queryStructure->setElement(QueryStructure::DISTINCT, 0); //???
 		}
 
-		if($this->queryStructure->getElement(QueryStructure::FIRST))
+		if ($this->queryStructure->getElement(QueryStructure::FIRST))
 			$this->queryStructure->setElement(QueryStructure::LIMIT, 1);
 
 		$syntax = array();
@@ -120,10 +120,10 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		 */
 		$syntax[] = $this->statement;
 
-        /**
-         * PRIORITY
-         */
-        $syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
+		/**
+		 * PRIORITY
+		 */
+		$syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
 
 		/**
 		 * DISTINCT clause
@@ -155,10 +155,10 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		 */
 		$syntax[] = $this->getGroupBySyntax();
 
-        /**
-         * HAVING clause
-         */
-        $syntax[] = $this->getHavingSyntax();
+		/**
+		 * HAVING clause
+		 */
+		$syntax[] = $this->getHavingSyntax();
 
 		/**
 		 * ORDER BY clause
@@ -170,9 +170,9 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		 */
 		$syntax[] = $this->getLimitSyntax();
 
-		$syntax = implode(' ',$syntax);
+		$syntax = implode(' ', $syntax);
 
-		return $this->getSyntaxReplace( $syntax );
+		return $this->getSyntaxReplace($syntax);
 
 	}
 
@@ -183,13 +183,12 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	public function execute()
 	{
 
-		switch ( true )
-		{
+		switch (true) {
 			case $this->queryStructure->getElement(QueryStructure::COUNT):
 				return DbService::getInstance()->single($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
 				break;
 			case $this->queryStructure->getElement(QueryStructure::FIRST):
-				if($this->queryStructure->getElement(QueryStructure::COLUMN))
+				if ($this->queryStructure->getElement(QueryStructure::COLUMN))
 					return DbService::getInstance()->single($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
 				return DbService::getInstance()->row($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
 				break;
