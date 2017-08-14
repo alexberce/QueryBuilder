@@ -11,9 +11,8 @@ namespace Qpdb\QueryBuilder\Statements;
 interface QueryStatementInterface
 {
 
-    const REPALCEMENT_NONE      = 0;
-    const REPALCEMENT_VALUES     = 1;
-    const REPALCEMENT_MASK      = 2;
+	const REPLACEMENT_NONE      = 0;
+	const REPLACEMENT_VALUES    = 1;
 
 	public function getSyntax();
 

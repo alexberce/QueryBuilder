@@ -18,48 +18,48 @@ trait Replacement
 
 	use Objects;
 
-    /**
-     * @return $this
-     */
-    public function withReplacement()
+	/**
+	 * @return $this
+	 */
+	public function withReplacement()
 	{
-        $this->queryStructure->setElement(QueryStructure::REPLACEMENT, QueryStatementInterface::REPALCEMENT_VALUES);
+		$this->queryStructure->setElement(QueryStructure::REPLACEMENT, QueryStatementInterface::REPLACEMENT_VALUES);
 		return $this;
 	}
 
 
-    /**
-     * @param $syntax
-     * @param int $withReplacement
-     * @return mixed|string
-     */
-    private function getSyntaxReplace($syntax, $withReplacement = QueryStatementInterface::REPALCEMENT_NONE )
-    {
-        $syntax = QueryHelper::clearMultipleSpaces($syntax);
+	/**
+	 * @param $syntax
+	 * @param int $withReplacement
+	 * @return mixed|string
+	 */
+	private function getSyntaxReplace($syntax, $withReplacement = QueryStatementInterface::REPLACEMENT_NONE)
+	{
+		$syntax = QueryHelper::clearMultipleSpaces($syntax);
 
-        if( !$this->queryStructure->getElement(QueryStructure::REPLACEMENT) && !$withReplacement )
-            return $syntax;
+		if (!$this->queryStructure->getElement(QueryStructure::REPLACEMENT) && !$withReplacement)
+			return $syntax;
 
-        return $this->replaceValues( $syntax );
-    }
+		return $this->replaceValues($syntax);
+	}
 
-    /**
-     * @param $syntax
-     * @return string
-     */
-    private function replaceValues( $syntax )
-    {
-        $bindParams = $this->queryStructure->getElement(QueryStructure::BIND_PARAMS);
-        $search = array();
-        $replace = array();
-        foreach ($bindParams as $key => $value) {
-            $search[] = ':'.$key;
-            $replace[] = DbConnect::getInstance()->quote($value);
-        }
-        $syntax = str_ireplace($search, $replace, $syntax);
+	/**
+	 * @param $syntax
+	 * @return string
+	 */
+	private function replaceValues($syntax)
+	{
+		$bindParams = $this->queryStructure->getElement(QueryStructure::BIND_PARAMS);
+		$search = array();
+		$replace = array();
+		foreach ($bindParams as $key => $value) {
+			$search[] = ':' . $key;
+			$replace[] = DbConnect::getInstance()->quote($value);
+		}
+		$syntax = str_ireplace($search, $replace, $syntax);
 
-        return $syntax;
+		return $syntax;
 
-    }
+	}
 
 }
