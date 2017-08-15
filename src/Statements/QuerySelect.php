@@ -21,13 +21,14 @@ use Qpdb\QueryBuilder\Traits\Join;
 use Qpdb\QueryBuilder\Traits\Limit;
 use Qpdb\QueryBuilder\Traits\OrderBy;
 use Qpdb\QueryBuilder\Traits\Replacement;
+use Qpdb\QueryBuilder\Traits\SelectFields;
 use Qpdb\QueryBuilder\Traits\Utilities;
 use Qpdb\QueryBuilder\Traits\Where;
 
 class QuerySelect extends QueryStatement implements QueryStatementInterface
 {
 
-	use Limit, Distinct, Where, Having, Replacement, OrderBy, GroupBy, Join, DefaultPriority, HighPriority, Utilities;
+	use SelectFields, Limit, Distinct, Where, Having, Replacement, OrderBy, GroupBy, Join, DefaultPriority, HighPriority, Utilities;
 
 	/**
 	 * @var string
@@ -60,16 +61,6 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 				$this->queryStructure->setParams($key, $value);
 
 		}
-	}
-
-	/**
-	 * @param $fields
-	 * @return $this
-	 */
-	public function fields($fields)
-	{
-		$this->queryStructure->setElement(QueryStructure::FIELDS, $fields);
-		return $this;
 	}
 
 	/**
