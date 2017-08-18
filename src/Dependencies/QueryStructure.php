@@ -41,6 +41,19 @@ class QueryStructure
 	const WHERE_TRIGGER         = 'where_trigger';
 	const INSTANCE              = 'instance';
 
+	/**
+	 *  Elements type
+	 */
+
+	const ELEMENT_TYPE_BOOLEAN      = 'boolean';
+	const ELEMENT_TYPE_INTEGER      = 'integer';
+	const ELEMENT_TYPE_DOUBLE       = 'double';
+	const ELEMENT_TYPE_STRING       = 'string';
+	const ELEMENT_TYPE_ARRAY        = 'array';
+	const ELEMENT_TYPE_OBJECT       = 'object';
+	const ELEMENT_TYPE_RESOURCE     = 'resource';
+	const ELEMENT_TYPE_NULL         = 'NULL';
+	const ELEMENT_TYPE_UNKNOWN      = 'unknown type';
 
 	/**
 	 * @var array
@@ -51,6 +64,11 @@ class QueryStructure
 	 * @var array
 	 */
 	private $syntaxEL = array();
+
+	/**
+	 * @var array
+	 */
+	private $typeEL = array();
 
 	/**
 	 * @var int
@@ -64,6 +82,12 @@ class QueryStructure
 	public function __construct()
 	{
 		$this->syntaxEL = $this->init();
+
+		foreach ($this->syntaxEL as $name => $value)
+			$this->typeEL[$name] = gettype($value);
+
+		echo "<pre>" . print_r($this->typeEL,1) . "</pre>";
+
 	}
 
 	private function init()
@@ -151,7 +175,7 @@ class QueryStructure
 		if( $name == self::TABLE && is_a( $value, QueryStatement::class) )
 			return true;
 
-		if(is_array($this->syntaxEL[$name]))
+		if( $this->typeEL[$name] === self::ELEMENT_TYPE_ARRAY )
 		    $this->syntaxEL[$name][] = $value;
 		else
 		    $this->syntaxEL[$name] = $value;

@@ -23,7 +23,7 @@ trait SelectFields
 	public function fields( $fields )
 	{
 		if(is_array($fields))
-			$fields = QueryHelper::implode($fields, ',');
+			$fields = QueryHelper::implode( $fields, ', ' );
 
 		$this->queryStructure->setElement(QueryStructure::FIELDS, $fields);
 		return $this;
