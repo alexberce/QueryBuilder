@@ -24,5 +24,7 @@ class QueryException extends \Exception
 	const QUERY_ERROR_INVALID_DISTINCT              = 92;
 	const QUERY_ERROR_HAVING_INVALID_PARAM_ARRAY    = 93;
 	const QUERY_ERROR_HAVING_INVALID_OPERATOR       = 94;
+	const QUERY_ERROR_SELECT_INVALID_FIELD          = 95;
+	const QUERY_ERROR_SELECT_INVALID_PARAM          = 96;
 
 }

@@ -86,8 +86,6 @@ class QueryStructure
 		foreach ($this->syntaxEL as $name => $value)
 			$this->typeEL[$name] = gettype($value);
 
-		echo "<pre>" . print_r($this->typeEL,1) . "</pre>";
-
 	}
 
 	private function init()
