@@ -8,7 +8,8 @@
 
 return [
 
-    'table_prefix'  => 'vs_',
-    'driver'        => 'mysql'
+	'use_table_prefix' => 1,
+	'table_prefix' => 'vs_',
+	'driver' => 'pdo'
 
 ];

@@ -8,15 +8,16 @@
 namespace Qpdb\QueryBuilder\Statements;
 
 
-use Qpdb\QueryBuilder\Dependencies\QueryConfig;
+use Qpdb\QueryBuilder\Dependencies\QueryException;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\TableValidation;
 use Qpdb\QueryBuilder\Traits\Utilities;
 
 abstract class QueryStatement
 {
 
-	use Utilities;
+	use Utilities, TableValidation;
 
 	/**
 	 * @var string
@@ -38,27 +39,29 @@ abstract class QueryStatement
 	 */
 	protected $usedInstanceIds = [];
 
-    /**
-     * @var string
-     */
+	/**
+	 * @var string
+	 */
 	protected $tablePrefix;
+
 
 	/**
 	 * QueryStatement constructor.
 	 * @param QueryBuild $queryBuild
-	 * @param null $table
+	 * @param string $table
+	 * @throws QueryException
 	 */
-	public function __construct( QueryBuild $queryBuild, $table = null )
+	public function __construct(QueryBuild $queryBuild, $table = '')
 	{
 
-		if(!is_null($table) && !is_a($table, QueryStatement::class))
-		    $table = str_ireplace('::', QueryConfig::getInstance()->getTablePrefix(), $table );
+		$table = $this->validateTable($table);
 
-        $this->queryBuild = $queryBuild;
+		$this->queryBuild = $queryBuild;
 		$this->queryStructure = new QueryStructure();
-		$this->queryStructure->setElement( QueryStructure::TABLE, $table );
-		$this->queryStructure->setElement( QueryStructure::STATEMENT, $this->statement );
-		$this->queryStructure->setElement( QueryStructure::QUERY_TYPE, $this->queryBuild->getType());
+		$this->queryStructure->setElement(QueryStructure::TABLE, $table);
+		$this->queryStructure->setElement(QueryStructure::STATEMENT, $this->statement);
+		$this->queryStructure->setElement(QueryStructure::QUERY_TYPE, $this->queryBuild->getType());
+
 	}
 
 	/**

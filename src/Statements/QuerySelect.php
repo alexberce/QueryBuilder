@@ -39,9 +39,9 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	/**
 	 * QuerySelect constructor.
 	 * @param QueryBuild $queryBuild
-	 * @param null $table
+	 * @param string|QueryStatement $table
 	 */
-	public function __construct(QueryBuild $queryBuild, $table = null)
+	public function __construct( QueryBuild $queryBuild, $table )
 	{
 		parent::__construct($queryBuild, $table);
 

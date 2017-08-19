@@ -26,5 +26,6 @@ class QueryException extends \Exception
 	const QUERY_ERROR_HAVING_INVALID_OPERATOR       = 94;
 	const QUERY_ERROR_SELECT_INVALID_FIELD          = 95;
 	const QUERY_ERROR_SELECT_INVALID_PARAM          = 96;
+	const QUERY_ERROR_INVALID_TABLE_STATEMENT       = 97;
 
 }
