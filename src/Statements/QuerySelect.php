@@ -33,7 +33,7 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	/**
 	 * @var string
 	 */
-	protected $statement = 'SELECT';
+	protected $statement = self::QUERY_STATEMENT_SELECT;
 
 
 	/**
@@ -41,7 +41,7 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	 * @param QueryBuild $queryBuild
 	 * @param string|QueryStatement $table
 	 */
-	public function __construct( QueryBuild $queryBuild, $table )
+	public function __construct(QueryBuild $queryBuild, $table)
 	{
 		parent::__construct($queryBuild, $table);
 

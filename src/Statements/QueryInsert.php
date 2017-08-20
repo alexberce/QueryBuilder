@@ -23,75 +23,75 @@ use Qpdb\QueryBuilder\Traits\Utilities;
 class QueryInsert extends QueryStatement implements QueryStatementInterface
 {
 
-    use Replacement, SetFields, Ignore, DefaultPriority, LowPriority, HighPriority, Utilities;
+	use Replacement, SetFields, Ignore, DefaultPriority, LowPriority, HighPriority, Utilities;
 
-    /**
-     * @var string
-     */
-    protected $statement = 'INSERT';
-
-
-    /**
-     * QueryInsert constructor.
-     * @param QueryBuild $queryBuild
-     * @param null $table
-     */
-    public function __construct(QueryBuild $queryBuild, $table = null)
-    {
-        parent::__construct($queryBuild, $table);
-    }
-
-    /**
-     * @return QueryInsertMultiple
-     */
-    public function multiple()
-    {
-        return new QueryInsertMultiple( $this->queryBuild, $this->queryStructure->getElement(QueryStructure::TABLE) );
-    }
-
-    public function getSyntax()
-    {
-        $syntax = array();
-
-        /**
-         * UPDATE statement
-         */
-        $syntax[] = $this->statement;
-
-        /**
-         * PRIORITY
-         */
-        $syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
-
-        /**
-         * IGNORE clause
-         */
-        $syntax[] = $this->queryStructure->getElement(QueryStructure::IGNORE) ? 'IGNORE' : '';
-
-        /**
-         * INTO table
-         */
-        $syntax[] = 'INTO ' . $this->queryStructure->getElement(QueryStructure::TABLE);
-
-        /**
-         * FIELDS update
-         */
-        $syntax[] = $this->getSettingFieldsSyntax();
-
-        $syntax = implode(' ',$syntax);
-
-        return $this->getSyntaxReplace( $syntax );
-
-    }
+	/**
+	 * @var string
+	 */
+	protected $statement = self::QUERY_STATEMENT_INSERT;
 
 
-    public function execute()
-    {
-        return DbService::getInstance()->query(
-            $this->getSyntax(),
-            $this->queryStructure->getElement(QueryStructure::BIND_PARAMS)
-        );
-    }
+	/**
+	 * QueryInsert constructor.
+	 * @param QueryBuild $queryBuild
+	 * @param null $table
+	 */
+	public function __construct(QueryBuild $queryBuild, $table = null)
+	{
+		parent::__construct($queryBuild, $table);
+	}
+
+	/**
+	 * @return QueryInsertMultiple
+	 */
+	public function multiple()
+	{
+		return new QueryInsertMultiple($this->queryBuild, $this->queryStructure->getElement(QueryStructure::TABLE));
+	}
+
+	public function getSyntax()
+	{
+		$syntax = array();
+
+		/**
+		 * UPDATE statement
+		 */
+		$syntax[] = $this->statement;
+
+		/**
+		 * PRIORITY
+		 */
+		$syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
+
+		/**
+		 * IGNORE clause
+		 */
+		$syntax[] = $this->queryStructure->getElement(QueryStructure::IGNORE) ? 'IGNORE' : '';
+
+		/**
+		 * INTO table
+		 */
+		$syntax[] = 'INTO ' . $this->queryStructure->getElement(QueryStructure::TABLE);
+
+		/**
+		 * FIELDS update
+		 */
+		$syntax[] = $this->getSettingFieldsSyntax();
+
+		$syntax = implode(' ', $syntax);
+
+		return $this->getSyntaxReplace($syntax);
+
+	}
+
+
+	public function execute()
+	{
+		return DbService::getInstance()->query(
+			$this->getSyntax(),
+			$this->queryStructure->getElement(QueryStructure::BIND_PARAMS)
+		);
+	}
 
 
 }

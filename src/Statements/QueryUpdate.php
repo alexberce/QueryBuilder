@@ -30,15 +30,15 @@ class QueryUpdate extends QueryStatement implements QueryStatementInterface
 	/**
 	 * @var string
 	 */
-	protected $statement = 'UPDATE';
+	protected $statement = self::QUERY_STATEMENT_UPDATE;
 
 
-    /**
-     * QueryUpdate constructor.
-     * @param QueryBuild $queryBuild
-     * @param null $table
-     */
-    public function __construct(QueryBuild $queryBuild, $table = null)
+	/**
+	 * QueryUpdate constructor.
+	 * @param QueryBuild $queryBuild
+	 * @param null $table
+	 */
+	public function __construct(QueryBuild $queryBuild, $table = null)
 	{
 		parent::__construct($queryBuild, $table);
 	}
@@ -53,10 +53,10 @@ class QueryUpdate extends QueryStatement implements QueryStatementInterface
 		 */
 		$syntax[] = $this->statement;
 
-        /**
-         * PRIORITY
-         */
-        $syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
+		/**
+		 * PRIORITY
+		 */
+		$syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
 
 		/**
 		 * IGNORE clause
@@ -68,10 +68,10 @@ class QueryUpdate extends QueryStatement implements QueryStatementInterface
 		 */
 		$syntax[] = $this->queryStructure->getElement(QueryStructure::TABLE);
 
-        /**
-         * FIELDS update
-         */
-        $syntax[] = $this->getSettingFieldsSyntax();
+		/**
+		 * FIELDS update
+		 */
+		$syntax[] = $this->getSettingFieldsSyntax();
 
 		/**
 		 * WHERE clause
@@ -88,28 +88,28 @@ class QueryUpdate extends QueryStatement implements QueryStatementInterface
 		 */
 		$syntax[] = $this->getLimitSyntax();
 
-        $syntax = implode(' ',$syntax);
+		$syntax = implode(' ', $syntax);
 
-		return $this->getSyntaxReplace( $syntax );
+		return $this->getSyntaxReplace($syntax);
 
 	}
 
-    /**
-     * @return array|int|null
-     * @throws QueryException
-     */
-    public function execute()
+	/**
+	 * @return array|int|null
+	 * @throws QueryException
+	 */
+	public function execute()
 	{
 
-        if(
-            $this->queryStructure->getElement((QueryStructure::WHERE_TRIGGER)) &&
-            !count($this->queryStructure->getElement(QueryStructure::WHERE))
-        )
-            throw new QueryException('Where clause is required for this statement!', QueryException::QUERY_ERROR_DELETE_NOT_FILTER);
+		if (
+			$this->queryStructure->getElement((QueryStructure::WHERE_TRIGGER)) &&
+			!count($this->queryStructure->getElement(QueryStructure::WHERE))
+		)
+			throw new QueryException('Where clause is required for this statement!', QueryException::QUERY_ERROR_DELETE_NOT_FILTER);
 
 		return DbService::getInstance()->query(
-		    $this->getSyntax(),
-            $this->queryStructure->getElement(QueryStructure::BIND_PARAMS)
-        );
+			$this->getSyntax(),
+			$this->queryStructure->getElement(QueryStructure::BIND_PARAMS)
+		);
 	}
 }

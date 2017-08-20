@@ -23,10 +23,10 @@ abstract class QueryStatement
 	/**
 	 * Statements
 	 */
-	const QUERY_STATEMENT_SELECT        = 'SELECT';
-	const QUERY_STATEMENT_UPDATE        = 'UPDATE';
-	const QUERY_STATEMENT_DELETE        = 'DELETE';
-	const QUERY_STATEMENT_INSERT        = 'INSERT';
+	const QUERY_STATEMENT_SELECT = 'SELECT';
+	const QUERY_STATEMENT_UPDATE = 'UPDATE';
+	const QUERY_STATEMENT_DELETE = 'DELETE';
+	const QUERY_STATEMENT_INSERT = 'INSERT';
 
 	/**
 	 * @var string

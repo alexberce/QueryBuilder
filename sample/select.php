@@ -9,10 +9,19 @@
 include_once 'autoloader.php';
 use Qpdb\QueryBuilder\QueryBuild;
 
-$sql = QueryBuild::select('::test')
+function exception_handler($exception) {
+	/**
+	 * @var \Exception $exception
+	 */
+	echo "Uncaught exception: " , $exception->getMessage(), "\n", $exception->getCode();
+	var_dump(end($exception->getTrace()));
+}
+
+set_exception_handler('exception_handler');
+
+$sql = QueryBuild::select(QueryBuild::select('kbs'))
 	->fields([]);
 
 echo $sql->getSyntax();
 
-//echo phpversion();
-//throw new \Qpdb\QueryBuilder\Dependencies\QueryException(\Qpdb\QueryBuilder\Dependencies\QueryException::QUERY_ERROR_INVALID_DISTINCT,'jnwoeoew');
+//var_dump(\Qpdb\QueryBuilder\Statements\QueryStatement::QUERY_STATEMENT_DELETE);
