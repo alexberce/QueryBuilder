@@ -36,10 +36,10 @@ class QueryInsertMultiple extends QueryStatement implements QueryStatementInterf
 	 * @param QueryBuild $queryBuild
 	 * @param null $table
 	 */
-	public function __construct(QueryBuild $queryBuild, $table = null)
+	public function __construct( QueryBuild $queryBuild, $table = null )
 	{
-		parent::__construct($queryBuild, $table);
-		$this->queryStructure->setElement(QueryStructure::FIELDS, array());
+		parent::__construct( $queryBuild, $table );
+		$this->queryStructure->setElement( QueryStructure::FIELDS, array() );
 	}
 
 	public function getSyntax()
@@ -54,26 +54,26 @@ class QueryInsertMultiple extends QueryStatement implements QueryStatementInterf
 		/**
 		 * PRIORITY
 		 */
-		$syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
+		$syntax[] = $this->queryStructure->getElement( QueryStructure::PRIORITY );
 
 		/**
 		 * IGNORE clause
 		 */
-		$syntax[] = $this->queryStructure->getElement(QueryStructure::IGNORE) ? 'IGNORE' : '';
+		$syntax[] = $this->queryStructure->getElement( QueryStructure::IGNORE ) ? 'IGNORE' : '';
 
 		/**
 		 * INTO table
 		 */
-		$syntax[] = 'INTO ' . $this->queryStructure->getElement(QueryStructure::TABLE);
+		$syntax[] = 'INTO ' . $this->queryStructure->getElement( QueryStructure::TABLE );
 
 		/**
 		 * FIELDS update
 		 */
 		$syntax[] = $this->getInsertMultipleRowsSyntax();
 
-		$syntax = implode(' ', $syntax);
+		$syntax = implode( ' ', $syntax );
 
-		return $this->getSyntaxReplace($syntax);
+		return $this->getSyntaxReplace( $syntax );
 
 	}
 
@@ -81,7 +81,7 @@ class QueryInsertMultiple extends QueryStatement implements QueryStatementInterf
 	{
 		return DbService::getInstance()->query(
 			$this->getSyntax(),
-			$this->queryStructure->getElement(QueryStructure::BIND_PARAMS)
+			$this->queryStructure->getElement( QueryStructure::BIND_PARAMS )
 		);
 	}
 }

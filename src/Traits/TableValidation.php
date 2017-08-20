@@ -17,18 +17,18 @@ use Qpdb\QueryBuilder\Statements\QuerySelect;
 trait TableValidation
 {
 
-	private function validateTable($table)
+	private function validateTable( $table )
 	{
-		switch (gettype($table)) {
+		switch ( gettype( $table ) ) {
 
 			case QueryStructure::ELEMENT_TYPE_STRING:
-				$table = $this->validateTableName($table);
+				$table = $this->validateTableName( $table );
 				break;
 			case QueryStructure::ELEMENT_TYPE_OBJECT:
-				$table = $this->validateTableSubQuery($table);
+				$table = $this->validateTableSubQuery( $table );
 				break;
 			default:
-				throw new QueryException('Invalid table type parameter: ' . gettype($table), QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT);
+				throw new QueryException( 'Invalid table type parameter: ' . gettype( $table ), QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT );
 
 		}
 
@@ -40,26 +40,26 @@ trait TableValidation
 	 * @return mixed|string
 	 * @throws QueryException
 	 */
-	private function validateTableName($table )
+	private function validateTableName( $table )
 	{
-		$table = trim($table);
+		$table = trim( $table );
 
-		if ('' === $table)
-			throw new QueryException('Table name is empty string!', QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT);
+		if ( '' === $table )
+			throw new QueryException( 'Table name is empty string!', QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT );
 
-		if (QueryConfig::getInstance()->useTablePrefix())
-			$table = str_ireplace('::', QueryConfig::getInstance()->getTablePrefix(), $table);
+		if ( QueryConfig::getInstance()->useTablePrefix() )
+			$table = str_ireplace( '::', QueryConfig::getInstance()->getTablePrefix(), $table );
 
 		return $table;
 	}
 
 	private function validateTableSubQuery( $table )
 	{
-		if( $this->statement !== self::QUERY_STATEMENT_SELECT)
-			throw new QueryException('Invalid subQuery statement!', QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT);
+		if ( $this->statement !== self::QUERY_STATEMENT_SELECT )
+			throw new QueryException( 'Invalid subQuery statement!', QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT );
 
-		if (!is_a($table, QuerySelect::class))
-			throw new QueryException('Invalid subQuery statement!', QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT);
+		if ( !is_a( $table, QuerySelect::class ) )
+			throw new QueryException( 'Invalid subQuery statement!', QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT );
 
 		return $table;
 	}

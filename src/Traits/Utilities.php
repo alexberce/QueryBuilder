@@ -22,7 +22,8 @@ trait Utilities
 	 */
 	public function withComment( $comment = '' )
 	{
-		$this->queryStructure->setElement(QueryStructure::QUERY_COMMENT, $comment);
+		$this->queryStructure->setElement( QueryStructure::QUERY_COMMENT, $comment );
+
 		return $this;
 	}
 
@@ -32,7 +33,8 @@ trait Utilities
 	 */
 	public function withLogIdentifier( $identifier = null )
 	{
-		$this->queryStructure->setElement(QueryStructure::QUERY_IDENTIFIER, $identifier);
+		$this->queryStructure->setElement( QueryStructure::QUERY_IDENTIFIER, $identifier );
+
 		return $this;
 	}
 

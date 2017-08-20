@@ -22,32 +22,31 @@ trait SelectFields
 	 * @return $this
 	 * @throws QueryException
 	 */
-	public function fields($fields )
+	public function fields( $fields )
 	{
 
-		switch ( gettype($fields) )
-		{
+		switch ( gettype( $fields ) ) {
 			case QueryStructure::ELEMENT_TYPE_ARRAY:
 
-				$fields = $this->prepareArrayFields($fields);
+				$fields = $this->prepareArrayFields( $fields );
 
-				if(count($fields))
-					$this->queryStructure->setElement(QueryStructure::FIELDS, implode(', ', $fields));
+				if ( count( $fields ) )
+					$this->queryStructure->setElement( QueryStructure::FIELDS, implode( ', ', $fields ) );
 				else
-					$this->queryStructure->setElement(QueryStructure::FIELDS, '*');
+					$this->queryStructure->setElement( QueryStructure::FIELDS, '*' );
 				break;
 
 			case QueryStructure::ELEMENT_TYPE_STRING:
 
-				$fields = trim($fields);
-				if( '' !== $fields )
-					$this->queryStructure->setElement(QueryStructure::FIELDS, $fields);
+				$fields = trim( $fields );
+				if ( '' !== $fields )
+					$this->queryStructure->setElement( QueryStructure::FIELDS, $fields );
 				else
-					$this->queryStructure->setElement(QueryStructure::FIELDS, '*');
+					$this->queryStructure->setElement( QueryStructure::FIELDS, '*' );
 				break;
 
 			default:
-				throw new QueryException('Invalid fields parameter type', QueryException::QUERY_ERROR_WHERE_INVALID_PARAM_ARRAY);
+				throw new QueryException( 'Invalid fields parameter type', QueryException::QUERY_ERROR_WHERE_INVALID_PARAM_ARRAY );
 
 		}
 
@@ -63,13 +62,12 @@ trait SelectFields
 	{
 		$prepareArray = [];
 
-		foreach ( $fieldsArray as $field )
-		{
-			if(gettype($field) !== QueryStructure::ELEMENT_TYPE_STRING)
-				throw new QueryException('Invalid select field type!', QueryException::QUERY_ERROR_SELECT_INVALID_FIELD);
+		foreach ( $fieldsArray as $field ) {
+			if ( gettype( $field ) !== QueryStructure::ELEMENT_TYPE_STRING )
+				throw new QueryException( 'Invalid select field type!', QueryException::QUERY_ERROR_SELECT_INVALID_FIELD );
 
-			if('' !== trim($field))
-				$prepareArray[] = trim($field);
+			if ( '' !== trim( $field ) )
+				$prepareArray[] = trim( $field );
 		}
 
 		return $prepareArray;

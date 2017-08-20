@@ -8,7 +8,6 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
-
 use Qpdb\QueryBuilder\Dependencies\QueryException;
 use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
@@ -27,34 +26,36 @@ trait Limit
 	 */
 	public function limit( $limit = 0, $offset = null )
 	{
-		$limit = trim($limit);
+		$limit = trim( $limit );
 
-		if( !QueryHelper::isInteger($limit) )
-			throw new QueryException('Invalid Limit value', QueryException::QUERY_ERROR_INVALID_LIMIT);
+		if ( !QueryHelper::isInteger( $limit ) )
+			throw new QueryException( 'Invalid Limit value', QueryException::QUERY_ERROR_INVALID_LIMIT );
 
-		if( $limit == 0 )
-			throw new QueryException('Invalid Limit zero', QueryException::QUERY_ERROR_INVALID_LIMIT_ZERO);
+		if ( $limit == 0 )
+			throw new QueryException( 'Invalid Limit zero', QueryException::QUERY_ERROR_INVALID_LIMIT_ZERO );
 
-		if(is_null($offset)) {
-			$this->queryStructure->setElement(QueryStructure::LIMIT, $limit);
+		if ( is_null( $offset ) ) {
+			$this->queryStructure->setElement( QueryStructure::LIMIT, $limit );
+
 			return $this;
 		}
 
-		$offset = trim($offset);
+		$offset = trim( $offset );
 
-		if(!QueryHelper::isInteger($offset))
-			throw new QueryException('Invalid Limit offset', QueryException::QUERY_ERROR_INVALID_LIMIT_OFFSET);
+		if ( !QueryHelper::isInteger( $offset ) )
+			throw new QueryException( 'Invalid Limit offset', QueryException::QUERY_ERROR_INVALID_LIMIT_OFFSET );
 
-		$this->queryStructure->setElement(QueryStructure::LIMIT, $offset . ',' . $limit);
+		$this->queryStructure->setElement( QueryStructure::LIMIT, $offset . ',' . $limit );
 
 		return $this;
 	}
 
 	private function getLimitSyntax()
 	{
-		if(!$this->queryStructure->getElement(QueryStructure::LIMIT))
+		if ( !$this->queryStructure->getElement( QueryStructure::LIMIT ) )
 			return '';
-		return 'LIMIT ' . $this->queryStructure->getElement(QueryStructure::LIMIT);
+
+		return 'LIMIT ' . $this->queryStructure->getElement( QueryStructure::LIMIT );
 	}
 
 }

@@ -11,8 +11,8 @@ namespace Qpdb\QueryBuilder\Statements;
 interface QueryStatementInterface
 {
 
-	const REPLACEMENT_NONE      = 0;
-	const REPLACEMENT_VALUES    = 1;
+	const REPLACEMENT_NONE = 0;
+	const REPLACEMENT_VALUES = 1;
 
 	public function getSyntax();
 

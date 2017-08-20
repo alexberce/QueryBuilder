@@ -23,7 +23,8 @@ trait Replacement
 	 */
 	public function withReplacement()
 	{
-		$this->queryStructure->setElement(QueryStructure::REPLACEMENT, QueryStatementInterface::REPLACEMENT_VALUES);
+		$this->queryStructure->setElement( QueryStructure::REPLACEMENT, QueryStatementInterface::REPLACEMENT_VALUES );
+
 		return $this;
 	}
 
@@ -33,30 +34,30 @@ trait Replacement
 	 * @param int $withReplacement
 	 * @return mixed|string
 	 */
-	private function getSyntaxReplace($syntax, $withReplacement = QueryStatementInterface::REPLACEMENT_NONE)
+	private function getSyntaxReplace( $syntax, $withReplacement = QueryStatementInterface::REPLACEMENT_NONE )
 	{
-		$syntax = QueryHelper::clearMultipleSpaces($syntax);
+		$syntax = QueryHelper::clearMultipleSpaces( $syntax );
 
-		if (!$this->queryStructure->getElement(QueryStructure::REPLACEMENT) && !$withReplacement)
+		if ( !$this->queryStructure->getElement( QueryStructure::REPLACEMENT ) && !$withReplacement )
 			return $syntax;
 
-		return $this->replaceValues($syntax);
+		return $this->replaceValues( $syntax );
 	}
 
 	/**
 	 * @param $syntax
 	 * @return string
 	 */
-	private function replaceValues($syntax)
+	private function replaceValues( $syntax )
 	{
-		$bindParams = $this->queryStructure->getElement(QueryStructure::BIND_PARAMS);
+		$bindParams = $this->queryStructure->getElement( QueryStructure::BIND_PARAMS );
 		$search = array();
 		$replace = array();
-		foreach ($bindParams as $key => $value) {
+		foreach ( $bindParams as $key => $value ) {
 			$search[] = ':' . $key;
-			$replace[] = DbConnect::getInstance()->quote($value);
+			$replace[] = DbConnect::getInstance()->quote( $value );
 		}
-		$syntax = str_ireplace($search, $replace, $syntax);
+		$syntax = str_ireplace( $search, $replace, $syntax );
 
 		return $syntax;
 

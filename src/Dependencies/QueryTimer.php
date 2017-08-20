@@ -23,7 +23,7 @@ class QueryTimer
 
 	public function __construct()
 	{
-		$this->queryStart = microtime(true);
+		$this->queryStart = microtime( true );
 	}
 
 	/**
@@ -31,7 +31,8 @@ class QueryTimer
 	 */
 	public function getDuration()
 	{
-		$this->queryEnd = microtime(true);
+		$this->queryEnd = microtime( true );
+
 		return $this->queryEnd - $this->queryStart;
 	}
 

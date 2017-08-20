@@ -9,18 +9,19 @@
 include_once 'autoloader.php';
 use Qpdb\QueryBuilder\QueryBuild;
 
-function exception_handler($exception) {
+function exception_handler( $exception )
+{
 	/**
 	 * @var \Exception $exception
 	 */
-	echo "Uncaught exception: " , $exception->getMessage(), "\n", $exception->getCode();
-	var_dump(end($exception->getTrace()));
+	echo "Uncaught exception: ", $exception->getMessage(), "\n", $exception->getCode();
+	var_dump( end( $exception->getTrace() ) );
 }
 
-set_exception_handler('exception_handler');
+set_exception_handler( 'exception_handler' );
 
-$sql = QueryBuild::select(QueryBuild::select('kbs'))
-	->fields([]);
+$sql = QueryBuild::select( QueryBuild::select( 'kbs' ) )
+	->fields( [] );
 
 echo $sql->getSyntax();
 

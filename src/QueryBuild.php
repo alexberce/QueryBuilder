@@ -26,7 +26,7 @@ class QueryBuild
 	 * QueryBuild constructor.
 	 * @param $queryType
 	 */
-	protected function __construct($queryType)
+	protected function __construct( $queryType )
 	{
 		$this->queryType = $queryType;
 	}
@@ -35,36 +35,36 @@ class QueryBuild
 	 * @param $table
 	 * @return QuerySelect
 	 */
-	public static function select($table)
+	public static function select( $table )
 	{
-		return new QuerySelect(new QueryBuild(0), $table);
+		return new QuerySelect( new QueryBuild( 0 ), $table );
 	}
 
 	/**
 	 * @param $table
 	 * @return QueryUpdate
 	 */
-	public static function update($table)
+	public static function update( $table )
 	{
-		return new QueryUpdate(new QueryBuild(0), $table);
+		return new QueryUpdate( new QueryBuild( 0 ), $table );
 	}
 
 	/**
 	 * @param $table
 	 * @return QueryInsert
 	 */
-	public static function insert($table)
+	public static function insert( $table )
 	{
-		return new QueryInsert(new QueryBuild(0), $table);
+		return new QueryInsert( new QueryBuild( 0 ), $table );
 	}
 
 	/**
 	 * @param $table
 	 * @return QueryDelete
 	 */
-	public static function delete($table)
+	public static function delete( $table )
 	{
-		return new QueryDelete(new QueryBuild(0), $table);
+		return new QueryDelete( new QueryBuild( 0 ), $table );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class QueryBuild
 	 */
 	public static function custom()
 	{
-		return new QueryCustom(new QueryBuild(1));
+		return new QueryCustom( new QueryBuild( 1 ) );
 	}
 
 	/**

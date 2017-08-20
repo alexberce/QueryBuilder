@@ -60,16 +60,16 @@ abstract class QueryStatement
 	 * @param string $table
 	 * @throws QueryException
 	 */
-	public function __construct(QueryBuild $queryBuild, $table = '')
+	public function __construct( QueryBuild $queryBuild, $table = '' )
 	{
 
-		$table = $this->validateTable($table);
+		$table = $this->validateTable( $table );
 
 		$this->queryBuild = $queryBuild;
 		$this->queryStructure = new QueryStructure();
-		$this->queryStructure->setElement(QueryStructure::TABLE, $table);
-		$this->queryStructure->setElement(QueryStructure::STATEMENT, $this->statement);
-		$this->queryStructure->setElement(QueryStructure::QUERY_TYPE, $this->queryBuild->getType());
+		$this->queryStructure->setElement( QueryStructure::TABLE, $table );
+		$this->queryStructure->setElement( QueryStructure::STATEMENT, $this->statement );
+		$this->queryStructure->setElement( QueryStructure::QUERY_TYPE, $this->queryBuild->getType() );
 
 	}
 
@@ -78,7 +78,7 @@ abstract class QueryStatement
 	 */
 	public function getBindParams()
 	{
-		return $this->queryStructure->getElement(QueryStructure::BIND_PARAMS);
+		return $this->queryStructure->getElement( QueryStructure::BIND_PARAMS );
 	}
 
 

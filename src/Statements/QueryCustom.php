@@ -14,19 +14,19 @@ use Qpdb\QueryBuilder\QueryBuild;
 class QueryCustom extends QueryStatement implements QueryStatementInterface
 {
 
-    public function __construct(QueryBuild $queryBuild, $table = null)
-    {
-        parent::__construct($queryBuild, $table);
-    }
+	public function __construct( QueryBuild $queryBuild, $table = null )
+	{
+		parent::__construct( $queryBuild, $table );
+	}
 
 
-    public function getSyntax()
-    {
-        // TODO: Implement getSyntax() method.
-    }
+	public function getSyntax()
+	{
+		// TODO: Implement getSyntax() method.
+	}
 
-    public function execute()
-    {
-        // TODO: Implement execute() method.
-    }
+	public function execute()
+	{
+		// TODO: Implement execute() method.
+	}
 }

@@ -8,8 +8,8 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
-use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\Dependencies\QueryHelper;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait OrderBy
 {
@@ -45,9 +45,10 @@ trait OrderBy
 	 * @param $expression
 	 * @return $this
 	 */
-	public function orderByExpression ( $expression )
+	public function orderByExpression( $expression )
 	{
-		$this->queryStructure->setElement( QueryStructure::ORDER_BY, QueryHelper::clearQuotes($expression) );
+		$this->queryStructure->setElement( QueryStructure::ORDER_BY, QueryHelper::clearQuotes( $expression ) );
+
 		return $this;
 	}
 
@@ -56,8 +57,8 @@ trait OrderBy
 	 */
 	private function getOrderBySyntax()
 	{
-		if( count($this->queryStructure->getElement(QueryStructure::ORDER_BY)) )
-			return 'ORDER BY ' . QueryHelper::implode( $this->queryStructure->getElement(QueryStructure::ORDER_BY), ', ' );
+		if ( count( $this->queryStructure->getElement( QueryStructure::ORDER_BY ) ) )
+			return 'ORDER BY ' . QueryHelper::implode( $this->queryStructure->getElement( QueryStructure::ORDER_BY ), ', ' );
 
 		return '';
 	}

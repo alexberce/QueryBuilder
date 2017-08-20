@@ -8,8 +8,8 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
-use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\Dependencies\QueryHelper;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait GroupBy
 {
@@ -22,16 +22,16 @@ trait GroupBy
 	 * @param null $direction
 	 * @return $this
 	 */
-	public function groupBy($field, $direction = null )
+	public function groupBy( $field, $direction = null )
 	{
 		$expression = QueryHelper::alphaNum( $field );
 
-		if(!is_null($direction)){
-			$direction = strtoupper($direction);
+		if ( !is_null( $direction ) ) {
+			$direction = strtoupper( $direction );
 			$expression .= ' ' . $direction;
 		}
 
-		$this->queryStructure->setElement(QueryStructure::GROUP_BY, $expression);
+		$this->queryStructure->setElement( QueryStructure::GROUP_BY, $expression );
 
 		return $this;
 	}
@@ -39,8 +39,8 @@ trait GroupBy
 	private function getGroupBySyntax()
 	{
 
-		if( count($this->queryStructure->getElement(QueryStructure::GROUP_BY)) )
-			return 'GROUP BY ' . implode(', ', $this->queryStructure->getElement(QueryStructure::GROUP_BY));
+		if ( count( $this->queryStructure->getElement( QueryStructure::GROUP_BY ) ) )
+			return 'GROUP BY ' . implode( ', ', $this->queryStructure->getElement( QueryStructure::GROUP_BY ) );
 
 		return '';
 	}

@@ -30,7 +30,7 @@ class DbLog
 	 */
 	private function __construct()
 	{
-		$this->dateTimeZone = new \DateTimeZone('Europe/Bucharest');
+		$this->dateTimeZone = new \DateTimeZone( 'Europe/Bucharest' );
 	}
 
 
@@ -38,41 +38,43 @@ class DbLog
 	 * @param $query
 	 * @param $duration
 	 */
-	public function writeQueryDuration($query, $duration)
+	public function writeQueryDuration( $query, $duration )
 	{
-		$backtrace = end(debug_backtrace());
+		$backtrace = end( debug_backtrace() );
 		$location = $backtrace['file'] . " Line: " . $backtrace['line'];
 
 		$this->path = DbConfig::getInstance()->getLogPathQueryDuration(); //my comments
-		$message = "Duration: " . round($duration, 5) . "\r\n";
+		$message = "Duration: " . round( $duration, 5 ) . "\r\n";
 		$message .= "Location: $location\r\n";
 		$message .= "Query: $query";
-		$this->write($message);
+		$this->write( $message );
 	}
 
 
-	public function write($message)
+	public function write( $message )
 	{
 
 		$date = new \DateTime();
-		$date->setTimezone($this->dateTimeZone);
+		$date->setTimezone( $this->dateTimeZone );
 
-		$log = $this->path . $date->format('Y-m-d') . ".txt";
-		$time = $date->format('H:i:s');
+		$log = $this->path . $date->format( 'Y-m-d' ) . ".txt";
+		$time = $date->format( 'H:i:s' );
 
 		$messageFormat = "[$time]\r\n$message\r\n\r\n";
 
-		if (is_dir($this->path)) {
-			if (!file_exists($log)) {
-				$fh = fopen($log, 'a+') or die("Fatal Error !");
-				fwrite($fh, $messageFormat);
-				fclose($fh);
-			} else {
-				$this->edit($log, $date, $messageFormat);
+		if ( is_dir( $this->path ) ) {
+			if ( !file_exists( $log ) ) {
+				$fh = fopen( $log, 'a+' ) or die( "Fatal Error !" );
+				fwrite( $fh, $messageFormat );
+				fclose( $fh );
 			}
-		} else {
-			if (mkdir($this->path, 0777) === true) {
-				$this->write($message);
+			else {
+				$this->edit( $log, $date, $messageFormat );
+			}
+		}
+		else {
+			if ( mkdir( $this->path, 0777 ) === true ) {
+				$this->write( $message );
 			}
 		}
 	}
@@ -83,9 +85,9 @@ class DbLog
 	 * @param \DateTime $date
 	 * @param  string $message
 	 */
-	private function edit($log, \DateTime $date, $message)
+	private function edit( $log, \DateTime $date, $message )
 	{
-		file_put_contents($log, $message, FILE_APPEND);
+		file_put_contents( $log, $message, FILE_APPEND );
 	}
 
 
@@ -94,9 +96,10 @@ class DbLog
 	 */
 	public static function getInstance()
 	{
-		if (null === static::$instance) {
+		if ( null === static::$instance ) {
 			static::$instance = new static();
 		}
+
 		return static::$instance;
 	}
 

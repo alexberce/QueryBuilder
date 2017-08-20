@@ -42,8 +42,8 @@ class DbConnect
 	 */
 	public function getMasterConnection()
 	{
-		if(!is_a($this->pdoMaster, \PDO::class))
-			$this->pdoMaster = $this->connect($this->config->getMasterDataConnect());
+		if ( !is_a( $this->pdoMaster, \PDO::class ) )
+			$this->pdoMaster = $this->connect( $this->config->getMasterDataConnect() );
 
 		return $this->pdoMaster;
 	}
@@ -53,11 +53,11 @@ class DbConnect
 	 */
 	public function getSlaveConnection()
 	{
-		if(!$this->config->getReplicationEnable())
+		if ( !$this->config->getReplicationEnable() )
 			return $this->getMasterConnection();
 
-		if(!is_a($this->pdoSlave, \PDO::class))
-			$this->pdoSlave = $this->connect($this->config->getSlaveDataConnect());
+		if ( !is_a( $this->pdoSlave, \PDO::class ) )
+			$this->pdoSlave = $this->connect( $this->config->getSlaveDataConnect() );
 
 		return $this->pdoSlave;
 	}
@@ -68,30 +68,30 @@ class DbConnect
 	 */
 	public function getConnection( $statement )
 	{
-		$statement = trim(strtolower($statement));
+		$statement = trim( strtolower( $statement ) );
 
-		if( $statement === DbService::QUERY_TYPE_SELECT )
+		if ( $statement === DbService::QUERY_TYPE_SELECT )
 			return $this->getSlaveConnection();
 
 		return $this->getMasterConnection();
 	}
 
-    /**
-     * @param $string
-     * @return string
-     */
-    public function quote( $string )
-    {
-        return $this->getMasterConnection()->quote( $string );
-    }
+	/**
+	 * @param $string
+	 * @return string
+	 */
+	public function quote( $string )
+	{
+		return $this->getMasterConnection()->quote( $string );
+	}
 
-    /**
-     * @return string
-     */
-    public function lastInsertId()
-    {
-        return $this->getMasterConnection()->lastInsertId();
-    }
+	/**
+	 * @return string
+	 */
+	public function lastInsertId()
+	{
+		return $this->getMasterConnection()->lastInsertId();
+	}
 
 	/**
 	 * @param $dataConnect
@@ -106,10 +106,9 @@ class DbConnect
 				array( \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8" )
 			);
 
-			$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-			$pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-		}
-		catch (\PDOException $e) {
+			$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
+			$pdo->setAttribute( \PDO::ATTR_EMULATE_PREPARES, false );
+		} catch ( \PDOException $e ) {
 			# Write into log
 			//echo $this->ExceptionLog($e->getMessage());
 			die();
@@ -122,10 +121,12 @@ class DbConnect
 	/**
 	 * @return DbConnect
 	 */
-	public static function getInstance() {
-		if (null === static::$instance) {
+	public static function getInstance()
+	{
+		if ( null === static::$instance ) {
 			static::$instance = new static();
 		}
+
 		return static::$instance;
 	}
 

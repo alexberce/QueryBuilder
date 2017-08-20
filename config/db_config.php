@@ -9,7 +9,7 @@ return [
 
 	'replicationEnable' => true,
 
-	'slave_statements' => ['SELECT'],
+	'slave_statements' => [ 'SELECT' ],
 
 	/**
 	 * if not Replication support use only first entry in master_data_connect

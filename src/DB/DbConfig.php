@@ -33,24 +33,24 @@ class DbConfig
 	 */
 	private $slaveDataConnect;
 
-    /**
-     * @var bool
-     */
+	/**
+	 * @var bool
+	 */
 	private $enableLogErrors = false;
 
-    /**
-     * @var bool
-     */
+	/**
+	 * @var bool
+	 */
 	private $enableLogQueryDuration = false;
 
-    /**
-     * @var string
-     */
+	/**
+	 * @var string
+	 */
 	private $logPathErrors;
 
-    /**
-     * @var string
-     */
+	/**
+	 * @var string
+	 */
 	private $logPathQueryDuration;
 
 
@@ -100,48 +100,47 @@ class DbConfig
 		return $this->dbConfig['db_log'];
 	}
 
-    /**
-     * @return bool
-     */
-    public function isEnableLogErrors()
-    {
-        return $this->enableLogErrors;
-    }
+	/**
+	 * @return bool
+	 */
+	public function isEnableLogErrors()
+	{
+		return $this->enableLogErrors;
+	}
 
-    /**
-     * @return bool
-     */
-    public function isEnableLogQueryDuration()
-    {
-        return $this->enableLogQueryDuration;
-    }
+	/**
+	 * @return bool
+	 */
+	public function isEnableLogQueryDuration()
+	{
+		return $this->enableLogQueryDuration;
+	}
 
-    /**
-     * @return string
-     */
-    public function getLogPathErrors()
-    {
-        return $this->logPathErrors;
-    }
+	/**
+	 * @return string
+	 */
+	public function getLogPathErrors()
+	{
+		return $this->logPathErrors;
+	}
 
-    /**
-     * @return string
-     */
-    public function getLogPathQueryDuration()
-    {
-        return $this->logPathQueryDuration;
-    }
+	/**
+	 * @return string
+	 */
+	public function getLogPathQueryDuration()
+	{
+		return $this->logPathQueryDuration;
+	}
 
 
+	private function configLogger()
+	{
+		$this->enableLogErrors = $this->dbConfig['db_log']['enable_log_errors'];
+		$this->enableLogQueryDuration = $this->dbConfig['db_log']['enable_log_query_duration'];
+		$this->logPathErrors = $this->dbConfig['db_log']['log_path_errors'];
+		$this->logPathQueryDuration = $this->dbConfig['db_log']['log_path_query_duration'];
 
-    private function configLogger()
-    {
-        $this->enableLogErrors = $this->dbConfig['db_log']['enable_log_errors'];
-        $this->enableLogQueryDuration = $this->dbConfig['db_log']['enable_log_query_duration'];
-        $this->logPathErrors = $this->dbConfig['db_log']['log_path_errors'];
-        $this->logPathQueryDuration = $this->dbConfig['db_log']['log_path_query_duration'];
-
-    }
+	}
 
 	/**
 	 * @return bool
@@ -150,13 +149,14 @@ class DbConfig
 	private function readMasterDataConnect()
 	{
 
-		if(!isset($this->dbConfig['master_data_connect'][0]))
-			throw new DbException('Master data connect is missing', DbException::DB_ERROR_MASTER_DATA_CONNECTION_MISSING);
+		if ( !isset( $this->dbConfig['master_data_connect'][0] ) )
+			throw new DbException( 'Master data connect is missing', DbException::DB_ERROR_MASTER_DATA_CONNECTION_MISSING );
 
 		$dataConnection = $this->dbConfig['master_data_connect'];
 
-		if(!$this->replicationEnable || count($dataConnection)==1) {
+		if ( !$this->replicationEnable || count( $dataConnection ) == 1 ) {
 			$this->masterDataConnect = $dataConnection[0];
+
 			return true;
 		}
 
@@ -173,8 +173,9 @@ class DbConfig
 	private function readSlaveDataConnect()
 	{
 
-		if(!isset($this->dbConfig['slave_data_connect'][0])) {
+		if ( !isset( $this->dbConfig['slave_data_connect'][0] ) ) {
 			$this->slaveDataConnect = $this->masterDataConnect;
+
 			return true;
 		}
 
@@ -189,10 +190,12 @@ class DbConfig
 	/**
 	 * @return DbConfig
 	 */
-	public static function getInstance() {
-		if (null === static::$instance) {
+	public static function getInstance()
+	{
+		if ( null === static::$instance ) {
 			static::$instance = new static();
 		}
+
 		return static::$instance;
 	}
 

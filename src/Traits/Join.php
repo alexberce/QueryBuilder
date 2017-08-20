@@ -8,8 +8,8 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
-use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\Dependencies\QueryHelper;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait Join
 {
@@ -67,7 +67,7 @@ trait Join
 	 * @param null $onRight
 	 * @return $this
 	 */
-	public function rightOuterJoin($tableJoin, $onLeft, $onRight = null )
+	public function rightOuterJoin( $tableJoin, $onLeft, $onRight = null )
 	{
 		return $this->makeJoin( 'RIGHT OUTER JOIN', $tableJoin, $onLeft, $onRight );
 	}
@@ -78,7 +78,7 @@ trait Join
 	 * @param null $onRight
 	 * @return $this
 	 */
-	public function fullJoin($tableJoin, $onLeft, $onRight = null )
+	public function fullJoin( $tableJoin, $onLeft, $onRight = null )
 	{
 		return $this->makeJoin( 'FULL JOIN', $tableJoin, $onLeft, $onRight );
 	}
@@ -89,7 +89,7 @@ trait Join
 	 * @param null $onRight
 	 * @return $this
 	 */
-	public function fullOuterJoin($tableJoin, $onLeft, $onRight = null )
+	public function fullOuterJoin( $tableJoin, $onLeft, $onRight = null )
 	{
 		return $this->makeJoin( 'FULL OUTER JOIN', $tableJoin, $onLeft, $onRight );
 	}
@@ -98,9 +98,10 @@ trait Join
 	 * @param $stringJoin
 	 * @return $this
 	 */
-	public function join ( $stringJoin )
+	public function join( $stringJoin )
 	{
 		$this->queryStructure->setElement( QueryStructure::JOIN, $stringJoin );
+
 		return $this;
 	}
 
@@ -111,16 +112,17 @@ trait Join
 	 * @param null $onRight
 	 * @return $this
 	 */
-	private function makeJoin ( $typeJoin, $tableJoin, $onLeft, $onRight = null )
+	private function makeJoin( $typeJoin, $tableJoin, $onLeft, $onRight = null )
 	{
 		$join = $typeJoin . ' ' . $tableJoin;
 
-		if(is_null($onRight))
+		if ( is_null( $onRight ) )
 			$join .= " USING ( $onLeft )";
 		else
 			$join .= " ON $onLeft = $onRight";
 
 		$this->queryStructure->setElement( QueryStructure::JOIN, $join );
+
 		return $this;
 	}
 
@@ -130,6 +132,7 @@ trait Join
 	private function getJoinSyntax()
 	{
 		$joinString = implode( ' ', $this->queryStructure->getElement( QueryStructure::JOIN ) );
+
 		return QueryHelper::clearMultipleSpaces( $joinString );
 	}
 

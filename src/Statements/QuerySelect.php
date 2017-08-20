@@ -41,24 +41,24 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	 * @param QueryBuild $queryBuild
 	 * @param string|QueryStatement $table
 	 */
-	public function __construct(QueryBuild $queryBuild, $table)
+	public function __construct( QueryBuild $queryBuild, $table )
 	{
-		parent::__construct($queryBuild, $table);
+		parent::__construct( $queryBuild, $table );
 
-		if (is_a($table, QuerySelect::class)) {
+		if ( is_a( $table, QuerySelect::class ) ) {
 
 			/**
 			 * @var QuerySelect $table
 			 */
 			$tableName = '( ' . $table->getSyntax() . ' )';
-			$this->queryStructure->setElement(QueryStructure::TABLE, $tableName);
+			$this->queryStructure->setElement( QueryStructure::TABLE, $tableName );
 
-			if ($this->queryStructure->getElement(QueryStructure::REPLACEMENT))
+			if ( $this->queryStructure->getElement( QueryStructure::REPLACEMENT ) )
 				$table->withReplacement();
 
 			$tableSelectParams = $table->getBindParams();
-			foreach ($tableSelectParams as $key => $value)
-				$this->queryStructure->setParams($key, $value);
+			foreach ( $tableSelectParams as $key => $value )
+				$this->queryStructure->setParams( $key, $value );
 
 		}
 	}
@@ -68,7 +68,8 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	 */
 	public function first()
 	{
-		$this->queryStructure->setElement(QueryStructure::FIRST, 1);
+		$this->queryStructure->setElement( QueryStructure::FIRST, 1 );
+
 		return $this;
 	}
 
@@ -77,7 +78,8 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	 */
 	public function count()
 	{
-		$this->queryStructure->setElement(QueryStructure::COUNT, 1);
+		$this->queryStructure->setElement( QueryStructure::COUNT, 1 );
+
 		return $this;
 	}
 
@@ -85,24 +87,25 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	 * @param $column
 	 * @return $this
 	 */
-	public function column($column)
+	public function column( $column )
 	{
-		$column = QueryHelper::clearMultipleSpaces($column);
-		$this->queryStructure->setElement(QueryStructure::COLUMN, $column);
+		$column = QueryHelper::clearMultipleSpaces( $column );
+		$this->queryStructure->setElement( QueryStructure::COLUMN, $column );
+
 		return $this;
 	}
 
 	public function getSyntax()
 	{
 
-		if ($this->queryStructure->getElement(QueryStructure::COUNT)) {
-			$this->queryStructure->setElement(QueryStructure::FIELDS, 'COUNT(*)');
-			$this->queryStructure->setElement(QueryStructure::LIMIT, 1);
-			$this->queryStructure->setElement(QueryStructure::DISTINCT, 0); //???
+		if ( $this->queryStructure->getElement( QueryStructure::COUNT ) ) {
+			$this->queryStructure->setElement( QueryStructure::FIELDS, 'COUNT(*)' );
+			$this->queryStructure->setElement( QueryStructure::LIMIT, 1 );
+			$this->queryStructure->setElement( QueryStructure::DISTINCT, 0 ); //???
 		}
 
-		if ($this->queryStructure->getElement(QueryStructure::FIRST))
-			$this->queryStructure->setElement(QueryStructure::LIMIT, 1);
+		if ( $this->queryStructure->getElement( QueryStructure::FIRST ) )
+			$this->queryStructure->setElement( QueryStructure::LIMIT, 1 );
 
 		$syntax = array();
 
@@ -114,7 +117,7 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		/**
 		 * PRIORITY
 		 */
-		$syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
+		$syntax[] = $this->queryStructure->getElement( QueryStructure::PRIORITY );
 
 		/**
 		 * DISTINCT clause
@@ -124,12 +127,12 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		/**
 		 * FIELDS
 		 */
-		$syntax[] = $this->queryStructure->getElement(QueryStructure::FIELDS);
+		$syntax[] = $this->queryStructure->getElement( QueryStructure::FIELDS );
 
 		/**
 		 * FROM table or queryStructure
 		 */
-		$syntax[] = 'FROM ' . $this->queryStructure->getElement(QueryStructure::TABLE);
+		$syntax[] = 'FROM ' . $this->queryStructure->getElement( QueryStructure::TABLE );
 
 		/**
 		 * JOIN CLAUSES
@@ -161,9 +164,9 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		 */
 		$syntax[] = $this->getLimitSyntax();
 
-		$syntax = implode(' ', $syntax);
+		$syntax = implode( ' ', $syntax );
 
-		return $this->getSyntaxReplace($syntax);
+		return $this->getSyntaxReplace( $syntax );
 
 	}
 
@@ -174,20 +177,21 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 	public function execute()
 	{
 
-		switch (true) {
-			case $this->queryStructure->getElement(QueryStructure::COUNT):
-				return DbService::getInstance()->single($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+		switch ( true ) {
+			case $this->queryStructure->getElement( QueryStructure::COUNT ):
+				return DbService::getInstance()->single( $this->getSyntax(), $this->queryStructure->getElement( QueryStructure::BIND_PARAMS ) );
 				break;
-			case $this->queryStructure->getElement(QueryStructure::FIRST):
-				if ($this->queryStructure->getElement(QueryStructure::COLUMN))
-					return DbService::getInstance()->single($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
-				return DbService::getInstance()->row($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+			case $this->queryStructure->getElement( QueryStructure::FIRST ):
+				if ( $this->queryStructure->getElement( QueryStructure::COLUMN ) )
+					return DbService::getInstance()->single( $this->getSyntax(), $this->queryStructure->getElement( QueryStructure::BIND_PARAMS ) );
+
+				return DbService::getInstance()->row( $this->getSyntax(), $this->queryStructure->getElement( QueryStructure::BIND_PARAMS ) );
 				break;
-			case $this->queryStructure->getElement(QueryStructure::COLUMN):
-				return DbService::getInstance()->column($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+			case $this->queryStructure->getElement( QueryStructure::COLUMN ):
+				return DbService::getInstance()->column( $this->getSyntax(), $this->queryStructure->getElement( QueryStructure::BIND_PARAMS ) );
 				break;
 			default:
-				return DbService::getInstance()->query($this->getSyntax(), $this->queryStructure->getElement(QueryStructure::BIND_PARAMS));
+				return DbService::getInstance()->query( $this->getSyntax(), $this->queryStructure->getElement( QueryStructure::BIND_PARAMS ) );
 				break;
 		}
 	}

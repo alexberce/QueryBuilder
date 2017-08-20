@@ -36,9 +36,9 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 	 * @param QueryBuild $queryBuild
 	 * @param null $table
 	 */
-	public function __construct(QueryBuild $queryBuild, $table = null)
+	public function __construct( QueryBuild $queryBuild, $table = null )
 	{
-		parent::__construct($queryBuild, $table);
+		parent::__construct( $queryBuild, $table );
 	}
 
 	/**
@@ -46,7 +46,7 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 	 */
 	public function multiple()
 	{
-		return new QueryInsertMultiple($this->queryBuild, $this->queryStructure->getElement(QueryStructure::TABLE));
+		return new QueryInsertMultiple( $this->queryBuild, $this->queryStructure->getElement( QueryStructure::TABLE ) );
 	}
 
 	public function getSyntax()
@@ -61,26 +61,26 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 		/**
 		 * PRIORITY
 		 */
-		$syntax[] = $this->queryStructure->getElement(QueryStructure::PRIORITY);
+		$syntax[] = $this->queryStructure->getElement( QueryStructure::PRIORITY );
 
 		/**
 		 * IGNORE clause
 		 */
-		$syntax[] = $this->queryStructure->getElement(QueryStructure::IGNORE) ? 'IGNORE' : '';
+		$syntax[] = $this->queryStructure->getElement( QueryStructure::IGNORE ) ? 'IGNORE' : '';
 
 		/**
 		 * INTO table
 		 */
-		$syntax[] = 'INTO ' . $this->queryStructure->getElement(QueryStructure::TABLE);
+		$syntax[] = 'INTO ' . $this->queryStructure->getElement( QueryStructure::TABLE );
 
 		/**
 		 * FIELDS update
 		 */
 		$syntax[] = $this->getSettingFieldsSyntax();
 
-		$syntax = implode(' ', $syntax);
+		$syntax = implode( ' ', $syntax );
 
-		return $this->getSyntaxReplace($syntax);
+		return $this->getSyntaxReplace( $syntax );
 
 	}
 
@@ -89,7 +89,7 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 	{
 		return DbService::getInstance()->query(
 			$this->getSyntax(),
-			$this->queryStructure->getElement(QueryStructure::BIND_PARAMS)
+			$this->queryStructure->getElement( QueryStructure::BIND_PARAMS )
 		);
 	}
 

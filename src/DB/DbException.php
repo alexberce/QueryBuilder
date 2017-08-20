@@ -11,6 +11,6 @@ namespace Qpdb\QueryBuilder\DB;
 class DbException extends \Exception
 {
 
-	const DB_ERROR_MASTER_DATA_CONNECTION_MISSING       = 1;
+	const DB_ERROR_MASTER_DATA_CONNECTION_MISSING = 1;
 
 }
