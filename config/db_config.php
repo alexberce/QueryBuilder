@@ -19,13 +19,13 @@ return [
 			'host' => 'localhost',
 			'user' => 'guser',
 			'password' => '1234',
-			'dbname' => 'vstore'
+			'dbname' => 'classicmodels'
 		],
 		[
 			'host' => 'localhost',
 			'user' => 'guser',
 			'password' => '1234',
-			'dbname' => 'vstore'
+			'dbname' => 'classicmodels'
 		]
 	],
 
@@ -34,13 +34,13 @@ return [
 			'host' => 'localhost',
 			'user' => 'guser',
 			'password' => '1234',
-			'dbname' => 'vstore'
+			'dbname' => 'classicmodels'
 		],
 		[
 			'host' => 'localhost',
 			'user' => 'guser',
 			'password' => '1234',
-			'dbname' => 'vstore'
+			'dbname' => 'classicmodels'
 		]
 	],
 
