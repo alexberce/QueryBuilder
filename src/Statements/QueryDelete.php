@@ -100,6 +100,7 @@ class QueryDelete extends QueryStatement implements QueryStatementInterface
 			$this->getSyntax(),
 			$this->queryStructure->getElement( QueryStructure::BIND_PARAMS )
 		);
+
 	}
 
 
