@@ -18,4 +18,6 @@ interface QueryStatementInterface
 
 	public function execute();
 
+	public function getBindParams();
+
 }

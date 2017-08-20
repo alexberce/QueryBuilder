@@ -9,7 +9,6 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
-use Qpdb\QueryBuilder\DB\DbService;
 use Qpdb\QueryBuilder\Dependencies\QueryConfig;
 use Qpdb\QueryBuilder\Dependencies\QueryException;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
@@ -56,7 +55,7 @@ trait TableValidation
 
 	private function validateTableSubQuery( $table )
 	{
-		if( $this->statement !== DbService::QUERY_TYPE_SELECT)
+		if( $this->statement !== self::QUERY_STATEMENT_SELECT)
 			throw new QueryException('Invalid subQuery statement!', QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT);
 
 		if (!is_a($table, QuerySelect::class))
