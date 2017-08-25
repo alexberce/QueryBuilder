@@ -420,8 +420,6 @@ trait Where
 	 */
 	private function inSelectObject( $field, QuerySelect $subquerySelect, $operator, $glue = 'AND' )
 	{
-		if ( $this->queryStructure->getElement( QueryStructure::REPLACEMENT ) )
-			$subquerySelect->withReplacement();
 		$subquerySelectParams = $subquerySelect->getBindParams();
 		foreach ( $subquerySelectParams as $key => $value ) {
 			$this->queryStructure->setParams( $key, $value );

@@ -53,9 +53,6 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 			$tableName = '( ' . $table->getSyntax() . ' )';
 			$this->queryStructure->setElement( QueryStructure::TABLE, $tableName );
 
-			if ( $this->queryStructure->getElement( QueryStructure::REPLACEMENT ) )
-				$table->withReplacement();
-
 			$tableSelectParams = $table->getBindParams();
 			foreach ( $tableSelectParams as $key => $value )
 				$this->queryStructure->setParams( $key, $value );

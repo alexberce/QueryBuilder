@@ -19,17 +19,6 @@ trait Replacement
 	use Objects;
 
 	/**
-	 * @return $this
-	 */
-	public function withReplacement()
-	{
-		$this->queryStructure->setElement( QueryStructure::REPLACEMENT, QueryStatementInterface::REPLACEMENT_VALUES );
-
-		return $this;
-	}
-
-
-	/**
 	 * @param $syntax
 	 * @param int $withReplacement
 	 * @return mixed|string
@@ -38,7 +27,7 @@ trait Replacement
 	{
 		$syntax = QueryHelper::clearMultipleSpaces( $syntax );
 
-		if ( !$this->queryStructure->getElement( QueryStructure::REPLACEMENT ) && !$withReplacement )
+		if ( !$withReplacement )
 			return $syntax;
 
 		return $this->replaceValues( $syntax );
