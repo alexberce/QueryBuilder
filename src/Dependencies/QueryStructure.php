@@ -253,7 +253,7 @@ class QueryStructure
 
 		foreach ( $expressionToArray as $sub ) {
 			$arrayReturn[] = $sub;
-			$arrayReturn[] = ( array_key_exists( $i, $params ) && array_key_exists( $i, $expressionToArray ) ) ? $this->bindParam( 'exp', $params[ $i ] ) : '';
+			$arrayReturn[] = array_key_exists( $i, $params ) ? $this->bindParam( 'exp', $params[ $i ] ) : '';
 			$i++;
 		}
 
