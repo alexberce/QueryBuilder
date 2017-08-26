@@ -182,6 +182,7 @@ class QueryStructure
 		return true;
 	}
 
+
 	/**
 	 * @param string $elementName
 	 * @param $elementValue
@@ -195,6 +196,7 @@ class QueryStructure
 		$this->syntaxEL[ $elementName ] = $elementValue;
 	}
 
+
 	/**
 	 * @param string $name
 	 * @return mixed
@@ -204,6 +206,7 @@ class QueryStructure
 		return $this->syntaxEL[ $name ];
 	}
 
+
 	/**
 	 * @param $name
 	 * @param $value
@@ -212,6 +215,7 @@ class QueryStructure
 	{
 		$this->syntaxEL[ QueryStructure::BIND_PARAMS ][ $name ] = $value;
 	}
+
 
 	/**
 	 * @param $name
@@ -225,6 +229,37 @@ class QueryStructure
 
 		return ':' . $pdoName;
 	}
+
+
+	/**
+	 * @param $expression
+	 * @param array $params
+	 * @param string $search
+	 * @return string
+	 */
+	public function bindParamsExpression( $expression, array $params = [], $search = '?' )
+	{
+		if ( !count( $params ) )
+			return $expression;
+
+		if ( strpos( $expression, $search ) === false )
+			return $expression;
+
+		$params = array_slice( $params, 0, substr_count( $expression, $search ) );
+
+		$i = 0;
+		$arrayReturn = [];
+		$expressionToArray = explode( $search, $expression );
+
+		foreach ( $expressionToArray as $sub ) {
+			$arrayReturn[] = $sub;
+			$arrayReturn[] = ( array_key_exists( $i, $params ) && array_key_exists( $i, $expressionToArray ) ) ? $this->bindParam( 'exp', $params[ $i ] ) : '';
+			$i++;
+		}
+
+		return implode( '', $arrayReturn );
+	}
+
 
 	/**
 	 * @param string $fieldName

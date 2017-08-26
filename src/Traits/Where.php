@@ -288,20 +288,24 @@ trait Where
 
 	/**
 	 * @param $whereString
+	 * @param array $bindParams
 	 * @param string $glue
 	 * @return $this
 	 */
-	public function whereExpression( $whereString, $glue = 'AND' )
+	public function whereExpression( $whereString, array $bindParams = [], $glue = 'AND' )
 	{
+		$whereString = $this->queryStructure->bindParamsExpression( $whereString, $bindParams );
 		return $this->where( $whereString, $glue );
 	}
 
 	/**
 	 * @param $whereString
+	 * @param array $bindParams
 	 * @return $this
 	 */
-	public function orWhereExpression( $whereString )
+	public function orWhereExpression( $whereString, array $bindParams = [] )
 	{
+		$whereString = $this->queryStructure->bindParamsExpression( $whereString, $bindParams );
 		return $this->where( $whereString, 'OR' );
 	}
 
