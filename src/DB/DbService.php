@@ -133,7 +133,13 @@ class DbService
 			/**
 			 * Add parameters to the parameter array
 			 */
-			$this->bindMore( $parameters );
+			if(self::isArrayAssoc($parameters))
+				$this->bindMore( $parameters );
+			else
+				foreach ( $parameters as $key => $val )
+					$this->parameters[] = array($key+1, $val);
+
+			var_dump($this->parameters);
 
 			if ( count( $this->parameters ) ) {
 				foreach ( $this->parameters as $param => $value ) {
@@ -233,6 +239,16 @@ class DbService
 		else {
 			return self::QUERY_TYPE_OTHER;
 		}
+	}
+
+	/**
+	 * @param array $arr
+	 * @return bool
+	 */
+	public static function isArrayAssoc( array  $arr )
+	{
+		if (array() === $arr) return false;
+		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 
 
