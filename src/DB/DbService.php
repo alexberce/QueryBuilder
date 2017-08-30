@@ -139,8 +139,6 @@ class DbService
 				foreach ( $parameters as $key => $val )
 					$this->parameters[] = array($key+1, $val);
 
-			var_dump($this->parameters);
-
 			if ( count( $this->parameters ) ) {
 				foreach ( $this->parameters as $param => $value ) {
 					if ( is_int( $value[1] ) ) {
