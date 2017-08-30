@@ -68,11 +68,12 @@ class QueryBuild
 	}
 
 	/**
+	 * @param $query
 	 * @return QueryCustom
 	 */
-	public static function custom()
+	public static function query( $query )
 	{
-		return new QueryCustom( new QueryBuild( 1 ) );
+		return new QueryCustom( new QueryBuild( 1 ), $query );
 	}
 
 	/**

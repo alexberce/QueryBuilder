@@ -36,6 +36,7 @@ class QueryStructure
 	const BIND_PARAMS = 'bind_params';
 	const REPLACEMENT = 'replacement';
 	const QUERY_TYPE = 'query_type';
+	const QUERY_STRING = 'query_string';
 	const QUERY_COMMENT = 'query_comment';
 	const QUERY_IDENTIFIER = 'query_identifier';
 	const WHERE_TRIGGER = 'where_trigger';
@@ -114,6 +115,7 @@ class QueryStructure
 			self::BIND_PARAMS => array(),
 			self::REPLACEMENT => 0,
 			self::QUERY_TYPE => 0,
+			self::QUERY_STRING => '',
 			self::QUERY_COMMENT => '',
 			self::QUERY_IDENTIFIER => 'DEFAULT',
 			self::WHERE_TRIGGER => 1,

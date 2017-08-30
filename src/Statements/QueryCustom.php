@@ -9,24 +9,86 @@
 namespace Qpdb\QueryBuilder\Statements;
 
 
+use Qpdb\QueryBuilder\DB\DbService;
+use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
 
-class QueryCustom extends QueryStatement implements QueryStatementInterface
+class QueryCustom implements QueryStatementInterface
 {
 
-	public function __construct( QueryBuild $queryBuild, $table = null )
+
+	/**
+	 * @var string
+	 */
+	protected $statement = QueryStatement::QUERY_STATEMENT_CUSTOM;
+
+	/**
+	 * @var QueryBuild
+	 */
+	protected $queryBuild;
+
+	/**
+	 * @var QueryStructure
+	 */
+	protected $queryStructure;
+
+	/**
+	 * @var array
+	 */
+	protected $usedInstanceIds = [];
+
+	/**
+	 * @var string
+	 */
+	protected $tablePrefix;
+
+
+	public function __construct( QueryBuild $queryBuild, $query = '' )
 	{
-		parent::__construct( $queryBuild, $table );
+		$this->queryBuild = $queryBuild;
+		$this->queryStructure = new QueryStructure();
+		$this->queryStructure->setElement( QueryStructure::STATEMENT, $this->statement );
+		$this->queryStructure->setElement( QueryStructure::QUERY_TYPE, $this->queryBuild->getType() );
+		$this->queryStructure->setElement( QueryStructure::QUERY_STRING, $query );
 	}
 
+	/**
+	 * @param array $params
+	 * @return $this
+	 */
+	public function withBindParams( array $params = [] )
+	{
+		$this->queryStructure->replaceElement( QueryStructure::BIND_PARAMS, $params );
 
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
 	public function getSyntax()
 	{
-		// TODO: Implement getSyntax() method.
+		return $this->queryStructure->getElement( QueryStructure::QUERY_STRING );
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getBindParams()
+	{
+		return $this->queryStructure->getElement( QueryStructure::BIND_PARAMS );
+	}
+
+	/**
+	 * @return array|int|null
+	 */
 	public function execute()
 	{
-		// TODO: Implement execute() method.
+		return DbService::getInstance()->query(
+			$this->queryStructure->getElement( QueryStructure::QUERY_STRING ),
+			$this->queryStructure->getElement( QueryStructure::BIND_PARAMS )
+		);
 	}
+
+
 }

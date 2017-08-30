@@ -27,6 +27,8 @@ abstract class QueryStatement
 	const QUERY_STATEMENT_UPDATE = 'UPDATE';
 	const QUERY_STATEMENT_DELETE = 'DELETE';
 	const QUERY_STATEMENT_INSERT = 'INSERT';
+	const QUERY_STATEMENT_CUSTOM = 'CUSTOM';
+
 
 	/**
 	 * @var string
