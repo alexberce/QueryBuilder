@@ -9,5 +9,30 @@
 
 ```PHP
 $sql = QueryBuild::select('employees')
-        ->whereLike('firstName', '%arry%');
+	->fields("firstName, lastName, jobTitle, offices.city, offices.country")
+	->innerJoin('offices', 'employees.officeCode', 'offices.officeCode');
 ```
+
+```PHP
+array (size=23)
+  0 => 
+    array (size=5)
+      'firstName' => string 'Diane' (length=5)
+      'lastName' => string 'Murphy' (length=6)
+      'jobTitle' => string 'President' (length=9)
+      'city' => string 'San Francisco' (length=13)
+      'country' => string 'USA' (length=3)
+  1 => 
+    array (size=5)
+      'firstName' => string 'Mary' (length=4)
+      'lastName' => string 'Patterson' (length=9)
+      'jobTitle' => string 'VP Sales' (length=8)
+      'city' => string 'San Francisco' (length=13)
+      'country' => string 'USA' (length=3)
+  2 => 
+    array (size=5)
+      'firstName' => string 'Jeff' (length=4)
+      'lastName' => string 'Firrelli' (length=8)
+      'jobTitle' => string 'VP Marketing' (length=12)
+      'city' => string 'San Francisco' (length=13)
+      'country' => string 'USA' (length=3)
