@@ -14,25 +14,37 @@ $sql = QueryBuild::select('employees')
 ```
 
 ```PHP
-array (size=23)
-  0 => 
-    array (size=5)
-      'firstName' => string 'Diane' (length=5)
-      'lastName' => string 'Murphy' (length=6)
-      'jobTitle' => string 'President' (length=9)
-      'city' => string 'San Francisco' (length=13)
-      'country' => string 'USA' (length=3)
-  1 => 
-    array (size=5)
-      'firstName' => string 'Mary' (length=4)
-      'lastName' => string 'Patterson' (length=9)
-      'jobTitle' => string 'VP Sales' (length=8)
-      'city' => string 'San Francisco' (length=13)
-      'country' => string 'USA' (length=3)
-  2 => 
-    array (size=5)
-      'firstName' => string 'Jeff' (length=4)
-      'lastName' => string 'Firrelli' (length=8)
-      'jobTitle' => string 'VP Marketing' (length=12)
-      'city' => string 'San Francisco' (length=13)
-      'country' => string 'USA' (length=3)
+Array
+(
+    [0] => Array
+        (
+            [employeeNumber] => 1002
+            [lastName] => Murphy
+            [firstName] => Diane
+            [extension] => x5800
+            [email] => dmurphy@classicmodelcars.com
+            [officeCode] => 1
+            [reportsTo] => 
+            [jobTitle] => President
+            [city] => San Francisco
+            [country] => USA
+            [ss] => 10
+        )
+
+    [1] => Array
+        (
+            [employeeNumber] => 1501
+            [lastName] => Bott
+            [firstName] => Larry
+            [extension] => x2311
+            [email] => lbott@classicmodelcars.com
+            [officeCode] => 7
+            [reportsTo] => 1102
+            [jobTitle] => Sales Rep
+            [city] => London
+            [country] => UK
+            [ss] => 2
+        )
+	...
+```	
+      
