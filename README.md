@@ -9,7 +9,7 @@
 
 ### Installation
 * With composer
-```
+```json
 {
   "repositories": [
     {
