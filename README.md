@@ -9,5 +9,5 @@
 
 ### Installation
 
-* [With composer](docs/installation/composer.md)
+* [Via composer](docs/installation/composer.md)
 
