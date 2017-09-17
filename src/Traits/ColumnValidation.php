@@ -9,10 +9,12 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
-trait ValidateColumn
+trait ColumnValidation
 {
 
-	private function validateColumn( $columnName, array $allowed )
+	use Objects;
+
+	protected function validateColumn( $columnName, array $allowed )
 	{
 		if ( is_integer( $columnName ) )
 			return true;

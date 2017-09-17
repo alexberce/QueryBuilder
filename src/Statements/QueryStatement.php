@@ -11,13 +11,14 @@ namespace Qpdb\QueryBuilder\Statements;
 use Qpdb\QueryBuilder\Dependencies\QueryException;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\QueryBuild;
+use Qpdb\QueryBuilder\Traits\ColumnValidation;
 use Qpdb\QueryBuilder\Traits\TableValidation;
 use Qpdb\QueryBuilder\Traits\Utilities;
 
 abstract class QueryStatement
 {
 
-	use Utilities, TableValidation;
+	use Utilities, TableValidation, ColumnValidation;
 
 
 	/**

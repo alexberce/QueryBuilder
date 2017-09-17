@@ -15,7 +15,7 @@ use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 trait GroupBy
 {
 
-	use Objects, ValidateColumn;
+	use Objects;
 
 
 	/**
@@ -24,7 +24,7 @@ trait GroupBy
 	 * @return $this
 	 * @throws QueryException
 	 */
-	public function orderBy( $column, array $allowedColumns = [] )
+	public function groupBy( $column, array $allowedColumns = [] )
 	{
 		$column = trim( $column );
 
@@ -43,7 +43,7 @@ trait GroupBy
 	 * @return $this
 	 * @throws QueryException
 	 */
-	public function orderByDesc( $column, array $allowedColumns = [] )
+	public function groupByDesc( $column, array $allowedColumns = [] )
 	{
 		$column = trim( $column );
 
@@ -60,7 +60,7 @@ trait GroupBy
 	 * @param $expression
 	 * @return $this
 	 */
-	public function orderByExpression( $expression )
+	public function groupByExpression( $expression )
 	{
 		$this->queryStructure->setElement( QueryStructure::GROUP_BY, $expression );
 

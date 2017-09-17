@@ -17,7 +17,7 @@ use Qpdb\QueryBuilder\QueryBuild;
 $sql = QueryBuild::select('employees')
 	->fields("employees.*, offices.city, offices.country")
 	->innerJoin('offices', 'employees.officeCode', 'offices.officeCode')
-	//->groupBy('country DESC')
+	->groupBy('country DESC')
 	;
 
 //$sql = QueryBuild::select('employees')

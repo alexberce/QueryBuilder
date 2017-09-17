@@ -15,7 +15,7 @@ use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 trait OrderBy
 {
 
-	use Objects, ValidateColumn;
+	use Objects;
 
 
 	/**
