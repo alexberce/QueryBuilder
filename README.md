@@ -8,30 +8,6 @@
 * MySql 5.5 / 5.6 / 5.7 / MariaDB
 
 ### Installation
-* With composer
-```json
-{
-  "repositories": [
-    {
-      "type": "package",
-      "package": {
-        "name": "QueryBuilder",
-        "version": "1.0",
-        "source": {
-          "url": "https://github.com/adumitru68/QueryBuilder.git",
-          "type": "git",
-          "reference": "master"
-        },
-        "autoload": {
-          "psr-4": {
-            "Qpdb\\QueryBuilder\\": "src/"
-          }
-        }
-      }
-    }
-  ],
-  "require": {
-    "QueryBuilder": "1.0"
-  }
-}
-```
+
+* [With composer](docs/installation/composer.md)
+
