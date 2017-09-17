@@ -11,4 +11,4 @@
 * [With composer](docs/installation/composer.md)
 * [Manual installation](docs/installation/download_source.md)
 
-### Package Setup
+### Configuration
