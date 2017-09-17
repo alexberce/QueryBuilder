@@ -8,38 +8,53 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
+use Qpdb\QueryBuilder\Dependencies\QueryException;
 use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 
 trait OrderBy
 {
 
-	use Objects;
+	use Objects, ValidateColumn;
 
 
 	/**
-	 * @param $field
+	 * @param $column
+	 * @param array $allowedColumns
 	 * @return $this
+	 * @throws QueryException
 	 */
-	public function orderBy( $field )
+	public function orderBy( $column, array $allowedColumns = [] )
 	{
-		$expression = QueryHelper::alphaNum( $field ) . ' ASC';
-		$this->queryStructure->setElement( QueryStructure::ORDER_BY, $expression );
+		$column = trim( $column );
+
+		if ( !$this->validateColumn( $column, $allowedColumns ) )
+			throw new QueryException('Invalid column name in ORDER BY clause', QueryException::QUERY_ERROR_INVALID_COLUMN_NAME);
+
+		$this->queryStructure->setElement( QueryStructure::ORDER_BY, $column );
 
 		return $this;
 	}
 
+
 	/**
-	 * @param $field
+	 * @param $column
+	 * @param array $allowedColumns
 	 * @return $this
+	 * @throws QueryException
 	 */
-	public function orderByDesc( $field )
+	public function orderByDesc( $column, array $allowedColumns = [] )
 	{
-		$expression = QueryHelper::alphaNum( $field ) . ' DESC';
-		$this->queryStructure->setElement( QueryStructure::ORDER_BY, $expression );
+		$column = trim( $column );
+
+		if ( !$this->validateColumn( $column, $allowedColumns ) )
+			throw new QueryException('Invalid column name in ORDER BY clause', QueryException::QUERY_ERROR_INVALID_COLUMN_NAME);
+
+		$this->queryStructure->setElement( QueryStructure::ORDER_BY, $column . ' DESC' );
 
 		return $this;
 	}
+
 
 	/**
 	 * @param $expression
@@ -47,10 +62,11 @@ trait OrderBy
 	 */
 	public function orderByExpression( $expression )
 	{
-		$this->queryStructure->setElement( QueryStructure::ORDER_BY, QueryHelper::clearQuotes( $expression ) );
+		$this->queryStructure->setElement( QueryStructure::ORDER_BY, $expression );
 
 		return $this;
 	}
+
 
 	/**
 	 * @return string
