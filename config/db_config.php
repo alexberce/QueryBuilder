@@ -7,7 +7,7 @@
 
 return [
 
-	'replicationEnable' => true,
+	'replicationEnable' => false,
 
 	'slave_statements' => [ 'SELECT' ],
 
@@ -15,12 +15,6 @@ return [
 	 * if not Replication support use only first entry in master_data_connect
 	 */
 	'master_data_connect' => [
-		[
-			'host' => 'localhost',
-			'user' => 'guser',
-			'password' => '1234',
-			'dbname' => 'classicmodels'
-		],
 		[
 			'host' => 'localhost',
 			'user' => 'guser',
@@ -45,8 +39,8 @@ return [
 	],
 
 	'db_log' => [
-		'enable_log_errors' => true,
-		'enable_log_query_duration' => true,
+		'enable_log_errors' => false,
+		'enable_log_query_duration' => false,
 		'log_path_errors' => $_SERVER['DOCUMENT_ROOT'] . '/tmp/db_errors/',
 		'log_path_query_duration' => $_SERVER['DOCUMENT_ROOT'] . '/tmp/db_query_duration/',
 	]

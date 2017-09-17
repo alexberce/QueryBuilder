@@ -9,7 +9,7 @@
 return [
 
 	'use_table_prefix' => 1,
-	'table_prefix' => 'vs_',
+	'table_prefix' => 'tex_',
 	'driver' => 'pdo'
 
 ];
