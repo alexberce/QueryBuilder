@@ -9,6 +9,6 @@
 
 ### Installation
 * [With composer](docs/installation/composer.md)
-* [Manual installation](docs/installation/download_source.md)
+* [Manual installation](docs/installation/manual.md)
 
 ### Configuration

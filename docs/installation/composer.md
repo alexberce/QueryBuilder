@@ -1,8 +1,9 @@
 ## Installation with composer
 
-Create file **composer.json** in root folder.
+1. Creates the **composer.json** file (or adds this repository to the existing file composer.json)
+2. Run command __composer update__
 
- ```composer.json```
+
     
 ```php
 {
