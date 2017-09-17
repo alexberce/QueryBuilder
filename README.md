@@ -1,6 +1,6 @@
 # QueryBuilder
 
-**QueryBuilder** is a user friendly php class for build MySql queries that prevents mysql injections and it takes care of table prefixing. This same can also support replication master and slave.
+**QueryBuilder** is a user friendly php class for build MySql queries that prevents mysql injections and it takes care of table prefixing. This same can also replication support for use master and slave.
 
 ### Requirements
 * Php 5.4+
@@ -8,6 +8,7 @@
 * MySql 5.5 / 5.6 / 5.7 / MariaDB
 
 ### Installation
+* [With composer](docs/installation/composer.md)
+* [Manual installation](docs/installation/download_source.md)
 
-* [Via composer](docs/installation/composer.md)
-
+### Package Setup
