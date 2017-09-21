@@ -64,9 +64,10 @@ class QueryCustom implements QueryStatementInterface
 	}
 
 	/**
+	 * @param bool|int $replacement
 	 * @return mixed
 	 */
-	public function getSyntax()
+	public function getSyntax( $replacement = self::REPLACEMENT_NONE )
 	{
 		return $this->queryStructure->getElement( QueryStructure::QUERY_STRING );
 	}

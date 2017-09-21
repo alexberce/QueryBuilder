@@ -8,8 +8,8 @@
 
 //include_once 'autoloader.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-var_dump($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
-var_dump(__DIR__);
+//var_dump($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
+//var_dump(__DIR__);
 use Qpdb\QueryBuilder\QueryBuild;
 
 
@@ -20,12 +20,17 @@ $sql = QueryBuild::select('employees')
 	->groupBy('country DESC')
 	;
 
+$sql = QueryBuild::update('employees')
+	->whereEqual('firstName', "O'Neill")
+->setField('dcdcs','value');
+
 //$sql = QueryBuild::select('employees')
 //	->whereLike('lastName','%bo%')
 //;
 
 echo "<pre>" . print_r($sql->getSyntax(),1) . "</pre>";
 echo "<pre>" . print_r($sql->getBindParams(),1) . "</pre>";
-echo "<pre>" . print_r($sql->execute(),1) . "</pre>";
+echo "<pre>" . print_r($sql->getSyntax(1),1) . "</pre>";
+//echo "<pre>" . print_r($sql->execute(),1) . "</pre>";
 
 

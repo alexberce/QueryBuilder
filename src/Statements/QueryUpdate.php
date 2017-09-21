@@ -43,7 +43,7 @@ class QueryUpdate extends QueryStatement implements QueryStatementInterface
 		parent::__construct( $queryBuild, $table );
 	}
 
-	public function getSyntax()
+	public function getSyntax( $replacement = self::REPLACEMENT_NONE )
 	{
 
 		$syntax = array();
@@ -90,7 +90,7 @@ class QueryUpdate extends QueryStatement implements QueryStatementInterface
 
 		$syntax = implode( ' ', $syntax );
 
-		return $this->getSyntaxReplace( $syntax );
+		return $this->getSyntaxReplace( $syntax, $replacement );
 
 	}
 

@@ -42,7 +42,7 @@ class QueryInsertMultiple extends QueryStatement implements QueryStatementInterf
 		$this->queryStructure->setElement( QueryStructure::FIELDS, array() );
 	}
 
-	public function getSyntax()
+	public function getSyntax( $replacement = self::REPLACEMENT_NONE )
 	{
 		$syntax = array();
 
@@ -73,7 +73,7 @@ class QueryInsertMultiple extends QueryStatement implements QueryStatementInterf
 
 		$syntax = implode( ' ', $syntax );
 
-		return $this->getSyntaxReplace( $syntax );
+		return $this->getSyntaxReplace( $syntax, $replacement );
 
 	}
 

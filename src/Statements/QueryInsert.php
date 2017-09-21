@@ -49,7 +49,11 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 		return new QueryInsertMultiple( $this->queryBuild, $this->queryStructure->getElement( QueryStructure::TABLE ) );
 	}
 
-	public function getSyntax()
+	/**
+	 * @param bool|int $replacement
+	 * @return mixed|string
+	 */
+	public function getSyntax( $replacement = self::REPLACEMENT_NONE )
 	{
 		$syntax = array();
 
@@ -80,7 +84,7 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 
 		$syntax = implode( ' ', $syntax );
 
-		return $this->getSyntaxReplace( $syntax );
+		return $this->getSyntaxReplace( $syntax, $replacement );
 
 	}
 

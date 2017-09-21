@@ -92,7 +92,12 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		return $this;
 	}
 
-	public function getSyntax()
+
+	/**
+	 * @param bool|int $replacement
+	 * @return mixed|string
+	 */
+	public function getSyntax( $replacement = self::REPLACEMENT_NONE )
 	{
 
 		if ( $this->queryStructure->getElement( QueryStructure::COUNT ) ) {
@@ -163,7 +168,7 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 
 		$syntax = implode( ' ', $syntax );
 
-		return $this->getSyntaxReplace( $syntax );
+		return $this->getSyntaxReplace( $syntax, $replacement );
 
 	}
 

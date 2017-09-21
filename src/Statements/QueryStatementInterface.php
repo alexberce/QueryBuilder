@@ -14,7 +14,11 @@ interface QueryStatementInterface
 	const REPLACEMENT_NONE = 0;
 	const REPLACEMENT_VALUES = 1;
 
-	public function getSyntax();
+	/**
+	 * @param bool $replacement
+	 * @return string
+	 */
+	public function getSyntax( $replacement = self::REPLACEMENT_NONE );
 
 	public function execute();
 
