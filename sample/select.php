@@ -10,27 +10,87 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 //var_dump($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
 //var_dump(__DIR__);
+use Qpdb\QueryBuilder\Dependencies\Tree;
 use Qpdb\QueryBuilder\QueryBuild;
 
 
+$sql = QueryBuild::select( 'employees' )
+	->fields( "employees.*, offices.city, offices.country" )
+	->innerJoin( 'offices', 'employees.officeCode', 'offices.officeCode' )
+	->groupBy( 'country DESC' );
 
-$sql = QueryBuild::select('employees')
-	->fields("employees.*, offices.city, offices.country")
-	->innerJoin('offices', 'employees.officeCode', 'offices.officeCode')
-	->groupBy('country DESC')
-	;
-
-$sql = QueryBuild::update('employees')
-	->whereEqual('firstName', "O'Neill")
-->setField('dcdcs','value');
+$sql = QueryBuild::update( 'employees' )
+	->whereEqual( 'firstName', "O'Neill" )
+	->setField( 'dcdcs', 'value' );
 
 //$sql = QueryBuild::select('employees')
 //	->whereLike('lastName','%bo%')
 //;
 
-echo "<pre>" . print_r($sql->getSyntax(),1) . "</pre>";
-echo "<pre>" . print_r($sql->getBindParams(),1) . "</pre>";
-echo "<pre>" . print_r($sql->getSyntax(1),1) . "</pre>";
+//echo "<pre>" . print_r($sql->getSyntax(),1) . "</pre>";
+//echo "<pre>" . print_r($sql->getBindParams(),1) . "</pre>";
+//echo "<pre>" . print_r($sql->getSyntax(1),1) . "</pre>";
 //echo "<pre>" . print_r($sql->execute(),1) . "</pre>";
+
+$a =
+	[
+		[
+			'id' => 1,
+			'parent' => 0,
+			'name' => 'Option 1'
+		],
+		[
+			'id' => 2,
+			'parent' => 0,
+			'name' => 'Option 2'
+		],
+		[
+			'id' => 11,
+			'parent' => 1,
+			'name' => 'Option 11'
+		],
+		[
+			'id' => 112,
+			'parent' => 11,
+			'name' => 'Option 112'
+		],
+		[
+			'id' => 111,
+			'parent' => 11,
+			'name' => 'Option 111'
+		],
+		[
+			'id' => 12,
+			'parent' => 1,
+			'name' => 'Option 121'
+		],
+		[
+			'id' => 2224,
+			'parent' => 78,
+			'name' => 'bla bla'
+		],
+		[
+			'id' => 1121,
+			'parent' => 112,
+			'name' => 'Option 1121'
+		],
+		[
+			'id' => 1122,
+			'parent' => 112,
+			'name' => 'Option 1122'
+		],
+	];
+
+$tree = ( new Tree( $a ) )
+	->withIdName( 'id' )
+	->withParentIdName( 'parent' )
+	->buildTree()
+	;
+
+
+echo "<pre>" . print_r( $tree->getTreeArray(), 1 ) . "</pre>";
+echo "<pre>" . print_r( $tree->getChildren(1), 1 ) . "</pre>";
+echo "<pre>" . print_r( $tree->getParents(1121), 1 ) . "</pre>";
+echo "<pre>" . print_r( $tree->getFlatArray(), 1 ) . "</pre>";
 
 
