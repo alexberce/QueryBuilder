@@ -14,8 +14,8 @@ class Installer
 
 	public static function postInstall()
 	{
-		$folder = "test_folder";
-		mkdir( $folder, 0777 );
+		$configPath = __DIR__ . '/../config22/';
+		mkdir( $configPath, 0777 );
 	}
 
 
