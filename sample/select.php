@@ -29,7 +29,7 @@ $sql = QueryBuild::select( 'employees' )
 //;
 
 echo "<pre>" . print_r($sql->getSyntax(),1) . "</pre>";
-//echo "<pre>" . print_r($sql->getBindParams(),1) . "</pre>";
+echo "<pre>" . print_r($sql->getBindParams(),1) . "</pre>";
 //echo "<pre>" . print_r($sql->getSyntax(1),1) . "</pre>";
 //echo "<pre>" . print_r($sql->execute(),1) . "</pre>";
 
