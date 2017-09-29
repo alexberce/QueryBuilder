@@ -21,11 +21,12 @@ use Qpdb\QueryBuilder\Traits\Replacement;
 use Qpdb\QueryBuilder\Traits\SetFields;
 use Qpdb\QueryBuilder\Traits\Utilities;
 use Qpdb\QueryBuilder\Traits\Where;
+use Qpdb\QueryBuilder\Traits\WhereAndHavingBuilder;
 
 class QueryUpdate extends QueryStatement implements QueryStatementInterface
 {
 
-	use Limit, Where, Replacement, OrderBy, SetFields, Ignore, DefaultPriority, LowPriority, Utilities;
+	use Limit, Where, WhereAndHavingBuilder, Replacement, OrderBy, SetFields, Ignore, DefaultPriority, LowPriority, Utilities;
 
 	/**
 	 * @var string

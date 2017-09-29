@@ -8,27 +8,13 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
-use Qpdb\QueryBuilder\Dependencies\QueryException;
-use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
-use Qpdb\QueryBuilder\Statements\QuerySelect;
 
 trait Where
 {
 
 	use Objects;
 
-	private $whereOperators = [
-		'=', '!=', '<>', '<', '<=', '>', '>=',
-		'LIKE', 'NOT LIKE', '!LIKE',
-		'IN', 'NOT IN', '!IN',
-		'BETWEEN', 'NOT BETWEEN',
-		'REGEXP', 'NOT REGEXP', '!REGEXP'
-	];
-
-	private $whereGlue = [
-		'AND', 'OR', 'XOR'
-	];
 
 	/**
 	 * @param $field
@@ -333,7 +319,7 @@ trait Where
 	/**
 	 * @return $this
 	 */
-	public function OrWhereGroup()
+	public function orWhereGroup()
 	{
 		return $this->whereGroup( 'OR' );
 	}
@@ -349,63 +335,6 @@ trait Where
 	}
 
 	/**
-	 * @param $param
-	 * @param string $glue
-	 * @return $this
-	 */
-	public function where( $param, $glue = 'AND' )
-	{
-
-		if ( !is_array( $param ) ) {
-			$this->queryStructure->setElement( QueryStructure::WHERE, array( 'glue' => $glue, 'body' => trim( $param ), 'type' => 'cond' ) );
-
-			return $this;
-		}
-
-		$param = $this->validateWhereParam( $param );
-
-		$field = $param[0];
-		$value = $param[1];
-		$operator = $param[2];
-
-		switch ( $operator ) {
-			case 'BETWEEN':
-			case 'NOT BETWEEN':
-			case '!BETWEEN':
-				$min = $value[0];
-				$max = $value[1];
-				$body = [
-					$field,
-					$operator,
-					$this->queryStructure->bindParam( 'min', $min ),
-					'AND',
-					$this->queryStructure->bindParam( 'max', $max )
-				];
-				$body = implode( ' ', $body );
-				$this->queryStructure->setElement( QueryStructure::WHERE, array( 'glue' => $glue, 'body' => $body, 'type' => 'cond' ) );
-				break;
-
-			case 'IN':
-			case 'NOT IN':
-			case '!IN':
-				if ( is_a( $value, QuerySelect::class ) )
-					return $this->inSelectObject( $field, $value, $operator, $glue );
-				elseif ( is_array( $value ) )
-					return $this->inArray( $field, $value, $operator, $glue );
-				break;
-
-			default:
-				$valuePdoString = $this->queryStructure->bindParam( $field, $value );
-				$body = $field . ' ' . $operator . ' ' . $valuePdoString;
-				$this->queryStructure->setElement( QueryStructure::WHERE, array( 'glue' => $glue, 'body' => $body, 'type' => 'cond' ) );
-
-		}
-
-		return $this;
-
-	}
-
-	/**
 	 * @return $this
 	 */
 	public function ignoreWhereTrigger()
@@ -415,104 +344,15 @@ trait Where
 		return $this;
 	}
 
-	/**
-	 * @param $field
-	 * @param QuerySelect $subquerySelect
-	 * @param $operator
-	 * @param string $glue
-	 * @return $this
-	 */
-	private function inSelectObject( $field, QuerySelect $subquerySelect, $operator, $glue = 'AND' )
-	{
-		$subquerySelectParams = $subquerySelect->getBindParams();
-		foreach ( $subquerySelectParams as $key => $value ) {
-			$this->queryStructure->setParams( $key, $value );
-		}
-		$body = [
-			$field,
-			$operator,
-			'( ',
-			$subquerySelect->getSyntax(),
-			' )'
-		];
-		$body = implode( ' ', $body );
-		$this->queryStructure->setElement( QueryStructure::WHERE, array( 'glue' => $glue, 'body' => $body, 'type' => 'cond' ) );
-
-		return $this;
-	}
-
-	/**
-	 * @param $field
-	 * @param $value
-	 * @param $operator
-	 * @param $glue
-	 * @return $this
-	 */
-	private function inArray( $field, array $value, $operator, $glue )
-	{
-		$pdoArray = array();
-		foreach ( $value as $item ) {
-			$pdoArray[] = $this->queryStructure->bindParam( 'a', $item );
-		}
-		$body = [
-			$field,
-			$operator,
-			'( ' . implode( ', ', $pdoArray ) . ' )'
-		];
-		$body = implode( ' ', $body );
-		$body = QueryHelper::clearMultipleSpaces( $body );
-		$this->queryStructure->setElement( QueryStructure::WHERE, array( 'glue' => $glue, 'body' => $body, 'type' => 'cond' ) );
-
-		return $this;
-	}
-
-	/**
-	 * @return bool|mixed|string
-	 */
-	private function getWhereSyntax()
-	{
-		if ( count( $this->queryStructure->getElement( QueryStructure::WHERE ) ) == 0 )
-			return '';
-
-		$where = '';
-		$last_type = 'where_start';
-		foreach ( $this->queryStructure->getElement( QueryStructure::WHERE ) as $where_cond ) {
-			$glue = $where_cond['glue'];
-			if ( $last_type == 'where_start' || $last_type == 'start_where_group' ) {
-				$glue = '';
-			}
-			$where .= ' ' . $glue . ' ' . $where_cond['body'];
-			$last_type = $where_cond['type'];
-		}
-
-		if ( $this->queryStructure->getElement( QueryStructure::WHERE_INVERT ) ) {
-			$where = ' NOT ( ' . $where . ' ) ';
-		}
-
-		$where = 'WHERE ' . $where;
-
-		return QueryHelper::clearMultipleSpaces( $where );
-	}
 
 	/**
 	 * @param $param
-	 * @return array
-	 * @throws QueryException
+	 * @param string $glue
+	 * @return $this
 	 */
-	private function validateWhereParam( $param )
+	private function where( $param, $glue = 'AND' )
 	{
-		if ( count( $param ) < 2 )
-			throw new QueryException( 'Invalid where array!', QueryException::QUERY_ERROR_WHERE_INVALID_PARAM_ARRAY );
-
-		if ( count( $param ) == 2 )
-			$param[] = '=';
-
-		$param[2] = trim( strtoupper( $param[2] ) );
-		$param[2] = QueryHelper::clearMultipleSpaces( $param[2] );
-
-		if ( !in_array( $param[2], $this->whereOperators ) )
-			throw new QueryException( 'Invalid operator!', QueryException::QUERY_ERROR_WHERE_INVALID_OPERATOR );
-
-		return $param;
+		return $this->createCondition($param, $glue, QueryStructure::WHERE );
 	}
+
 }

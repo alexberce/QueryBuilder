@@ -24,11 +24,12 @@ use Qpdb\QueryBuilder\Traits\Replacement;
 use Qpdb\QueryBuilder\Traits\SelectFields;
 use Qpdb\QueryBuilder\Traits\Utilities;
 use Qpdb\QueryBuilder\Traits\Where;
+use Qpdb\QueryBuilder\Traits\WhereAndHavingBuilder;
 
 class QuerySelect extends QueryStatement implements QueryStatementInterface
 {
 
-	use SelectFields, Limit, Distinct, Where, Having, Replacement, OrderBy, GroupBy, Join, DefaultPriority, HighPriority, Utilities;
+	use SelectFields, Limit, Distinct, Where, Having, WhereAndHavingBuilder, Replacement, OrderBy, GroupBy, Join, DefaultPriority, HighPriority, Utilities;
 
 	/**
 	 * @var string

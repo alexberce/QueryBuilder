@@ -1,35 +1,20 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Adrian Dumitru
- * Date: 8/1/2017
- * Time: 12:38 PM
+ * Author: Adrian Dumitru
+ * Date: 4/25/2017 1:13 AM
  */
 
 namespace Qpdb\QueryBuilder\Traits;
 
 
-use Qpdb\QueryBuilder\Dependencies\QueryException;
-use Qpdb\QueryBuilder\Dependencies\QueryHelper;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
-use Qpdb\QueryBuilder\Statements\QuerySelect;
 
 trait Having
 {
 
 	use Objects;
 
-	private $havingOperators = [
-		'=', '!=', '<>', '<', '<=', '>', '>=',
-		'LIKE', 'NOT LIKE', '!LIKE',
-		'IN', 'NOT IN', '!IN',
-		'BETWEEN', 'NOT BETWEEN',
-		'REGEXP', 'NOT REGEXP', '!REGEXP'
-	];
-
-	private $havingGlue = [
-		'AND', 'OR', 'XOR'
-	];
 
 	/**
 	 * @param $field
@@ -288,22 +273,26 @@ trait Having
 	}
 
 	/**
-	 * @param $havingString
+	 * @param $whereString
+	 * @param array $bindParams
 	 * @param string $glue
 	 * @return $this
 	 */
-	public function havingExpression( $havingString, $glue = 'AND' )
+	public function havingExpression( $whereString, array $bindParams = [], $glue = 'AND' )
 	{
-		return $this->having( $havingString, $glue );
+		$whereString = $this->queryStructure->bindParamsExpression( $whereString, $bindParams );
+		return $this->having( $whereString, $glue );
 	}
 
 	/**
-	 * @param $havingString
+	 * @param $whereString
+	 * @param array $bindParams
 	 * @return $this
 	 */
-	public function orHavingExpression( $havingString )
+	public function orHavingExpression( $whereString, array $bindParams = [] )
 	{
-		return $this->having( $havingString, 'OR' );
+		$whereString = $this->queryStructure->bindParamsExpression( $whereString, $bindParams );
+		return $this->having( $whereString, 'OR' );
 	}
 
 	/**
@@ -322,7 +311,7 @@ trait Having
 	 */
 	public function havingGroup( $glue = 'AND' )
 	{
-		$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => $glue, 'body' => '(', 'type' => 'start_having_group' ) );
+		$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => $glue, 'body' => '(', 'type' => 'start_where_group' ) );
 
 		return $this;
 	}
@@ -330,7 +319,7 @@ trait Having
 	/**
 	 * @return $this
 	 */
-	public function OrHavingGroup()
+	public function orHavingGroup()
 	{
 		return $this->havingGroup( 'OR' );
 	}
@@ -340,7 +329,7 @@ trait Having
 	 */
 	public function havingGroupEnd()
 	{
-		$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => '', 'body' => ')', 'type' => 'end_having_group' ) );
+		$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => '', 'body' => ')', 'type' => 'end_where_group' ) );
 
 		return $this;
 	}
@@ -350,156 +339,9 @@ trait Having
 	 * @param string $glue
 	 * @return $this
 	 */
-	public function having( $param, $glue = 'AND' )
+	private function having( $param, $glue = 'AND' )
 	{
-
-		if ( !is_array( $param ) ) {
-			$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => $glue, 'body' => trim( $param ), 'type' => 'cond' ) );
-
-			return $this;
-		}
-
-		$param = $this->validateHavingParam( $param );
-
-		$field = $param[0];
-		$value = $param[1];
-		$operator = $param[2];
-
-		switch ( $operator ) {
-			case 'BETWEEN':
-			case 'NOT BETWEEN':
-			case '!BETWEEN':
-				$min = $value[0];
-				$max = $value[1];
-				$body = [
-					$field,
-					$operator,
-					$this->queryStructure->bindParam( 'min', $min ),
-					'AND',
-					$this->queryStructure->bindParam( 'max', $max )
-				];
-				$body = implode( ' ', $body );
-				$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => $glue, 'body' => $body, 'type' => 'cond' ) );
-				break;
-
-			case 'IN':
-			case 'NOT IN':
-			case '!IN':
-				if ( is_a( $value, QuerySelect::class ) )
-					return $this->inSelectObjectHaving( $field, $value, $operator, $glue );
-				elseif ( is_array( $value ) )
-					return $this->inArrayHaving( $field, $value, $operator, $glue );
-				break;
-
-			default:
-				$valuePdoString = $this->queryStructure->bindParam( $field, $value );
-				$body = $field . ' ' . $operator . ' ' . $valuePdoString;
-				$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => $glue, 'body' => $body, 'type' => 'cond' ) );
-
-		}
-
-		return $this;
-
+		return $this->createCondition($param, $glue, QueryStructure::HAVING );
 	}
 
-	/**
-	 * @param $field
-	 * @param QuerySelect $subquerySelect
-	 * @param $operator
-	 * @param string $glue
-	 * @return $this
-	 */
-	private function inSelectObjectHaving( $field, QuerySelect $subquerySelect, $operator, $glue = 'AND' )
-	{
-		$subquerySelectParams = $subquerySelect->getBindParams();
-		foreach ( $subquerySelectParams as $key => $value )
-			$this->queryStructure->setParams( $key, $value );
-
-		$body = [
-			$field,
-			$operator,
-			'( ',
-			$subquerySelect->getSyntax(),
-			' )'
-		];
-		$body = implode( ' ', $body );
-		$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => $glue, 'body' => $body, 'type' => 'cond' ) );
-
-		return $this;
-	}
-
-	/**
-	 * @param $field
-	 * @param $value
-	 * @param $operator
-	 * @param $glue
-	 * @return $this
-	 */
-	private function inArrayHaving( $field, array $value, $operator, $glue )
-	{
-		$pdoArray = array();
-		foreach ( $value as $item ) {
-			$pdoArray[] = $this->queryStructure->bindParam( 'a', $item );
-		}
-		$body = [
-			$field,
-			$operator,
-			'( ' . implode( ', ', $pdoArray ) . ' )'
-		];
-		$body = implode( ' ', $body );
-		$body = QueryHelper::clearMultipleSpaces( $body );
-		$this->queryStructure->setElement( QueryStructure::HAVING, array( 'glue' => $glue, 'body' => $body, 'type' => 'cond' ) );
-
-		return $this;
-	}
-
-	/**
-	 * @return bool|mixed|string
-	 */
-	private function getHavingSyntax()
-	{
-		if ( count( $this->queryStructure->getElement( QueryStructure::HAVING ) ) == 0 )
-			return '';
-
-		$having = '';
-		$last_type = 'having_start';
-		foreach ( $this->queryStructure->getElement( QueryStructure::HAVING ) as $having_cond ) {
-			$glue = $having_cond['glue'];
-			if ( $last_type == 'having_start' || $last_type == 'start_having_group' ) {
-				$glue = '';
-			}
-			$having .= ' ' . $glue . ' ' . $having_cond['body'];
-			$last_type = $having_cond['type'];
-		}
-
-		if ( $this->queryStructure->getElement( QueryStructure::HAVING_INVERT ) ) {
-			$having = ' NOT ( ' . $having . ' ) ';
-		}
-
-		$having = 'HAVING ' . $having;
-
-		return QueryHelper::clearMultipleSpaces( $having );
-	}
-
-	/**
-	 * @param $param
-	 * @return array
-	 * @throws QueryException
-	 */
-	private function validateHavingParam( $param )
-	{
-		if ( count( $param ) < 2 )
-			throw new QueryException( 'Invalid having array!', QueryException::QUERY_ERROR_HAVING_INVALID_PARAM_ARRAY );
-
-		if ( count( $param ) == 2 )
-			$param[] = '=';
-
-		$param[2] = trim( strtoupper( $param[2] ) );
-		$param[2] = QueryHelper::clearMultipleSpaces( $param[2] );
-
-		if ( !in_array( $param[2], $this->havingOperators ) )
-			throw new QueryException( 'Invalid operator!', QueryException::QUERY_ERROR_HAVING_INVALID_OPERATOR );
-
-		return $param;
-	}
 }

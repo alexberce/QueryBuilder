@@ -19,15 +19,16 @@ $sql = QueryBuild::select( 'employees' )
 	->innerJoin( 'offices', 'employees.officeCode', 'offices.officeCode' )
 	->groupBy( 'country DESC' );
 
-$sql = QueryBuild::update( 'employees' )
+$sql = QueryBuild::select( 'employees' )
 	->whereEqual( 'firstName', "O'Neill" )
-	->setField( 'dcdcs', 'value' );
+	//->whereInvertResult();
+;
 
 //$sql = QueryBuild::select('employees')
 //	->whereLike('lastName','%bo%')
 //;
 
-//echo "<pre>" . print_r($sql->getSyntax(),1) . "</pre>";
+echo "<pre>" . print_r($sql->getSyntax(),1) . "</pre>";
 //echo "<pre>" . print_r($sql->getBindParams(),1) . "</pre>";
 //echo "<pre>" . print_r($sql->getSyntax(1),1) . "</pre>";
 //echo "<pre>" . print_r($sql->execute(),1) . "</pre>";
