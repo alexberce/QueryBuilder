@@ -19,21 +19,12 @@ To use this package, you need to configure it. Configuration files can be found 
 ### How do we use?
 ```php
 include_once 'path/to/vendor/autoload.php';
-$query = QueryBuild::select( 'employees' )
-	->whereEqual( 'firstName', "leslie" );
-	
-$query->getSyntax()
 
-    SELECT * FROM employees WHERE firstName = :firstName_qndub_1i
-    
-$query->getBindParams()
+$result = QueryBuild::select( 'employees' )
+	->whereEqual( 'firstName', "leslie" )
+	->execute();
 
-    Array
-    (
-        [firstName_qndub_1i] => leslie
-    )
-
-$query->execute()
+// result
 
     Array
     (
