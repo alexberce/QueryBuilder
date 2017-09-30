@@ -1,7 +1,7 @@
 {
     "name": "qpdb/query-builder",
     "type": "library",
-    "description": "Logging for PHP 5.3",
+    "description": "php class for build MySql queries that prevents mysql injections",
     "keywords": ["php","pdo","MySql","QueryBuilder"],
     "license": "MIT",
     "authors": [
