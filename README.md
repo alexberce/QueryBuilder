@@ -20,38 +20,41 @@ To use this package, you need to configure it. Configuration files can be found 
 ```php
 include_once 'path/to/vendor/autoload.php';
 
+use Qpdb\QueryBuilder\QueryBuild;
+
 $result = QueryBuild::select( 'employees' )
 	->whereEqual( 'firstName', "leslie" )
 	->execute();
+```
+The result is obtained **$result**
+```php
 
-// result
+Array
+(
+	[0] => Array
+	    (
+		[employeeNumber] => 1165
+		[lastName] => Jennings
+		[firstName] => Leslie
+		[extension] => x3291
+		[email] => ljennings@classicmodelcars.com
+		[officeCode] => 1
+		[reportsTo] => 1143
+		[jobTitle] => Sales Rep
+	    )
 
-    Array
-    (
-        [0] => Array
-            (
-                [employeeNumber] => 1165
-                [lastName] => Jennings
-                [firstName] => Leslie
-                [extension] => x3291
-                [email] => ljennings@classicmodelcars.com
-                [officeCode] => 1
-                [reportsTo] => 1143
-                [jobTitle] => Sales Rep
-            )
-    
-        [1] => Array
-            (
-                [employeeNumber] => 1166
-                [lastName] => Thompson
-                [firstName] => Leslie
-                [extension] => x4065
-                [email] => lthompson@classicmodelcars.com
-                [officeCode] => 1
-                [reportsTo] => 1143
-                [jobTitle] => Sales Rep
-            )
-    
-    )
+	[1] => Array
+	    (
+		[employeeNumber] => 1166
+		[lastName] => Thompson
+		[firstName] => Leslie
+		[extension] => x4065
+		[email] => lthompson@classicmodelcars.com
+		[officeCode] => 1
+		[reportsTo] => 1143
+		[jobTitle] => Sales Rep
+	    )
+
+	)
 
 ```
