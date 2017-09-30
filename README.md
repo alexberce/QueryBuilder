@@ -17,7 +17,50 @@ To use this package, you need to configure it. Configuration files can be found 
 - **query_config.php**: if a prefix table is used, a prefix can be set and queryBuilder will automatically put the prefix of the table.
 
 ### How do we use?
-1. Import **autoload.php** file
 ```php
 include_once 'path/to/vendor/autoload.php';
+$query = QueryBuild::select( 'employees' )
+	->whereEqual( 'firstName', "leslie" );
+	
+$query->getSyntax()
+
+    SELECT * FROM employees WHERE firstName = :firstName_qndub_1i
+    
+$query->getBindParams()
+
+    Array
+    (
+        [firstName_qndub_1i] => leslie
+    )
+
+$query->execute()
+
+    Array
+    (
+        [0] => Array
+            (
+                [employeeNumber] => 1165
+                [lastName] => Jennings
+                [firstName] => Leslie
+                [extension] => x3291
+                [email] => ljennings@classicmodelcars.com
+                [officeCode] => 1
+                [reportsTo] => 1143
+                [jobTitle] => Sales Rep
+            )
+    
+        [1] => Array
+            (
+                [employeeNumber] => 1166
+                [lastName] => Thompson
+                [firstName] => Leslie
+                [extension] => x4065
+                [email] => lthompson@classicmodelcars.com
+                [officeCode] => 1
+                [reportsTo] => 1143
+                [jobTitle] => Sales Rep
+            )
+    
+    )
+
 ```
