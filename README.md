@@ -26,7 +26,7 @@ $result = QueryBuild::select( 'employees' )
 	->whereEqual( 'firstName', "leslie" )
 	->execute();
 ```
-The result is obtained **$result**
+The result **$result** is array:
 ```php
 
 Array
@@ -55,6 +55,6 @@ Array
 		[jobTitle] => Sales Rep
 	    )
 
-	)
+)
 
 ```
