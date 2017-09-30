@@ -14,6 +14,7 @@ class QueryStructure
 {
 
 	const TABLE = 'table';
+	const EXPLAIN = 'explain';
 	const STATEMENT = 'statement';
 	const PRIORITY = 'priority';
 	const FIELDS = 'fields';
@@ -93,6 +94,7 @@ class QueryStructure
 	{
 		return [
 			self::TABLE => '',
+			self::EXPLAIN => 0,
 			self::STATEMENT => '',
 			self::PRIORITY => '',
 			self::FIELDS => '*',

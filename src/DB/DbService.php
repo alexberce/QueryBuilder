@@ -20,6 +20,7 @@ class DbService
 	const QUERY_TYPE_DESC = 'DESC';
 	const QUERY_TYPE_EMPTY = 'EMPTY';
 	const QUERY_TYPE_OTHER = 'OTHER';
+	const QUERY_TYPE_EXPLAIN = 'EXPLAIN';
 
 	const ON_ERROR_THROW_EXCEPTION = 1;
 	const ON_ERROR_RETURN_ERROR = 2;
@@ -61,7 +62,8 @@ class DbService
 
 		if ( $statement === self::QUERY_TYPE_SELECT ||
 			$statement === self::QUERY_TYPE_SHOW ||
-			$statement === self::QUERY_TYPE_DESC
+			$statement === self::QUERY_TYPE_DESC ||
+			$statement === self::QUERY_TYPE_EXPLAIN
 		) {
 			return $this->sQuery->fetchAll( $fetchMode );
 		}
@@ -72,6 +74,7 @@ class DbService
 			return $this->sQuery->rowCount();
 		}
 		else {
+			var_dump($this->sQuery->fetchAll( $fetchMode )[0]);
 			return NULL;
 		}
 	}
@@ -84,6 +87,13 @@ class DbService
 	public function column( $query, $params = null )
 	{
 		$this->queryInit( $query, $params );
+
+		$query = trim( str_replace( "\r", " ", $query ) );
+		$statement = self::getQueryStatement( $query );
+
+		if($statement === self::QUERY_TYPE_EXPLAIN)
+			return $this->sQuery->fetchAll( \PDO::FETCH_ASSOC );
+
 		$Columns = $this->sQuery->fetchAll( \PDO::FETCH_NUM );
 
 		$column = null;
@@ -98,6 +108,13 @@ class DbService
 	public function row( $query, $params = null, $fetchmode = \PDO::FETCH_ASSOC )
 	{
 		$this->queryInit( $query, $params );
+
+		$query = trim( str_replace( "\r", " ", $query ) );
+		$statement = self::getQueryStatement( $query );
+
+		if($statement === self::QUERY_TYPE_EXPLAIN)
+			return $this->sQuery->fetchAll( \PDO::FETCH_ASSOC );
+
 		$result = $this->sQuery->fetch( $fetchmode );
 		$this->sQuery->closeCursor(); // Frees up the connection to the server so that other SQL statements may be issued,
 
@@ -212,7 +229,7 @@ class DbService
 			return self::QUERY_TYPE_EMPTY;
 		}
 
-		if ( preg_match( '/^(select|insert|update|delete|replace|show|desc)[\s]+/i', $queryString, $matches ) ) {
+		if ( preg_match( '/^(select|insert|update|delete|replace|show|desc|explain)[\s]+/i', $queryString, $matches ) ) {
 			switch ( strtolower( $matches[1] ) ) {
 				case 'select':
 					return self::QUERY_TYPE_SELECT;
@@ -228,6 +245,9 @@ class DbService
 					break;
 				case 'replace':
 					return self::QUERY_TYPE_REPLACE;
+					break;
+				case 'explain':
+					return self::QUERY_TYPE_EXPLAIN;
 					break;
 				default:
 					return self::QUERY_TYPE_OTHER;

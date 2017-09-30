@@ -113,6 +113,11 @@ class QuerySelect extends QueryStatement implements QueryStatementInterface
 		$syntax = array();
 
 		/**
+		 *  Explain
+		 */
+		$syntax[] = $this->getExplainSyntax();
+
+		/**
 		 * SELECT statement
 		 */
 		$syntax[] = $this->statement;

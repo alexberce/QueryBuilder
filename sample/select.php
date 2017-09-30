@@ -14,13 +14,9 @@ use Qpdb\QueryBuilder\Dependencies\Tree;
 use Qpdb\QueryBuilder\QueryBuild;
 
 
-
 $query = QueryBuild::select( 'employees' )
-	->whereEqual( 'firstName', "leslie" );
+	->whereEqual( 'firstName', "leslie" )->explain();
 
-//$sql = QueryBuild::select('employees')
-//	->whereLike('lastName','%bo%')
-//;
 
 echo "<pre>" . print_r($query->getSyntax(),1) . "</pre>";
 echo "<pre>" . print_r($query->getBindParams(),1) . "</pre>";

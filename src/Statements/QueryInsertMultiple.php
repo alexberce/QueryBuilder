@@ -47,6 +47,11 @@ class QueryInsertMultiple extends QueryStatement implements QueryStatementInterf
 		$syntax = array();
 
 		/**
+		 *  Explain
+		 */
+		$syntax[] = $this->getExplainSyntax();
+
+		/**
 		 * UPDATE statement
 		 */
 		$syntax[] = $this->statement;

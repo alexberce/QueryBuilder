@@ -17,6 +17,25 @@ trait Utilities
 
 
 	/**
+	 * @return $this
+	 */
+	public function explain()
+	{
+		$this->queryStructure->setElement(QueryStructure::EXPLAIN, 1);
+
+		return $this;
+	}
+
+	protected function getExplainSyntax()
+	{
+		if($this->queryStructure->getElement(QueryStructure::EXPLAIN))
+			return 'EXPLAIN';
+
+		return '';
+	}
+
+
+	/**
 	 * @param string $comment
 	 * @return $this
 	 */

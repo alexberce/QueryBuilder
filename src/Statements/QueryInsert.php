@@ -58,6 +58,11 @@ class QueryInsert extends QueryStatement implements QueryStatementInterface
 		$syntax = array();
 
 		/**
+		 *  Explain
+		 */
+		$syntax[] = $this->getExplainSyntax();
+
+		/**
 		 * UPDATE statement
 		 */
 		$syntax[] = $this->statement;
