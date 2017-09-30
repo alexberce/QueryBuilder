@@ -14,24 +14,18 @@ use Qpdb\QueryBuilder\Dependencies\Tree;
 use Qpdb\QueryBuilder\QueryBuild;
 
 
-$sql = QueryBuild::select( 'employees' )
-	->fields( "employees.*, offices.city, offices.country" )
-	->innerJoin( 'offices', 'employees.officeCode', 'offices.officeCode' )
-	->groupBy( 'country DESC' );
 
-$sql = QueryBuild::select( 'employees' )
-	->whereEqual( 'firstName', "O'Neill" )
-	//->whereInvertResult();
-;
+$query = QueryBuild::select( 'employees' )
+	->whereEqual( 'firstName', "leslie" );
 
 //$sql = QueryBuild::select('employees')
 //	->whereLike('lastName','%bo%')
 //;
 
-echo "<pre>" . print_r($sql->getSyntax(),1) . "</pre>";
-echo "<pre>" . print_r($sql->getBindParams(),1) . "</pre>";
-//echo "<pre>" . print_r($sql->getSyntax(1),1) . "</pre>";
-//echo "<pre>" . print_r($sql->execute(),1) . "</pre>";
+echo "<pre>" . print_r($query->getSyntax(),1) . "</pre>";
+echo "<pre>" . print_r($query->getBindParams(),1) . "</pre>";
+echo "<pre>" . print_r($query->getSyntax(1),1) . "</pre>";
+echo "<pre>" . print_r($query->execute(),1) . "</pre>";
 
 $a =
 	[
@@ -89,9 +83,9 @@ $tree = ( new Tree( $a ) )
 	;
 
 
-echo "<pre>" . print_r( $tree->getTreeArray(), 1 ) . "</pre>";
-echo "<pre>" . print_r( $tree->getChildren(1), 1 ) . "</pre>";
-echo "<pre>" . print_r( $tree->getParents(1121), 1 ) . "</pre>";
-echo "<pre>" . print_r( $tree->getFlatArray(), 1 ) . "</pre>";
+//echo "<pre>" . print_r( $tree->getTreeArray(), 1 ) . "</pre>";
+//echo "<pre>" . print_r( $tree->getChildren(1), 1 ) . "</pre>";
+//echo "<pre>" . print_r( $tree->getParents(1121), 1 ) . "</pre>";
+//echo "<pre>" . print_r( $tree->getFlatArray(), 1 ) . "</pre>";
 
 
