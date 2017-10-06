@@ -6,12 +6,15 @@
  * Time: 12:26 PM
  */
 
-//include_once 'autoloader.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-//var_dump($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
-//var_dump(__DIR__);
 use Qpdb\QueryBuilder\Dependencies\Tree;
 use Qpdb\QueryBuilder\QueryBuild;
+
+include_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
+
+
+var_dump(__DIR__);
+var_dump($_SERVER['DOCUMENT_ROOT']);
 
 
 $query = QueryBuild::select( 'employees' )
