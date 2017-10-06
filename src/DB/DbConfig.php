@@ -59,13 +59,19 @@ class DbConfig
 	 */
 	private function __construct()
 	{
-		$configPath = __DIR__ . '/../../config/db_config.php';
-		$this->dbConfig = require $configPath;
-		$this->replicationEnable = $this->dbConfig['replicationEnable'];
-		$this->readMasterDataConnect();
-		$this->readSlaveDataConnect();
-		$this->configLogger();
+		$this->dbConfig = require __DIR__ . '/../../config/qpdb_db_config.php';
+		$this->buildConfig();
+	}
 
+	/**
+	 * @param string $fileConfig
+	 * @return $this
+	 */
+	public function withFileConfig( $fileConfig )
+	{
+		$this->dbConfig = require $fileConfig;
+
+		return $this;
 	}
 
 	/**
@@ -132,6 +138,27 @@ class DbConfig
 		return $this->logPathQueryDuration;
 	}
 
+	public function useTablePrefix()
+	{
+		if ( !empty( $this->dbConfig['use_table_prefix'] ) )
+			return $this->dbConfig['use_table_prefix'];
+
+		return false;
+	}
+
+	public function getTablePrefix()
+	{
+		return $this->dbConfig['table_prefix'];
+	}
+
+
+	private function buildConfig()
+	{
+		$this->replicationEnable = $this->dbConfig['replicationEnable'];
+		$this->readMasterDataConnect();
+		$this->readSlaveDataConnect();
+		$this->configLogger();
+	}
 
 	private function configLogger()
 	{

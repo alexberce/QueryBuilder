@@ -9,7 +9,7 @@
 namespace Qpdb\QueryBuilder\Traits;
 
 
-use Qpdb\QueryBuilder\Dependencies\QueryConfig;
+use Qpdb\QueryBuilder\DB\DbConfig;
 use Qpdb\QueryBuilder\Dependencies\QueryException;
 use Qpdb\QueryBuilder\Dependencies\QueryStructure;
 use Qpdb\QueryBuilder\Statements\QuerySelect;
@@ -47,8 +47,8 @@ trait TableValidation
 		if ( '' === $table )
 			throw new QueryException( 'Table name is empty string!', QueryException::QUERY_ERROR_INVALID_TABLE_STATEMENT );
 
-		if ( QueryConfig::getInstance()->useTablePrefix() )
-			$table = str_ireplace( '::', QueryConfig::getInstance()->getTablePrefix(), $table );
+		if ( DbConfig::getInstance()->useTablePrefix() )
+			$table = str_ireplace( '::', DbConfig::getInstance()->getTablePrefix(), $table );
 
 		return $table;
 	}

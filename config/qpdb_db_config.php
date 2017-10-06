@@ -23,6 +23,9 @@ return [
 		]
 	],
 
+	/**
+	 * Use if replicationEnable is true. Config one or multiple slave connection
+	 */
 	'slave_data_connect' => [
 		[
 			'host' => 'localhost',
@@ -43,6 +46,9 @@ return [
 		'enable_log_query_duration' => false,
 		'log_path_errors' => $_SERVER['DOCUMENT_ROOT'] . '/tmp/db_errors/',
 		'log_path_query_duration' => $_SERVER['DOCUMENT_ROOT'] . '/tmp/db_query_duration/',
-	]
+	],
+
+	'use_table_prefix' => false,
+	'table_prefix' => 'prefix_',
 
 ];
