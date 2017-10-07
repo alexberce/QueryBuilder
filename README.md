@@ -33,39 +33,49 @@ include_once 'path/to/vendor/autoload.php';
 
 use Qpdb\QueryBuilder\QueryBuild;
 
-$result = QueryBuild::select( 'employees' )
-	->whereEqual( 'firstName', "leslie" )
-	->execute();
+$query = QueryBuild::select( 'employees' )
+	->fields('lastName, jobTitle, officeCode')
+	->whereEqual( 'jobTitle', "Sales Rep" )
+	->whereIn( 'officeCode', [ 2, 3, 4 ] );
+	
 ```
-The result **$result** is array:
 ```php
+$query->getSyntax()
 
+/** result */
+SELECT lastName, jobTitle, officeCode FROM employees WHERE jobTitle = :jobTitle_ynkbd_1i AND officeCode IN ( :a_ynkbd_2i, :a_ynkbd_3i, :a_ynkbd_4i )
+```
+```php
+$query->getBindParams()
+
+/** result */
 Array
 (
-	[0] => Array
-	    (
-		[employeeNumber] => 1165
-		[lastName] => Jennings
-		[firstName] => Leslie
-		[extension] => x3291
-		[email] => ljennings@classicmodelcars.com
-		[officeCode] => 1
-		[reportsTo] => 1143
-		[jobTitle] => Sales Rep
-	    )
-
-	[1] => Array
-	    (
-		[employeeNumber] => 1166
-		[lastName] => Thompson
-		[firstName] => Leslie
-		[extension] => x4065
-		[email] => lthompson@classicmodelcars.com
-		[officeCode] => 1
-		[reportsTo] => 1143
-		[jobTitle] => Sales Rep
-	    )
-
+    [jobTitle_ynkbd_1i] => Sales Rep
+    [a_ynkbd_2i] => 2
+    [a_ynkbd_3i] => 3
+    [a_ynkbd_4i] => 4
 )
+```
+```php
+$query->execute()
 
+/** result */
+Array
+(
+    [0] => Array
+        (
+            [lastName] => Firrelli
+            [jobTitle] => Sales Rep
+            [officeCode] => 2
+        )
+
+    [1] => Array
+        (
+            [lastName] => Patterson
+            [jobTitle] => Sales Rep
+            [officeCode] => 2
+        )
+    ...
+)
 ```

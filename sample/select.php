@@ -6,12 +6,10 @@
  * Time: 12:26 PM
  */
 
-use Qpdb\QueryBuilder\DB\DbConfig;
 use Qpdb\QueryBuilder\Dependencies\Tree;
 use Qpdb\QueryBuilder\QueryBuild;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-
 
 
 //var_dump(__DIR__);
@@ -19,14 +17,15 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 
 $query = QueryBuild::select( 'employees' )
-	->whereEqual( 'firstName', "leslie" );
+	->fields('lastName, jobTitle, officeCode')
+	->whereEqual( 'jobTitle', "Sales Rep" )
+	->whereIn( 'officeCode', [ 2, 3, 4 ] );
 
-DbConfig::getInstance()->withFileConfig($configFile);
 
-echo "<pre>" . print_r($query->getSyntax(),1) . "</pre>";
-echo "<pre>" . print_r($query->getBindParams(),1) . "</pre>";
-echo "<pre>" . print_r($query->getSyntax(1),1) . "</pre>";
-echo "<pre>" . print_r($query->execute(),1) . "</pre>";
+echo "<pre>" . print_r( $query->getSyntax(), 1 ) . "</pre>";
+echo "<pre>" . print_r( $query->getBindParams(), 1 ) . "</pre>";
+echo "<pre>" . print_r( $query->getSyntax( 1 ), 1 ) . "</pre>";
+echo "<pre>" . print_r( $query->execute(), 1 ) . "</pre>";
 
 $a =
 	[
@@ -80,8 +79,7 @@ $a =
 $tree = ( new Tree( $a ) )
 	->withIdName( 'id' )
 	->withParentIdName( 'parent' )
-	->buildTree()
-	;
+	->buildTree();
 
 
 //echo "<pre>" . print_r( $tree->getTreeArray(), 1 ) . "</pre>";
