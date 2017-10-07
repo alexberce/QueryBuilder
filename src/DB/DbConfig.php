@@ -59,7 +59,12 @@ class DbConfig
 	 */
 	private function __construct()
 	{
-		$this->dbConfig = require __DIR__ . '/../../config/qpdb_db_config.php';
+		$vendorCfg = __DIR__ . '/../../../../../vendor-cfg/qpdb_db_config.php';
+		if(file_exists($vendorCfg))
+			$this->dbConfig = require $vendorCfg;
+		else
+			$this->dbConfig = require __DIR__ . '/../../sample-config/qpdb_db_config.php';
+
 		$this->buildConfig();
 	}
 
