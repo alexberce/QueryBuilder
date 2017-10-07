@@ -16,14 +16,15 @@ If you do not use composer, you can [manually install](docs/installation/manual.
 
 ### Configuration
 
-By default MysqlBuilder searches for configuration data (credentials, paths, etc) in the file ```vendor/qpdb/query_builder/sample-config/qpdb_db_config.php```. 
+By default MysqlBuilder searches for configuration data (credentials, paths, etc) in the file 
+```vendor/qpdb/query_builder/sample-config/qpdb_db_config.php```. 
 But it's not recommended to edit this file because it's overwritten by composer.
 The simplest way to set up an efficient Query Builder is to walk through three easy steps:
 - Create a ```vendor-cfg``` folder on the same level as the ```vendor``` folder.
 - Copy file ```qpdb_db_config.php``` into ```vendor-cfg```.
 - Edit file ```vendor-cfg/qpdb_db_config.php```.
 
-Of course there are other configuration options, based on the DbConfig class. 
+Of course there are other configuration options (With Composer, or using custom autoload file), based on the DbConfig class. 
 These are listed in the [Configuration](docs/installation/config2.md) section.
 
 ### How do we use?
