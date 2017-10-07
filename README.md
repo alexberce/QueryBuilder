@@ -38,46 +38,23 @@ $query = QueryBuild::select( 'employees' )
 	->whereEqual( 'jobTitle', "Sales Rep" )
 	->whereIn( 'officeCode', [ 2, 3, 4 ] );
 	
-```
-```php
-$query->getSyntax()
-
-/** return string */
-SELECT lastName, jobTitle, officeCode FROM employees 
-WHERE jobTitle = :jobTitle_ynkbd_1i 
-AND officeCode IN ( :a_ynkbd_2i, :a_ynkbd_3i, :a_ynkbd_4i )
-```
-```php
-$query->getBindParams()
-
-/** return array */
-Array
-(
-    [jobTitle_ynkbd_1i] => Sales Rep
-    [a_ynkbd_2i] => 2
-    [a_ynkbd_3i] => 3
-    [a_ynkbd_4i] => 4
-)
-```
-```php
-$query->execute()
-
-/** reurn array */
-Array
-(
-    [0] => Array
-        (
-            [lastName] => Firrelli
-            [jobTitle] => Sales Rep
-            [officeCode] => 2
-        )
-
-    [1] => Array
-        (
-            [lastName] => Patterson
-            [jobTitle] => Sales Rep
-            [officeCode] => 2
-        )
-    ...
-)
+	$query->execute() /** return array */
+	
+	Array
+    (
+        [0] => Array
+            (
+                [lastName] => Firrelli
+                [jobTitle] => Sales Rep
+                [officeCode] => 2
+            )
+    
+        [1] => Array
+            (
+                [lastName] => Patterson
+                [jobTitle] => Sales Rep
+                [officeCode] => 2
+            )
+        ...
+    )
 ```
