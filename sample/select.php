@@ -6,6 +6,7 @@
  * Time: 12:26 PM
  */
 
+use Qpdb\QueryBuilder\DB\DbConfig;
 use Qpdb\QueryBuilder\Dependencies\Tree;
 use Qpdb\QueryBuilder\QueryBuild;
 
@@ -13,13 +14,14 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 
 
-var_dump(__DIR__);
-var_dump($_SERVER['DOCUMENT_ROOT']);
+//var_dump(__DIR__);
+//var_dump($_SERVER['DOCUMENT_ROOT']);
 
 
-$query = QueryBuild::select( 'employees22' )
-	->whereEqual( 'firstName', "leslie" )->explain();
+$query = QueryBuild::select( 'employees' )
+	->whereEqual( 'firstName', "leslie" );
 
+DbConfig::getInstance()->withFileConfig($configFile);
 
 echo "<pre>" . print_r($query->getSyntax(),1) . "</pre>";
 echo "<pre>" . print_r($query->getBindParams(),1) . "</pre>";

@@ -63,7 +63,7 @@ class DbConfig
 		if(file_exists($vendorCfg))
 			$this->dbConfig = require $vendorCfg;
 		else
-			$this->dbConfig = require __DIR__ . '/../../sample-config/qpdb_db_config.php';
+			$this->dbConfig = require __DIR__ . '/../../config/qpdb_db_config.php';
 
 		$this->buildConfig();
 	}
