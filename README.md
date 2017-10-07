@@ -23,11 +23,13 @@ Configure QueryBuilder using one of two options below:
 
 - **Step 1:** Create a ```vendor-cfg``` folder on the same level as the ```vendor``` folder.
 - **Step 2:** Copy file ```qpdb_db_config.php``` into ```vendor-cfg```.
-- **Step 3:** Editeza fisierul ```vendor-cfg/qpdb_db_config.php```.
+- **Step 3:** Edit file ```vendor-cfg/qpdb_db_config.php```.
 
 **Option 2** ( if there is already a configuration folder, for example ```config```)
 
 - **Step 1:** Creates a file in any existing or newly created folder. For example, ```config/qpdb_db_loader.php```
+- **Step 1:** Creates a file in any existing or newly created folder. For example, config/my_loader.php. 
+Then create a copy of the ```qpdb_db_config.php``` file from the vendor folder in any location, preferably ```config/qpdb_db_config.php```
 ```php
 use Qpdb\QueryBuilder\DB\DbConfig;
 $configFile = __DIR__ . '/relative/path/to/qpdb_db_config.php';
@@ -40,11 +42,12 @@ DbConfig::getInstance()->withFileConfig($configFile);
         "qpdb/query-builder": "^1.0"
     },
     "autoload": {
-        "files": ["config/qpdb_db_loader.php"]
+        "files": ["config/my_loader.php"]
     }
 }
 ```
 - **Step 3:** Run ```composer update```
+- **Step 3:** Edit file ```config/qpdb_db_config.php```.
 
 ### How do we use?
 ```php
