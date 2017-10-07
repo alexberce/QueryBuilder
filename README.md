@@ -43,7 +43,9 @@ $query = QueryBuild::select( 'employees' )
 $query->getSyntax()
 
 /** return string */
-SELECT lastName, jobTitle, officeCode FROM employees WHERE jobTitle = :jobTitle_ynkbd_1i AND officeCode IN ( :a_ynkbd_2i, :a_ynkbd_3i, :a_ynkbd_4i )
+SELECT lastName, jobTitle, officeCode FROM employees 
+WHERE jobTitle = :jobTitle_ynkbd_1i 
+AND officeCode IN ( :a_ynkbd_2i, :a_ynkbd_3i, :a_ynkbd_4i )
 ```
 ```php
 $query->getBindParams()
