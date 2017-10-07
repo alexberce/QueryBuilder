@@ -46,7 +46,7 @@ DbConfig::getInstance()->withFileConfig($configFile);
 }
 ```
 - **Step 3:** Run ```composer update```
-- **Step 3:** Edit file ```config/qpdb_db_config.php```.
+- **Step 4:** Edit file ```config/qpdb_db_config.php```.
 
 ### How do we use?
 ```php
