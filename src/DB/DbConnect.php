@@ -109,9 +109,10 @@ class DbConnect
 			$pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
 			$pdo->setAttribute( \PDO::ATTR_EMULATE_PREPARES, false );
 		} catch ( \PDOException $e ) {
-			# Write into log
-			//echo $this->ExceptionLog($e->getMessage());
-			die();
+			if ( DbConfig::getInstance()->isEnableLogErrors() ) {
+				DbLog::getInstance()->writeQueryErros( 'Connection fail!', $e->getCode(), $e->getMessage() );
+			}
+			throw new \PDOException( $e->getMessage(), $e->getCode() );
 		}
 
 		return $pdo;

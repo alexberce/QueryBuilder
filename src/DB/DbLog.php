@@ -50,6 +50,24 @@ class DbLog
 		$this->write( $message );
 	}
 
+	/**
+	 * @param $query
+	 * @param $duration
+	 */
+	public function writeQueryErros( $query, $code, $error )
+	{
+		$backtrace = end( debug_backtrace() );
+		$location = $backtrace['file'] . " Line: " . $backtrace['line'];
+
+		$this->path = DbConfig::getInstance()->getLogPathErrors(); //my comments
+		$message = "Query: $query" . "\r\n";
+		$message .= "Location: $location\r\n";
+		$message .= "Error code : " . $code . "\r\n";
+		$message .= "" . $error ;
+
+		$this->write( $message );
+	}
+
 
 	public function write( $message )
 	{

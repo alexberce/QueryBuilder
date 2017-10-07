@@ -74,7 +74,7 @@ class DbService
 			return $this->sQuery->rowCount();
 		}
 		else {
-			var_dump($this->sQuery->fetchAll( $fetchMode )[0]);
+
 			return NULL;
 		}
 	}
@@ -91,7 +91,7 @@ class DbService
 		$query = trim( str_replace( "\r", " ", $query ) );
 		$statement = self::getQueryStatement( $query );
 
-		if($statement === self::QUERY_TYPE_EXPLAIN)
+		if ( $statement === self::QUERY_TYPE_EXPLAIN )
 			return $this->sQuery->fetchAll( \PDO::FETCH_ASSOC );
 
 		$Columns = $this->sQuery->fetchAll( \PDO::FETCH_NUM );
@@ -112,7 +112,7 @@ class DbService
 		$query = trim( str_replace( "\r", " ", $query ) );
 		$statement = self::getQueryStatement( $query );
 
-		if($statement === self::QUERY_TYPE_EXPLAIN)
+		if ( $statement === self::QUERY_TYPE_EXPLAIN )
 			return $this->sQuery->fetchAll( \PDO::FETCH_ASSOC );
 
 		$result = $this->sQuery->fetch( $fetchmode );
@@ -150,11 +150,11 @@ class DbService
 			/**
 			 * Add parameters to the parameter array
 			 */
-			if(self::isArrayAssoc($parameters))
+			if ( self::isArrayAssoc( $parameters ) )
 				$this->bindMore( $parameters );
 			else
 				foreach ( $parameters as $key => $val )
-					$this->parameters[] = array($key+1, $val);
+					$this->parameters[] = array( $key + 1, $val );
 
 			if ( count( $this->parameters ) ) {
 				foreach ( $this->parameters as $param => $value ) {
@@ -182,10 +182,10 @@ class DbService
 			}
 
 		} catch ( \PDOException $e ) {
-			# Write into log and display Exception
-			//echo $this->ExceptionLog($e->getMessage(), $query);
-			echo $e->getMessage();
-			die();
+			if ( DbConfig::getInstance()->isEnableLogErrors() ) {
+				DbLog::getInstance()->writeQueryErros( $query, $e->getCode(), $e->getMessage() );
+			}
+			throw new \PDOException( $e->getMessage(), $e->getCode() );
 		}
 
 		/**
@@ -263,10 +263,11 @@ class DbService
 	 * @param array $arr
 	 * @return bool
 	 */
-	public static function isArrayAssoc( array  $arr )
+	public static function isArrayAssoc( array $arr )
 	{
-		if (array() === $arr) return false;
-		return array_keys($arr) !== range(0, count($arr) - 1);
+		if ( array() === $arr ) return false;
+
+		return array_keys( $arr ) !== range( 0, count( $arr ) - 1 );
 	}
 
 
