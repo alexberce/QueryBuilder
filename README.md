@@ -27,8 +27,7 @@ Configure QueryBuilder using one of two options below:
 
 **Option 2** ( if there is already a configuration folder, for example ```config```)
 
-- **Step 1:** Creates a file in any existing or newly created folder. For example, ```config/qpdb_db_loader.php```
-- **Step 1:** Creates a file in any existing or newly created folder. For example, config/my_loader.php. 
+- **Step 1:** Creates a file in any existing or newly created folder. For example, ```config/my_loader.php```. 
 Then create a copy of the ```qpdb_db_config.php``` file from the vendor folder in any location, preferably ```config/qpdb_db_config.php```
 ```php
 use Qpdb\QueryBuilder\DB\DbConfig;
