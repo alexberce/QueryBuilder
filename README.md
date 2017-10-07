@@ -42,13 +42,13 @@ $query = QueryBuild::select( 'employees' )
 ```php
 $query->getSyntax()
 
-/** result */
+/** return string */
 SELECT lastName, jobTitle, officeCode FROM employees WHERE jobTitle = :jobTitle_ynkbd_1i AND officeCode IN ( :a_ynkbd_2i, :a_ynkbd_3i, :a_ynkbd_4i )
 ```
 ```php
 $query->getBindParams()
 
-/** result */
+/** return array */
 Array
 (
     [jobTitle_ynkbd_1i] => Sales Rep
@@ -60,7 +60,7 @@ Array
 ```php
 $query->execute()
 
-/** result */
+/** reurn array */
 Array
 (
     [0] => Array
