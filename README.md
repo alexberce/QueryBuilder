@@ -38,23 +38,23 @@ $query = QueryBuild::select( 'employees' )
 	->whereEqual( 'jobTitle', "Sales Rep" )
 	->whereIn( 'officeCode', [ 2, 3, 4 ] );
 	
-	$query->execute() /** return array */
+$query->execute() /** return array */
 	
-	Array
-    (
-        [0] => Array
-            (
-                [lastName] => Firrelli
-                [jobTitle] => Sales Rep
-                [officeCode] => 2
-            )
-    
-        [1] => Array
-            (
-                [lastName] => Patterson
-                [jobTitle] => Sales Rep
-                [officeCode] => 2
-            )
-        ...
-    )
+Array
+(
+    [0] => Array
+        (
+            [lastName] => Firrelli
+            [jobTitle] => Sales Rep
+            [officeCode] => 2
+        )
+
+    [1] => Array
+        (
+            [lastName] => Patterson
+            [jobTitle] => Sales Rep
+            [officeCode] => 2
+        )
+    ...
+)
 ```
