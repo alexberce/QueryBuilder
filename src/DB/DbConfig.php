@@ -75,6 +75,7 @@ class DbConfig
 	public function withFileConfig( $fileConfig )
 	{
 		$this->dbConfig = require $fileConfig;
+		$this->buildConfig();
 
 		return $this;
 	}
