@@ -4,7 +4,7 @@
 
 ### Requirements
 * Php 5.4+
-* Enable PDO (php.ini)
+* PDO extension
 * MySql 5.5 / 5.6 / 5.7 / MariaDB
 
 ### Installation
@@ -16,7 +16,7 @@ If you do not use composer, you can [manually install](docs/installation/manual.
 
 ### Configuration
 
-By default MysqlBuilder searches for configuration data (credentials, paths, etc) in the file 
+By default, QueryBuilder searches for configuration data (credentials, paths, etc) in the file 
 ```vendor/qpdb/query_builder/sample-config/qpdb_db_config.php```. 
 But it's not recommended to edit this file because it's overwritten by composer.
 The simplest way to set up an efficient Query Builder is to walk through three easy steps:

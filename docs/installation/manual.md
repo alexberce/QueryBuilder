@@ -1,8 +1,8 @@
 ## Manual installation
 
 1. Download the [latest version](https://github.com/adumitru68/QueryBuilder/releases) of the project.
-2. Creates the autoload file ```autoload.php``` outside the QueryBuilder folder.
-3. Includes the autoload.php file in your project's main
+2. Create the autoload file ```autoload.php``` outside the QueryBuilder folder.
+3. Include the autoload.php file in your project.
 
 #### Autoload file example ```autoload.php```
 
