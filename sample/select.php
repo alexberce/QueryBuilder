@@ -11,11 +11,6 @@ use Qpdb\QueryBuilder\QueryBuild;
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-
-//var_dump(__DIR__);
-//var_dump($_SERVER['DOCUMENT_ROOT']);
-
-
 $query = QueryBuild::select( 'employees' )
 	->fields('lastName, jobTitle, officeCode')
 	->whereEqual( 'jobTitle', "Sales Rep" )
@@ -80,7 +75,6 @@ $tree = ( new Tree( $a ) )
 	->withIdName( 'id' )
 	->withParentIdName( 'parent' )
 	->buildTree();
-
 
 //echo "<pre>" . print_r( $tree->getTreeArray(), 1 ) . "</pre>";
 //echo "<pre>" . print_r( $tree->getChildren(1), 1 ) . "</pre>";
